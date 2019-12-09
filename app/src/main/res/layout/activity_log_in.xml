@@ -10,7 +10,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="201dp"
         android:layout_height="212dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="105dp"
         android:hint=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
