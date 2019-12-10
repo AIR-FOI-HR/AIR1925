@@ -12,7 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Guest.LogIn.ui.login.LogInActivity"></activity>
+        <activity
+            android:name=".ui.login.peobaActivity"
+            android:label="@string/title_activity_peoba"></activity>
+        <activity android:name=".ui.views.restaurant.SignUpActivity" />
+        <activity android:name=".ui.views.guest.SignUpActivity" />
+        <activity android:name=".ui.views.shared.UserTypeChoiceActivity" />
+        <activity android:name=".ui.views.shared.StartChoiceActivity" />
+        <activity android:name=".ui.views.shared.LogInActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
