@@ -12,16 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.views.guest.RestaurantMeniActivity"></activity>
-        <activity android:name=".ui.views.guest.RestaurantListActivity" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".ui.guest.auth.SignUpTypeActivity" />
+        <activity android:name=".ui.guest.restaurants.RestaurantMeniActivity" />
+        <activity android:name=".ui.guest.restaurants.RestaurantListActivity" />
         <activity
             android:name=".ui.login.peobaActivity"
             android:label="@string/title_activity_peoba" />
-        <activity android:name=".ui.views.restaurant.SignUpActivity" />
-        <activity android:name=".ui.views.guest.SignUpActivity" />
-        <activity android:name=".ui.views.shared.UserTypeChoiceActivity" />
-        <activity android:name=".ui.views.shared.StartChoiceActivity" />
-        <activity android:name=".ui.views.shared.LogInActivity" />
+        <activity android:name=".ui.restaurant.SignUpActivity" />
+        <activity android:name=".ui.guest.auth.SignUpActivity" />
+        <activity android:name=".ui.shared.UserTypeActivity" />
+        <activity android:name=".ui.shared.StartActivity" />
+        <activity android:name=".ui.guest.auth.LogInActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
