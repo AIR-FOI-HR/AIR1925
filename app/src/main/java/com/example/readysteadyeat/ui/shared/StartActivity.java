@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.views.shared;
+package com.example.readysteadyeat.ui.shared;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.readysteadyeat.R;
+import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
 
 public class StartChoiceActivity extends AppCompatActivity {
     private Button btnEnterSignUp;
