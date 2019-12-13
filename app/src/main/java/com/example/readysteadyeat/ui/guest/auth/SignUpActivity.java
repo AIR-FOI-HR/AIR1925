@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.views.guest;
+package com.example.readysteadyeat.ui.guest.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 

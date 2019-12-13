@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
 
-public class StartChoiceActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
     private Button btnEnterSignUp;
     private Button btnEnterLogIn;
 
@@ -38,12 +38,12 @@ public class StartChoiceActivity extends AppCompatActivity {
     }
 
     public void openActivityUserTypeChoice(){
-        Intent homeIntetnt = new Intent(StartChoiceActivity.this, UserTypeChoiceActivity.class);
+        Intent homeIntetnt = new Intent(StartActivity.this, UserTypeActivity.class);
         startActivity(homeIntetnt);
     }
 
     public void openActivityLogIn(){
-        Intent homeIntetnt = new Intent(StartChoiceActivity.this, LogInActivity.class);
+        Intent homeIntetnt = new Intent(StartActivity.this, LogInActivity.class);
         startActivity(homeIntetnt);
     }
 }

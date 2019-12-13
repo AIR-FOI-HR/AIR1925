@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.views.restaurant;
+package com.example.readysteadyeat.ui.restaurant;
 
 import androidx.appcompat.app.AppCompatActivity;
 
