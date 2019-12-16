@@ -11,17 +11,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginTop="228dp"
         android:paddingBottom="30pt"
         android:text="ReadySteadyEat"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="254dp"
         android:layout_height="84dp"
         android:background="@android:color/transparent"
@@ -38,10 +39,15 @@
         android:id="@+id/btnEnterSignUp"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="76dp"
         android:text="Sign Up"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:padding="8dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499" />
 
@@ -49,13 +55,29 @@
         android:id="@+id/btnEnterLogIn"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="60dp"
         android:text="Log In"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:padding="8dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.841"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.607" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
