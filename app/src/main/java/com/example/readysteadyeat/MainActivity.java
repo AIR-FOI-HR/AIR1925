@@ -1,35 +1,28 @@
 package com.example.readysteadyeat;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.readysteadyeat.ui.guest.BottomMenuGuestActivity;
 import com.example.readysteadyeat.ui.shared.StartActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 4000;
-    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-               toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Welcome");
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent homeIntent = new Intent(MainActivity.this, BottomMenuGuestActivity.class);
-            startActivity(homeIntent);
-            finish();
-        }
+                Intent homeIntetnt = new Intent(MainActivity.this, StartActivity.class);
+                startActivity(homeIntetnt);
+                finish();
+            }
         }, SPLASH_TIME_OUT);
     }
 
