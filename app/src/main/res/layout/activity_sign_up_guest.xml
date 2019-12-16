@@ -116,8 +116,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.072"
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
-        tools:srcCompat="@tools:sample/avatars"
-        tools:visibility="visible" />
+    tools:srcCompat="@tools:sample/avatars"
+    tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

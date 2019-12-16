@@ -15,22 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "498135365627-ttrmi98bk6ig9f8749m16g0pimes25mi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.readysteadyeat",
-            "certificate_hash": "183aeb8a7c159ad8c99bce5189b26e3c3e5087e7"
-          }
-        },
-        {
-          "client_id": "498135365627-sjtv9thvv28f3vvge1ev4mta2n9dv8n5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.readysteadyeat",
-            "certificate_hash": "8c725fa31ad04522a891a3c3f9aa94d63db6a9d0"
-          }
-        },
-        {
           "client_id": "498135365627-e0q0gt5h6cj7j5q4cgspbklagq9pi5em.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
