@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
+import com.example.readysteadyeat.ui.guest.BottomMenuGuestActivity;
+import com.example.readysteadyeat.ui.restaurant.BottomMenuRestaurantActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -83,7 +85,8 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        startActivity(HomeActivity);
+        Intent homeActivity = new Intent(getApplicationContext(), BottomMenuRestaurantActivity.class);
+        startActivity(homeActivity);
         finish();
     }
 

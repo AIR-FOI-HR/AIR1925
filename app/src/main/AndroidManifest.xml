@@ -19,6 +19,8 @@
         <activity android:name=".ui.guest.restaurants.RestaurantMeniActivity" />
         <activity android:name=".ui.guest.restaurants.RestaurantListActivity" />
         <activity android:name=".ui.restaurant.SignUpActivity" />
+        <activity android:name=".ui.guest.BottomMenuGuestActivity"/>
+        <activity android:name=".ui.restaurant.BottomMenuRestaurantActivity"/>
         <activity android:name=".ui.guest.auth.SignUpActivity" />
         <activity android:name=".ui.shared.UserTypeActivity" />
         <activity android:name=".ui.shared.StartActivity" />

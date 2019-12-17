@@ -14,6 +14,7 @@ import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.ui.guest.Orders.OrdersGuestFragment;
 import com.example.readysteadyeat.ui.guest.myProfile.ProfileGuestFragment;
 import com.example.readysteadyeat.ui.guest.restaurants.RestaurantListViewFragment;
+import com.example.readysteadyeat.ui.restaurant.orders.OrdersRestaurantFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomMenuGuestActivity extends AppCompatActivity  {
@@ -24,7 +25,7 @@ public class BottomMenuGuestActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_menu_guest);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-
+        Fragment fragment =new OrdersGuestFragment();
 
         bottomNavigationView.setSelectedItemId(R.id.navigation_orders_guest);
 
@@ -34,7 +35,7 @@ public class BottomMenuGuestActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Orders");
 
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
     }
 

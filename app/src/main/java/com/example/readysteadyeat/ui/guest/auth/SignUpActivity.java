@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.readysteadyeat.MainActivity;
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.data.models.guest.User;
+import com.example.readysteadyeat.ui.guest.BottomMenuGuestActivity;
 import com.example.readysteadyeat.ui.guest.HomeActivity;
 import com.google.android.gms.common.internal.service.Common;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -164,7 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+        Intent homeActivity = new Intent(getApplicationContext(), BottomMenuGuestActivity.class);
         startActivity(homeActivity);
         finish();
     }
