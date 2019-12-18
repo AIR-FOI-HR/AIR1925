@@ -13,7 +13,8 @@ import android.view.MenuItem;
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.ui.guest.Orders.OrdersGuestFragment;
 import com.example.readysteadyeat.ui.guest.myProfile.ProfileGuestFragment;
-import com.example.readysteadyeat.ui.guest.restaurants.RestaurantListViewFragment;
+import com.example.readysteadyeat.ui.guest.restaurants.RestaurantFragmentList;
+import com.example.readysteadyeat.ui.guest.restaurants.RestaurantFragmentList;
 import com.example.readysteadyeat.ui.restaurant.orders.OrdersRestaurantFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -65,7 +66,7 @@ public class BottomMenuGuestActivity extends AppCompatActivity  {
 
                 case R.id.navigation_list_guest:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.container, restaurantListViewFragment).commit();
-                    selectedFragment=new RestaurantListViewFragment();
+                    selectedFragment=new RestaurantFragmentList();
                     setSupportActionBar(toolbar);
                     getSupportActionBar().setTitle("Restaurants");
                 break;
