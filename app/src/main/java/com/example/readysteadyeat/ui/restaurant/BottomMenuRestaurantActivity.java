@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.ui.restaurant.menu.RestaurantMenuEditFragment;
+import com.example.readysteadyeat.ui.restaurant.menu.RestaurantMenuFragment;
 import com.example.readysteadyeat.ui.restaurant.myProfile.ProfileRestarutantFragment;
 import com.example.readysteadyeat.ui.restaurant.orders.OrdersRestaurantFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
