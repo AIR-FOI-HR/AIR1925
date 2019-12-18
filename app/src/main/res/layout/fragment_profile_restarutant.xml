@@ -5,166 +5,228 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.restaurant.myProfile.ProfileRestarutantFragment">
-
-    <!-- picture -->
-    <ImageView
-        android:id="@+id/imgVProfilePicture"
-        android:layout_width="150dp"
-        android:layout_height="96dp"
-        android:background="@color/colorPrimary"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/txtRestaurantName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
-        tools:srcCompat="@tools:sample/avatars"
-        tools:visibility="visible"
-        android:layout_margin="8dp"/>
-
-
-
-    <!-- First txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtRestaurantName"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtState">
+        android:layout_height="match_parent"
+        tools:context=".ui.restaurant.myProfile.ProfileRestarutantFragment">
+
+        <!-- picture -->
+        <ImageView
+            android:id="@+id/imgVProfilePicture"
+            android:layout_width="150dp"
+            android:layout_height="96dp"
+            android:background="@color/colorPrimary"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/txtRestaurantName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+            tools:srcCompat="@tools:sample/avatars"
+            tools:visibility="visible"
+            android:layout_margin="8dp"/>
 
 
-        <com.google.android.material.textfield.TextInputEditText
+
+        <!-- First txt -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtRestaurantName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Restaurant name" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <!-- Second txt -->
+            app:layout_constraintBottom_toTopOf="@+id/txtState">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtCity">
 
-        <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputRestaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Restaurant name"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <!-- Second txt -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="State" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtCity">
 
-    <!-- Third txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtAdress">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="State" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Third txt -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="City" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtAdress"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City"
+                android:enabled="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!--Fourth txt -->
+        <!--Fourth txt -->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtAdress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtHouseNumber">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtAdress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Adress" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtHouseNumber">
 
-    <!-- Fifth txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtHouseNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtCIN">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputAdress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Adress"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Fifth txt -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtHouseNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="House number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtCIN">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputHouseNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="House number"
+                android:enabled="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!-- Sixth txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtCIN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtIBAN">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Sixth txt -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtCIN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CIN" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtIBAN">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputCIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CIN"
+                android:enabled="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!--Seventh txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtIBAN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtEmailEdit">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <!--Seventh txt -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtIBAN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="IBAN" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtEmailEdit">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputIBAN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="IBAN"
+                android:enabled="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!-- Eight txt -->
+        <!-- Eight txt -->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtEmailEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtPasswordEdit">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtEmailEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtPasswordEdit">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputEmailEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:enabled="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!-- Ninth txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtPasswordEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtPasswordRepeatEdit">
+        <!-- Ninth txt -->
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Tenth txt -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtPasswordEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/txtPasswordRepeatEdit">
 
-    <!-- Tenth txt -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtPasswordRepeatEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtPasswordRepeatEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repeat assword" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/menuButton"
+            android:visibility="invisible">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputPasswordRepeatEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Repeat password"
+                android:enabled="false"
+                android:visibility="invisible"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- <android.support.design.widget.FloatingActionButton
+             android:id="@+id/fab"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="end|bottom"
+             android:layout_margin="16dp"
+             android:layout_marginBottom="16dp"
+             android:contentDescription="@string/submit"
+             android:src="@drawable/ic_my_icon"
+             app:layout_constraintBottom_toBottomOf="parent"
+             tools:layout_editor_absoluteX="107dp" />    -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:text="Edit"
+            android:background="@color/orangeDark"
+            android:backgroundTint="@color/orangeDark"
+            android:textColor="@color/white"
+            app:cornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
