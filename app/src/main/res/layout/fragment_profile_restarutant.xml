@@ -4,229 +4,216 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    tools:context=".ui.restaurant.auth.SignUpActivity"
+    tools:layout_editor_absoluteX="-1dp"
+    tools:layout_editor_absoluteY="-49dp">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.restaurant.myProfile.ProfileRestarutantFragment">
+        android:layout_height="730dp">
 
-        <!-- picture -->
-        <ImageView
-            android:id="@+id/imgVProfilePicture"
-            android:layout_width="150dp"
-            android:layout_height="96dp"
-            android:background="@color/colorPrimary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/txtRestaurantName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
-            tools:srcCompat="@tools:sample/avatars"
-            tools:visibility="visible"
-            android:layout_margin="8dp"/>
-
-
-
-        <!-- First txt -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtRestaurantName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtState">
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputRestaurantName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Restaurant name"
-                android:enabled="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <!-- Second txt -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtCity">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputState"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:hint="State" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Third txt -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtAdress"
-
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="City"
-                android:enabled="false"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!--Fourth txt -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtAdress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtHouseNumber">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputAdress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Adress"
-                android:enabled="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Fifth txt -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtHouseNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtCIN">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputHouseNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="House number"
-                android:enabled="false"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!-- Sixth txt -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtCIN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtIBAN">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputCIN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="CIN"
-                android:enabled="false"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!--Seventh txt -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtIBAN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtEmailEdit">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputIBAN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="IBAN"
-                android:enabled="false"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!-- Eight txt -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtEmailEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtPasswordEdit">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputEmailEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="E-mail"
-                android:enabled="false"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!-- Ninth txt -->
-
-        <!-- Tenth txt -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtPasswordEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtPasswordRepeatEdit">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputPasswordEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:enabled="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtPasswordRepeatEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/menuButton"
-            android:visibility="invisible">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtInputPasswordRepeatEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Repeat password"
-                android:enabled="false"
-                android:visibility="invisible"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- <android.support.design.widget.FloatingActionButton
-             android:id="@+id/fab"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="end|bottom"
-             android:layout_margin="16dp"
-             android:layout_marginBottom="16dp"
-             android:contentDescription="@string/submit"
-             android:src="@drawable/ic_my_icon"
-             app:layout_constraintBottom_toBottomOf="parent"
-             tools:layout_editor_absoluteX="107dp" />    -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:text="Edit"
-            android:background="@color/orangeDark"
-            android:backgroundTint="@color/orangeDark"
-            android:textColor="@color/white"
-            app:cornerRadius="100dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgvUserProfile"
+            android:layout_width="195dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="110dp"
+            android:src="@drawable/defaultuser"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.072" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRestaurantName"
+            android:layout_width="371dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Restaurant  name"
+            android:inputType="textPersonName"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtRestaurantState"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.943" />
 
-            />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmail"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Email"
+            android:textSize="15dp"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.57" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRestaurantState"
+            android:layout_width="400dp"            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="250dp"
+            android:layout_marginEnd="20dp"
+            android:hint="State"
+            android:textSize="15dp"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.27"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.794" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRestaturantCity"
+            android:layout_width="400dp"            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="20dp"
+            android:hint="City"
+            android:inputType="textPersonName"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.381" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRestaurantStreet"
+            android:layout_width="400dp"            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="350dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Street"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.028"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.448" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRestaturantHouseNumber"
+            android:layout_width="400dp"            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="400dp"
+            android:layout_marginEnd="20dp"
+            android:hint="House number"
+            android:textSize="15dp"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.524" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtIBAN"
+            android:layout_width="400dp"            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="450dp"
+            android:layout_marginEnd="20dp"
+            android:hint="IBAN"
+            android:textSize="15dp"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.682" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPassword"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Password"
+            android:textSize="15dp"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.763" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRepeatPassword"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="550dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Repeat password"
+            android:textSize="15dp"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.848" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEditProfileRestaurant"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="58dp"
+            android:layout_marginTop="620dp"
+            android:layout_marginEnd="52dp"
+            android:padding="10dp"
+            android:text="Edit profile"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.958" />
+
+    </RelativeLayout>
+
 </ScrollView>

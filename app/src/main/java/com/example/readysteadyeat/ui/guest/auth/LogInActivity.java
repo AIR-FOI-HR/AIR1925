@@ -44,7 +44,6 @@ public class LogInActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.txtUserPassword);
         btnLogIn = findViewById(R.id.btnLogIn);
         mAuth = FirebaseAuth.getInstance();
-        HomeActivity = new Intent(this, com.example.readysteadyeat.ui.guest.HomeActivity.class);
 
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
