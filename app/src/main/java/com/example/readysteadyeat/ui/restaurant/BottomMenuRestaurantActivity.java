@@ -5,16 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.ui.restaurant.menu.RestaurantMenuEditFragment;
+import com.example.readysteadyeat.ui.restaurant.menu.RestaurantMenuFragment;
 import com.example.readysteadyeat.ui.restaurant.myProfile.ProfileRestarutantFragment;
 import com.example.readysteadyeat.ui.restaurant.orders.OrdersRestaurantFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class BottomMenuRestaurantActivity extends AppCompatActivity {
+public class BottomMenuRestaurantActivity extends AppCompatActivity implements RestaurantMenuFragment.OnFragmentInteractionListener {
     Toolbar toolbar;
 
     @Override
@@ -48,7 +49,7 @@ public class BottomMenuRestaurantActivity extends AppCompatActivity {
                             getSupportActionBar().setTitle("Orders");
                             break;
                         case R.id.navigation_menu_restaurants:
-                            selectedFragment=new RestaurantMenuEditFragment();
+                            selectedFragment=new RestaurantMenuFragment();
                             setSupportActionBar(toolbar);
                             getSupportActionBar().setTitle("Menu editor");
                             break;
@@ -62,4 +63,9 @@ public class BottomMenuRestaurantActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
