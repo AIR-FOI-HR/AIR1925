@@ -138,7 +138,7 @@ public class ProfileGuestFragment extends Fragment {
                     final String email = txtIEmail.getText().toString();
                     final String phone = txtIPhoneNumber.getText().toString();
                     //pozvati metodu za updateProfila i prosljediti joj ovo sve gore
-                    updateUserInfo();
+                    //updateUserInfo();
                 }
             }
         });
@@ -175,7 +175,7 @@ public class ProfileGuestFragment extends Fragment {
         });
     }
 
-    private void updateUserInfo(final Guest newUser, Uri pickedImgUri) {
+    /*private void updateUserInfo(final Guest newUser, Uri pickedImgUri) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
@@ -210,7 +210,7 @@ public class ProfileGuestFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
     private void checkAndRequestPermission() {
         Activity activity = getActivity();
