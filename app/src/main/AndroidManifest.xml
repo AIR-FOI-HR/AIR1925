@@ -18,7 +18,9 @@
         <activity android:name=".ui.guest.HomeActivity"></activity>
         <activity android:name=".ui.guest.restaurants.RestaurantMeniActivity" />
         <activity android:name=".ui.restaurant.auth.SignUpActivity" />
-        <activity android:name=".ui.guest.BottomMenuGuestActivity"/>
+        <activity android:name=".ui.guest.BottomMenuGuestActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".ui.restaurant.BottomMenuRestaurantActivity"/>
         <activity android:name=".ui.guest.auth.SignUpActivity" />
         <activity android:name=".ui.shared.UserTypeActivity" />

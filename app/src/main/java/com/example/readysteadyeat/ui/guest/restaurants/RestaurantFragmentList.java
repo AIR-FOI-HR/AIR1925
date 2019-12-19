@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class RestaurantFragmentList extends Fragment {
     private DatabaseReference RestaurantsRef;
     private FirebaseAuth mAuth;
     private String currentUserID;
+    private SearchView searchRestaurants;
 
 
     public RestaurantFragmentList(){
@@ -46,6 +48,7 @@ public class RestaurantFragmentList extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         RestaurantsView= inflater.inflate(R.layout.fragment_restaurant_list_view, container, false);
+        searchRestaurants = (SearchView) RestaurantsView.findViewById(R.id.searchRestaurants);
 
 
         myRestaurantsList = (RecyclerView) RestaurantsView.findViewById(R.id.restaurants_list);
@@ -64,6 +67,23 @@ public class RestaurantFragmentList extends Fragment {
     public void onStart() {
         super.onStart();
 
+        searchRestaurants.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                populateRecycleView(s);
+                return true;
+            }
+        });
+
+        searchRestaurants.setQuery("", true);
+    }
+
+    public void populateRecycleView(final String s){
         FirebaseRecyclerOptions<Restaurant> options = new FirebaseRecyclerOptions.Builder<Restaurant>().setQuery(RestaurantsRef, Restaurant.class).build();
 
         FirebaseRecyclerAdapter<Restaurant, RestaurantViewHolder> adapter = new FirebaseRecyclerAdapter<Restaurant, RestaurantViewHolder>(options) {
@@ -73,26 +93,61 @@ public class RestaurantFragmentList extends Fragment {
                 RestaurantsRef.child(IDs).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.hasChild("imgUrl")){
-                            String profileImage = dataSnapshot.child("imgUrl").getValue().toString();
-                            String restaurantName = dataSnapshot.child("name").getValue().toString();
-                            String restaurantStreet = dataSnapshot.child("street").getValue().toString();
-                            String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+                        if(s.equals("")){
+                            if(dataSnapshot.hasChild("imgUrl")){
+                                String profileImage = dataSnapshot.child("imgUrl").getValue().toString();
+                                String restaurantName = dataSnapshot.child("name").getValue().toString();
+                                String restaurantStreet = dataSnapshot.child("street").getValue().toString();
+                                String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
 
-                            holder.restaurantName.setText(restaurantName);
-                            holder.restaurantStreet.setText(restaurantStreet);
-                            holder.restaurantHouseNumber.setText(restaurantHouseNumber);
-                            Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
+                                holder.restaurantName.setText(restaurantName);
+                                holder.restaurantStreet.setText(restaurantStreet);
+                                holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
 
+                            }
+                            else{
+                                String restaurantName = dataSnapshot.child("name").getValue().toString();
+                                String restaurantStreet = dataSnapshot.child("street").getValue().toString();
+                                String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+
+                                holder.restaurantName.setText(restaurantName);
+                                holder.restaurantStreet.setText(restaurantStreet);
+                                holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                            }
                         }
                         else{
-                            String restaurantName = dataSnapshot.child("name").getValue().toString();
-                            String restaurantStreet = dataSnapshot.child("street").getValue().toString();
-                            String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+                            if(dataSnapshot.child("name").getValue().toString().contains(s)){
+                                if(dataSnapshot.hasChild("imgUrl")){
+                                    String profileImage = dataSnapshot.child("imgUrl").getValue().toString();
+                                    String restaurantName = dataSnapshot.child("name").getValue().toString();
+                                    String restaurantStreet = dataSnapshot.child("street").getValue().toString();
+                                    String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
 
-                            holder.restaurantName.setText(restaurantName);
-                            holder.restaurantStreet.setText(restaurantStreet);
-                            holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                    holder.restaurantName.setText(restaurantName);
+                                    holder.restaurantStreet.setText(restaurantStreet);
+                                    holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                    Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
+
+                                }
+                                else{
+                                    String restaurantName = dataSnapshot.child("name").getValue().toString();
+                                    String restaurantStreet = dataSnapshot.child("street").getValue().toString();
+                                    String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+
+                                    holder.restaurantName.setText(restaurantName);
+                                    holder.restaurantStreet.setText(restaurantStreet);
+                                    holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                }
+                            }
+                            else{
+                                //final RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(0,0);
+                                //holder.itemView.setLayoutParams(params);
+                                ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
+                                params.height = 0;
+                                holder.itemView.setLayoutParams(params);
+                                holder.itemView.setVisibility(View.GONE);
+                            }
                         }
                     }
 
@@ -113,12 +168,12 @@ public class RestaurantFragmentList extends Fragment {
             }
 
         };
-
         myRestaurantsList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         myRestaurantsList.setAdapter(adapter);
 
 
         adapter.startListening();
+
     }
 }
 
