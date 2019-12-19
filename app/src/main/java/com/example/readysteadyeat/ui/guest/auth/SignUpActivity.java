@@ -46,11 +46,11 @@ public class SignUpActivity extends AppCompatActivity {
     //Za registraciju
     private EditText txtVFirstName, txtVLastName, txtVEmail, txtVPassword, txtVRepeatPassword, txtPhoneNumber;
     private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
     private FirebaseStorage storage;
     private StorageReference sotrageRererence;
     private FirebaseDatabase mFirebaseDb;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef;
     private String urlImage;
 
 

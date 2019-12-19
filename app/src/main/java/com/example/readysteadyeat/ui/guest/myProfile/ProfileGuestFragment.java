@@ -59,6 +59,8 @@ public class ProfileGuestFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseStorage storage;
 
     static int PReqCode = 1;
     static int REQUESCODE = 1;
@@ -103,6 +105,7 @@ public class ProfileGuestFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
         DatabaseReference databseReference = firebaseDatabase.getReference("User").child("Guest").child(firebaseAuth.getCurrentUser().getUid());
 
         btnEditProfileGuest.setText("Edit profile");
@@ -111,6 +114,9 @@ public class ProfileGuestFragment extends Fragment {
         txtIEmail.setEnabled(false);
         txtIPhoneNumber.setEnabled(false);
         imgUserProfile.setEnabled(false);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
 
         btnEditProfileGuest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,13 +138,13 @@ public class ProfileGuestFragment extends Fragment {
                     imgUserProfile.setEnabled(false);
                     click = false;
 
-                    //uzimanje podataka sa fronta
+
                     final String firstName = txtIFirstName.getText().toString();
                     final String lastName = txtILastName.getText().toString();
                     final String email = txtIEmail.getText().toString();
                     final String phone = txtIPhoneNumber.getText().toString();
                     //pozvati metodu za updateProfila i prosljediti joj ovo sve gore
-                    //updateUserInfo();
+                    updateUserInfo(firstName, lastName, email, phone, pickedImgUri);
                 }
             }
         });
@@ -175,7 +181,7 @@ public class ProfileGuestFragment extends Fragment {
         });
     }
 
-    /*private void updateUserInfo(final Guest newUser, Uri pickedImgUri) {
+    private void updateUserInfo(final String firstName, final String lastName, final String email, final String phone, final Uri pickedImgUri) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
@@ -192,16 +198,19 @@ public class ProfileGuestFragment extends Fragment {
                                 .build();
 
                         String imageReference = uri.toString();
-                        myRef.child(newUser.userId).child("imgUrl").setValue(imageReference);
+                        myRef = firebaseDatabase.getInstance().getReference("User").child("Guest");
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("firstName").setValue(firstName);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("lastName").setValue(lastName);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("phone").setValue(phone);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("imgUrl").setValue(imageReference);
 
-                        mAuth.getCurrentUser().updateProfile(profileUpdate)
+                        firebaseAuth.getCurrentUser().updateProfile(profileUpdate)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()) {
                                             showMessage("Register Complete");
-                                            updateUI();
-
                                         }
                                     }
                                 });
@@ -210,7 +219,10 @@ public class ProfileGuestFragment extends Fragment {
             }
         });
 
-    }*/
+    }
+
+    private void showMessage(String register_complete) {
+    }
 
     private void checkAndRequestPermission() {
         Activity activity = getActivity();
