@@ -43,7 +43,7 @@ public class UserTypeActivity extends AppCompatActivity {
     }
 
     public void openActivitySignUpRestaurant(){
-        Intent homeIntetnt = new Intent(UserTypeActivity.this, com.example.readysteadyeat.ui.restaurant.SignUpActivity.class);
+        Intent homeIntetnt = new Intent(UserTypeActivity.this, com.example.readysteadyeat.ui.restaurant.auth.SignUpActivity.class);
         startActivity(homeIntetnt);
     }
 }

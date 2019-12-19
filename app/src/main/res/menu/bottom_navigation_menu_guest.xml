@@ -7,8 +7,8 @@
         android:title="Restaurant">
     </item>
     <item android:id="@+id/navigation_orders_guest"
-        android:icon="@drawable/ic_restaurant_menu_24dp"
-        android:title="Menu"/>
+        android:icon="@drawable/ic_orders_24dp"
+        android:title="Orders"/>
     <item android:id="@+id/navigation_profile_guest"
         android:icon="@drawable/ic_person_24dp"
         android:title="Profil"/>

@@ -17,8 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.guest.HomeActivity"></activity>
         <activity android:name=".ui.guest.restaurants.RestaurantMeniActivity" />
-        <activity android:name=".ui.guest.restaurants.RestaurantListActivity" />
-        <activity android:name=".ui.restaurant.SignUpActivity" />
+        <activity android:name=".ui.restaurant.auth.SignUpActivity" />
         <activity android:name=".ui.guest.BottomMenuGuestActivity"/>
         <activity android:name=".ui.restaurant.BottomMenuRestaurantActivity"/>
         <activity android:name=".ui.guest.auth.SignUpActivity" />

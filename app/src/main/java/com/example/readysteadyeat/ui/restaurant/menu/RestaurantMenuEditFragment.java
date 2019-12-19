@@ -1,33 +1,30 @@
-package com.example.readysteadyeat.ui.guest.restaurants;
+package com.example.readysteadyeat.ui.restaurant.menu;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.readysteadyeat.R;
-
-import static androidx.databinding.DataBindingUtil.setContentView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RestaurantListViewFragment.OnFragmentInteractionListener} interface
+ * {@link RestaurantMenuEditFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RestaurantListViewFragment#newInstance} factory method to
+ * Use the {@link RestaurantMenuEditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RestaurantListViewFragment extends Fragment {
-    Toolbar toolbar;
+public class RestaurantMenuEditFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +36,7 @@ public class RestaurantListViewFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public RestaurantListViewFragment() {
+    public RestaurantMenuEditFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +46,11 @@ public class RestaurantListViewFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RestaurantListViewFragment.
+     * @return A new instance of fragment RestaurantMenuEditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RestaurantListViewFragment newInstance(String param1, String param2) {
-        RestaurantListViewFragment fragment = new RestaurantListViewFragment();
+    public static RestaurantMenuEditFragment newInstance(String param1, String param2) {
+        RestaurantMenuEditFragment fragment = new RestaurantMenuEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,22 +65,22 @@ public class RestaurantListViewFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        Spinner spinner = (Spinner) view.findViewById(R.id.spnrCategory);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.categoryMeal, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant_list_view, container, false);
-
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_restaurant_menu_edit, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -93,23 +90,7 @@ public class RestaurantListViewFragment extends Fragment {
         }
     }
 
-//@Override
-//public void onAttach(Context context) {
-//    super.onAttach(context);
-//    if (context instanceof OnFragmentInteractionListener) {
-//        mListener = (OnFragmentInteractionListener) context;
-//    } else {
-//        throw new RuntimeException(context.toString()
-//                + " must implement OnFragmentInteractionListener");
-//    }
-//}
-//
-//@Override
-//public void onDetach() {
-//    super.onDetach();
-//    mListener = null;
-//}
-//
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -123,13 +104,5 @@ public class RestaurantListViewFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-
     }
 }

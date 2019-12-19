@@ -7,65 +7,53 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.shared.StartActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="228dp"
-        android:paddingBottom="30pt"
-        android:text="ReadySteadyEat"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="254dp"
-        android:layout_height="84dp"
+        android:layout_width="357dp"
+        android:layout_height="298dp"
         android:background="@android:color/transparent"
         android:paddingBottom="30dp"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.204" />
+        app:layout_constraintVertical_bias="0.235" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEnterSignUp"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:text="Sign Up"
-        android:textColor="@color/white"
-        android:textAlignment="center"
         android:padding="8dp"
+        android:text="Sign Up"
+        android:textSize="15dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.629"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEnterLogIn"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:text="Log In"
-        android:textColor="@color/white"
-        android:textAlignment="center"
         android:padding="8dp"
+        android:textSize="15dp"
+        android:text="Log In"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        app:backgroundTint="#eeeeee"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.607" />
+        app:layout_constraintVertical_bias="0.738" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
