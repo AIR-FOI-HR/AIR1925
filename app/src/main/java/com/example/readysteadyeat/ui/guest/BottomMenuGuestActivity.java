@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,9 +41,6 @@ public class BottomMenuGuestActivity extends AppCompatActivity  {
 
     }
 
-
-
-
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -75,8 +73,5 @@ public class BottomMenuGuestActivity extends AppCompatActivity  {
             return true;
         }
     };
-
-
-
 
 }

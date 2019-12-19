@@ -79,14 +79,13 @@ public class LogInActivity extends AppCompatActivity {
                                  Restaurant restaurant = snapshot.getValue(Restaurant.class);
                                  if(restaurant.userId.equals(logedInUser)) {
                                     updateUI(1);
+                                    return;
                                  }
                                  else {
                                      updateUI(0);
                                  }
-
                              }
                          }
-
                          @Override
                          public void onCancelled(@NonNull DatabaseError databaseError) {
 

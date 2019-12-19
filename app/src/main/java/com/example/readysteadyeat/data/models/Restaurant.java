@@ -5,9 +5,9 @@ public class Restaurant {
     public String userId;
     public String email;
     public String name;
-    public String phone;
     public String state;
     public String city;
+
     public String street;
     public String houseNumber;
     public String iban;
@@ -25,7 +25,6 @@ public class Restaurant {
         this.userId = userId;
         this.email = email;
         this.name = name;
-        //this.phone = phone;
         this.state = state;
         this.street = street;
         this.city = city;
@@ -43,14 +42,6 @@ public class Restaurant {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -59,12 +50,12 @@ public class Restaurant {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getName() {
+        return name;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getState() {

@@ -1,24 +1,52 @@
 package com.example.readysteadyeat.ui.guest.myProfile;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
+import com.example.readysteadyeat.data.models.Guest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileGuestFragment extends Fragment {
-    private TextInputEditText txtIFirstName, txtILastName, txtIEmail,
-            txtIPassword, txtIRepeatPassword, txtIPhoneNumber;
+
+    private ImageView imgUserProfile;
+    private TextInputEditText txtIFirstName, txtILastName,
+            txtIEmail, txtIPhoneNumber;
     private MaterialButton btnEditProfileGuest;
 
     boolean click = false;
@@ -28,6 +56,14 @@ public class ProfileGuestFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
+
+    static int PReqCode = 1;
+    static int REQUESCODE = 1;
+    Uri pickedImgUri;
+
     public ProfileGuestFragment() { }
 
     public static ProfileGuestFragment newInstance(String param1, String param2) {
@@ -61,49 +97,145 @@ public class ProfileGuestFragment extends Fragment {
         txtIFirstName = view.findViewById(R.id.txtIFirstName);
         txtILastName = view.findViewById(R.id.txtILastName);
         txtIEmail = view.findViewById(R.id.txtIEmail);
-        txtIPassword = view.findViewById(R.id.txtIPassword);
-        txtIRepeatPassword = view.findViewById(R.id.txtIRepeatPassword);
         txtIPhoneNumber = view.findViewById(R.id.txtIPhoneNumber);
         btnEditProfileGuest = view.findViewById(R.id.btnEditProfileGuest);
+        imgUserProfile = (ImageView) view.findViewById(R.id.imgvUserProfileGuest);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databseReference = firebaseDatabase.getReference("User").child("Guest").child(firebaseAuth.getCurrentUser().getUid());
 
         btnEditProfileGuest.setText("Edit profile");
         txtIFirstName.setEnabled(false);
         txtILastName.setEnabled(false);
         txtIEmail.setEnabled(false);
-        txtIPassword.setEnabled(false);
-        txtIRepeatPassword.setEnabled(false);
         txtIPhoneNumber.setEnabled(false);
-        click = true;
+        imgUserProfile.setEnabled(false);
 
         btnEditProfileGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!click) {
-                    btnEditProfileGuest.setText("Edit profile");
-                    txtIFirstName.setEnabled(false);
-                    txtILastName.setEnabled(false);
-                    txtIEmail.setEnabled(false);
-                    txtIPassword.setEnabled(false);
-                    txtIRepeatPassword.setEnabled(false);
-                    txtIPhoneNumber.setEnabled(false);
-                    txtIPassword.setVisibility(View.VISIBLE);
-                    txtIRepeatPassword.setVisibility(View.VISIBLE);
-                    click = true;
-                } else if (click) {
                     btnEditProfileGuest.setText("Save changes");
                     txtIFirstName.setEnabled(true);
                     txtILastName.setEnabled(true);
                     txtIEmail.setEnabled(true);
-                    txtIPassword.setEnabled(true);
-                    txtIRepeatPassword.setEnabled(true);
                     txtIPhoneNumber.setEnabled(true);
-                    txtIPassword.setVisibility(View.VISIBLE);
-                    txtIRepeatPassword.setVisibility(View.VISIBLE);
+                    imgUserProfile.setEnabled(true);
+                    click = true;
+                } else if (click) {
+                    btnEditProfileGuest.setText("Edit profile");
+                    txtIFirstName.setEnabled(false);
+                    txtILastName.setEnabled(false);
+                    txtIEmail.setEnabled(false);
+                    txtIPhoneNumber.setEnabled(false);
+                    imgUserProfile.setEnabled(false);
                     click = false;
+
+                    //uzimanje podataka sa fronta
+                    final String firstName = txtIFirstName.getText().toString();
+                    final String lastName = txtILastName.getText().toString();
+                    final String email = txtIEmail.getText().toString();
+                    final String phone = txtIPhoneNumber.getText().toString();
+                    //pozvati metodu za updateProfila i prosljediti joj ovo sve gore
+                    updateUserInfo();
+                }
+            }
+        });
+
+        databseReference.addValueEventListener((new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Guest guestInfo = dataSnapshot.getValue(Guest.class);
+                txtIFirstName.setText(guestInfo.getFirstNsme());
+                txtILastName.setText(guestInfo.getLastNsme());
+                txtIEmail.setText(guestInfo.getEmail());
+                txtIPhoneNumber.setText(guestInfo.getPhone());
+                Picasso.get().load(guestInfo.getImgUrl()).into(imgUserProfile);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Activity activity = getActivity();
+                Toast.makeText(activity, databaseError.getCode(),Toast.LENGTH_SHORT).show();
+            }
+        }));
+
+        imgUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Build.VERSION.SDK_INT >= 22) {
+                    checkAndRequestPermission();
+                }
+                else
+                {
+                    openGallery();
                 }
             }
         });
     }
+
+    private void updateUserInfo(final Guest newUser, Uri pickedImgUri) {
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+
+        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                //.setDisplayName(newUser.firstNsme)
+                                .setPhotoUri(uri)
+                                .build();
+
+                        String imageReference = uri.toString();
+                        myRef.child(newUser.userId).child("imgUrl").setValue(imageReference);
+
+                        mAuth.getCurrentUser().updateProfile(profileUpdate)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()) {
+                                            showMessage("Register Complete");
+                                            updateUI();
+
+                                        }
+                                    }
+                                });
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void checkAndRequestPermission() {
+        Activity activity = getActivity();
+        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(activity, "Please accept for required permission", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(activity, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PReqCode);
+            }
+        }
+        else
+        {
+            openGallery();
+        }
+    }
+
+    private void openGallery(){
+        Intent galleryItent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryItent.setType("image/*");
+        startActivityForResult(galleryItent, REQUESCODE);
+    }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -113,4 +245,16 @@ public class ProfileGuestFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null){
+            pickedImgUri = data.getData();
+            Picasso.get().load(pickedImgUri).into(imgUserProfile);
+        }
+    }
+
 }

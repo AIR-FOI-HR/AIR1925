@@ -10,8 +10,8 @@ import java.io.Serializable;
 public class Guest implements Serializable {
 
     public String userId;
-    public String firstNsme;
-    public String lastNsme;
+    public String firstName;
+    public String lastName;
     public String email;
     public String phone;
     public boolean userType;
@@ -25,8 +25,8 @@ public class Guest implements Serializable {
                  String imgUrl) {
 
         this.userId = userId;
-        this.firstNsme = firstName;
-        this.lastNsme = lastNsme;
+        this.firstName = firstName;
+        this.lastName = lastNsme;
         this.email = email;
         this.phone = phone;
         this.userType = userType;
@@ -42,19 +42,19 @@ public class Guest implements Serializable {
     }
 
     public String getFirstNsme() {
-        return firstNsme;
+        return firstName;
     }
 
     public void setFirstNsme(String firstNsme) {
-        this.firstNsme = firstNsme;
+        this.firstName = firstNsme;
     }
 
     public String getLastNsme() {
-        return lastNsme;
+        return lastName;
     }
 
     public void setLastNsme(String lastNsme) {
-        this.lastNsme = lastNsme;
+        this.lastName = lastNsme;
     }
 
     public String getEmail() {
