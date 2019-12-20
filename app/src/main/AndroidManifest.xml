@@ -6,7 +6,7 @@
     <dist:module dist:instant="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,13 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.guest.HomeActivity"></activity>
+        <activity android:name=".ui.guest.myProfile.ResetPasswordActivity"></activity>
+        <activity android:name=".ui.guest.HomeActivity" />
         <activity android:name=".ui.guest.restaurants.RestaurantMeniActivity" />
         <activity android:name=".ui.restaurant.auth.SignUpActivity" />
-        <activity android:name=".ui.guest.BottomMenuGuestActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
-        <activity android:name=".ui.restaurant.BottomMenuRestaurantActivity"/>
+        <activity
+            android:name=".ui.guest.BottomMenuGuestActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.restaurant.BottomMenuRestaurantActivity" />
         <activity android:name=".ui.guest.auth.SignUpActivity" />
         <activity android:name=".ui.shared.UserTypeActivity" />
         <activity android:name=".ui.shared.StartActivity" />

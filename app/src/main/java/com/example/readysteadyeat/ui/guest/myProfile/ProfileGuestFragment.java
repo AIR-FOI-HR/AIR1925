@@ -2,7 +2,6 @@ package com.example.readysteadyeat.ui.guest.myProfile;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.data.models.Guest;
+import com.example.readysteadyeat.ui.shared.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +47,7 @@ public class ProfileGuestFragment extends Fragment {
     private ImageView imgUserProfile;
     private TextInputEditText txtIFirstName, txtILastName,
             txtIEmail, txtIPhoneNumber;
-    private MaterialButton btnEditProfileGuest;
+    private MaterialButton btnEditProfileGuest, btnResetPasswordGuest, btnLogOutGuest;
 
     boolean click = false;
 
@@ -101,6 +101,8 @@ public class ProfileGuestFragment extends Fragment {
         txtIEmail = view.findViewById(R.id.txtIEmail);
         txtIPhoneNumber = view.findViewById(R.id.txtIPhoneNumber);
         btnEditProfileGuest = view.findViewById(R.id.btnEditProfileGuest);
+        btnResetPasswordGuest = view.findViewById(R.id.btnResetPassword);
+        btnLogOutGuest = view.findViewById(R.id.btnLogOutGuest);
         imgUserProfile = (ImageView) view.findViewById(R.id.imgvUserProfileGuest);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -179,9 +181,41 @@ public class ProfileGuestFragment extends Fragment {
                 }
             }
         });
+
+        btnResetPasswordGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.sendPasswordResetEmail(firebaseAuth.getCurrentUser().getEmail().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Activity activity = getActivity();
+                        if(task.isSuccessful()){
+                            Toast.makeText(activity, "Password send to your email", Toast.LENGTH_LONG).show();
+                            updateUI();
+                        }else{
+                            Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        btnLogOutGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userSignOut();
+                updateUI();
+            }
+        });
+    }
+
+    private void updateUI() {
+        Intent homeActivity = new Intent(getActivity(), StartActivity.class);
+        startActivity(homeActivity);
     }
 
     private void updateUserInfo(final String firstName, final String lastName, final String email, final String phone, final Uri pickedImgUri) {
+
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
@@ -221,7 +255,9 @@ public class ProfileGuestFragment extends Fragment {
 
     }
 
-    private void showMessage(String register_complete) {
+    private void showMessage(String text) {
+        Activity activity = getActivity();
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
     }
 
     private void checkAndRequestPermission() {
@@ -267,6 +303,12 @@ public class ProfileGuestFragment extends Fragment {
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgUserProfile);
         }
+    }
+
+    //ODJAVA
+
+    private void userSignOut(){
+        FirebaseAuth.getInstance().signOut();
     }
 
 }

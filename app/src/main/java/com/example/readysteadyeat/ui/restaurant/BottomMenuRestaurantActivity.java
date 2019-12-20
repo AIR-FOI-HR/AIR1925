@@ -10,13 +10,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.ui.restaurant.menu.RestaurantMenuEditFragment;
-import com.example.readysteadyeat.ui.restaurant.menu.RestaurantMenuFragment;
+import com.example.readysteadyeat.ui.restaurant.menu.MenuRestaurantFragment;
 import com.example.readysteadyeat.ui.restaurant.myProfile.ProfileRestarutantFragment;
 import com.example.readysteadyeat.ui.restaurant.orders.OrdersRestaurantFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class BottomMenuRestaurantActivity extends AppCompatActivity implements RestaurantMenuFragment.OnFragmentInteractionListener {
+public class BottomMenuRestaurantActivity extends AppCompatActivity implements MenuRestaurantFragment.OnFragmentInteractionListener {
     Toolbar toolbar;
 
     @Override
@@ -50,7 +49,7 @@ public class BottomMenuRestaurantActivity extends AppCompatActivity implements R
                             getSupportActionBar().setTitle("Orders");
                             break;
                         case R.id.navigation_menu_restaurants:
-                            selectedFragment=new RestaurantMenuFragment();
+                            selectedFragment=new MenuRestaurantFragment();
                             setSupportActionBar(toolbar);
                             getSupportActionBar().setTitle("Menu editor");
                             break;
