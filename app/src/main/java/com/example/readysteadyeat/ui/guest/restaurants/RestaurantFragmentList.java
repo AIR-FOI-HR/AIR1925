@@ -61,8 +61,6 @@ public class RestaurantFragmentList extends Fragment {
         return RestaurantsView;
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();

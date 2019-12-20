@@ -102,16 +102,9 @@ public class LogInActivity extends AppCompatActivity {
 
     private void createUserSession() {
         FirebaseUser user  = mAuth.getCurrentUser();
-        //dohvatiti ime
-        // i sve ostale podatke i staviti u sharedpreferneces klasu
     }
 
-    //Metoda za SignOut koju je ne moguce dodati dok nemam uredi profil korisnika fragment
-    private void userSignOut(){
-        FirebaseAuth.getInstance().signOut();
-        //prosljediti klase iz kojih se korisnik odjavljuje
-        //startActivity(new Intent(HomeActivity.class, LogInActivity.class));
-    }
+
 
     private void updateUI(int Number) {
         //dohvatiti prema id type usera

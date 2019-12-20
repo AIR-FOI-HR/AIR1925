@@ -17,23 +17,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Guest;
 import com.example.readysteadyeat.data.models.Restaurant;
-import com.example.readysteadyeat.ui.guest.auth.SignUpActivity;
+import com.example.readysteadyeat.ui.shared.StartActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
@@ -45,7 +49,7 @@ public class ProfileRestarutantFragment extends Fragment {
             txtState, txtHouseNumber, txtIBAN,
             txtEmail;
 
-    private MaterialButton btnEditProfile;
+    private MaterialButton btnEditProfile, btnResetPasswordRest, btnLogOutRest;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -53,6 +57,8 @@ public class ProfileRestarutantFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseStorage storage;
 
     static int PReqCode = 1;
     static int REQUESCODE = 1;
@@ -101,10 +107,13 @@ public class ProfileRestarutantFragment extends Fragment {
         txtRestaurantName = view.findViewById(R.id.txtRestaurantName);
         txtState = view.findViewById(R.id.txtRestaurantState);
         btnEditProfile = (MaterialButton) view.findViewById(R.id.btnEditProfileRestaurant);
+        btnResetPasswordRest = view.findViewById(R.id.btnResetPassword);
+        btnLogOutRest = view.findViewById(R.id.btnLogOutRest);
         imgvUserProfile = (ImageView) view.findViewById(R.id.imgvUserProfile);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
         DatabaseReference databseReference = firebaseDatabase.getReference("User").child("Restaurant").child(firebaseAuth.getCurrentUser().getUid());
 
         btnEditProfile.setText("Edit profile");
@@ -114,7 +123,7 @@ public class ProfileRestarutantFragment extends Fragment {
         txtHouseNumber.setEnabled(false);
         txtIBAN.setEnabled(false);
         txtRestaurantName.setEnabled(false);
-        imgvUserProfile.setFocusable(false);
+        imgvUserProfile.setEnabled(false);
         txtState.setEnabled(false);
 
         btnEditProfile.setOnClickListener(new View.OnClickListener(){
@@ -136,16 +145,25 @@ public class ProfileRestarutantFragment extends Fragment {
                 else if(click)
                 {
                     btnEditProfile.setText("Edit profile");
-                    txtAdress.setEnabled(false);
-                    txtCity.setEnabled(false);
+                    txtRestaurantName.setEnabled(false);
                     txtEmail.setEnabled(false);
+                    txtState.setEnabled(false);
+                    txtCity.setEnabled(false);
+                    txtAdress.setEnabled(false);
                     txtHouseNumber.setEnabled(false);
                     txtIBAN.setEnabled(false);
-                    txtRestaurantName.setEnabled(false);
-                    txtState.setEnabled(false);
-                    imgvUserProfile.setFocusable(false);
                     imgvUserProfile.setEnabled(false);
                     click=false;
+
+                    final String restName = txtRestaurantName.getText().toString();
+                    final String email = txtEmail.getText().toString();
+                    final String state = txtState.getText().toString();
+                    final String city = txtCity.getText().toString();
+                    final String street = txtAdress.getText().toString();
+                    final String houseNumber = txtHouseNumber.getText().toString();
+                    final String iban = txtIBAN.getText().toString();
+
+                    updateUserInfo(restName, email, state, city, street, houseNumber, iban, pickedImgUri);
                 }
             }
         });
@@ -180,9 +198,96 @@ public class ProfileRestarutantFragment extends Fragment {
                 else
                 {
                     openGallery();
+                    openGallery();
                 }
             }
         });
+
+        btnResetPasswordRest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.sendPasswordResetEmail(firebaseAuth.getCurrentUser().getEmail().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Activity activity = getActivity();
+                        if(task.isSuccessful()){
+                            Toast.makeText(activity, "Password send to your email", Toast.LENGTH_LONG).show();
+                            updateUI();
+                        }else{
+                            Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        btnLogOutRest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userSignOut();
+                updateUI();
+            }
+        });
+    }
+
+    private void userSignOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    private void updateUI() {
+        Intent homeActivity = new Intent(getActivity(), StartActivity.class);
+        startActivity(homeActivity);
+    }
+
+
+    private void updateUserInfo(final String restName, final String email, final String state, final String city, final String street, final String houseNumber, final String iban, Uri pickedImgUri) {
+
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+
+        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                //.setDisplayName(newUser.firstNsme)
+                                .setPhotoUri(uri)
+                                .build();
+
+                        String imageReference = uri.toString();
+                        myRef = firebaseDatabase.getInstance().getReference("User").child("Restaurant");
+
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("name").setValue(restName);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("state").setValue(state);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("city").setValue(city);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("street").setValue(street);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("houseNumber").setValue(houseNumber);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("iban").setValue(iban);
+                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("imgUrl").setValue(imageReference);
+
+                        firebaseAuth.getCurrentUser().updateProfile(profileUpdate)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()) {
+                                            showMessage("Register Complete");
+                                        }
+                                    }
+                                });
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void showMessage(String text) {
+        Activity activity = getActivity();
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
     }
 
     private void checkAndRequestPermission() {
