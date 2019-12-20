@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.guest.myProfile.ResetPasswordActivity"></activity>
+        <activity android:name=".ui.guest.restaurants.RestaurantProfileActivity"></activity>
+        <activity android:name=".ui.guest.myProfile.ResetPasswordActivity" />
         <activity android:name=".ui.guest.HomeActivity" />
         <activity android:name=".ui.guest.restaurants.RestaurantMeniActivity" />
         <activity android:name=".ui.restaurant.auth.SignUpActivity" />
