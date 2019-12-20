@@ -1,6 +1,5 @@
 package com.example.readysteadyeat.ui.guest.restaurants;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,10 +89,10 @@ public class RestaurantFragmentList extends Fragment {
         FirebaseRecyclerAdapter<Restaurant, RestaurantViewHolder> adapter = new FirebaseRecyclerAdapter<Restaurant, RestaurantViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final RestaurantViewHolder holder, int position, @NonNull Restaurant model) {
-                final String IDs = getRef(position).getKey();
+                String IDs = getRef(position).getKey();
                 RestaurantsRef.child(IDs).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(s.equals("")){
                             if(dataSnapshot.hasChild("imgUrl")){
                                 String profileImage = dataSnapshot.child("imgUrl").getValue().toString();
@@ -150,27 +149,6 @@ public class RestaurantFragmentList extends Fragment {
                                 holder.itemView.setVisibility(View.GONE);
                             }
                         }
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent profileIntent = new Intent(getContext(), RestaurantProfileActivity.class);
-                                profileIntent.putExtra("restaurant_id", IDs);
-                                profileIntent.putExtra("restaurant_name", dataSnapshot.child("name").getValue().toString());
-                                profileIntent.putExtra("restaurant_street", dataSnapshot.child("street").getValue().toString());
-                                profileIntent.putExtra("restaurant_houseNumber", dataSnapshot.child("houseNumber").getValue().toString());
-                                profileIntent.putExtra("restaurant_city", dataSnapshot.child("city").getValue().toString());
-                                profileIntent.putExtra("restaurant_state", dataSnapshot.child("state").getValue().toString());
-                                profileIntent.putExtra("restaurant_email", dataSnapshot.child("email").getValue().toString());
-                                if(dataSnapshot.hasChild("imgUrl")){
-                                    profileIntent.putExtra("restaurant_imgUrl", dataSnapshot.child("imgUrl").getValue().toString());
-                                }
-                                else{
-                                    profileIntent.putExtra("restaurant_imgUrl", "");
-                                }
-
-                                startActivity(profileIntent);
-                            }
-                        });
                     }
 
                     @Override
