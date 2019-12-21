@@ -19,10 +19,10 @@
         app:titleTextColor="@color/white"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgvUserPictureGuest"
+        android:id="@+id/imgvDish"
         android:layout_width="142dp"
         android:layout_height="113dp"
-        android:src="@drawable/defaultuser"
+        android:src="@drawable/foodicon"
         app:civ_border_color="@color/colorPrimary"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"

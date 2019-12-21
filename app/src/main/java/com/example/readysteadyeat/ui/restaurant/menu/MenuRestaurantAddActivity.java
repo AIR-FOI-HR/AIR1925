@@ -22,13 +22,23 @@ import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.data.models.Category;
+import com.example.readysteadyeat.data.models.Dish;
+import com.example.readysteadyeat.data.models.Guest;
 import com.example.readysteadyeat.ui.guest.auth.SignUpActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -55,6 +65,13 @@ public class MenuRestaurantAddActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ValueEventListener listener;
 
+    String idCategory;
+    String glutenFreeStr;
+    String dairyFreeStr;
+
+    private FirebaseAuth mAuth;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +96,8 @@ public class MenuRestaurantAddActivity extends AppCompatActivity {
         spnrCategory.setAdapter(adapter);
         retreiveData();
 
+        mAuth = FirebaseAuth.getInstance();
+
         imgvDish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,20 +114,96 @@ public class MenuRestaurantAddActivity extends AppCompatActivity {
         btnAddDish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final String imgUrl;
-                final String category = spnrCategory.getSelectedItem().toString();
+                final String categoryName = spnrCategory.getSelectedItem().toString();
                 final String name = txtDishName.getText().toString();
                 final String description = txtDishDescription.getText().toString();
                 final String price = txtPrice.getText().toString();
                 final boolean glutenFree =  checkGluten.isChecked();
                 final boolean dairyFree = checkboxDairy.isChecked();
 
-                //napravit objekt
-                //spremiti u bazu
+                if(categoryName.isEmpty() || name.isEmpty() || description.isEmpty() || price.isEmpty()) {
+                    showMessage("Please Verify all fields");
+                }
+                else
+                {
+                    if(glutenFree) {
+                        glutenFreeStr = "true";
+                    }else {
+                        glutenFreeStr = "false";
+                    }
+                    if(dairyFree) {
+                        dairyFreeStr = "true";
+                    }else {
+                        dairyFreeStr = "false";
+                    }
+
+                    databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Category");
+                    listener = databaseReferenceCategory.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot item : dataSnapshot.getChildren()){
+                                Category category = item.getValue(Category.class);
+                                if(categoryName.equals(category.name)){
+                                    idCategory = category.idDish;
+                                    Dish newDish = new Dish(idCategory, dairyFreeStr, description, glutenFreeStr, name, price, mAuth.getCurrentUser().getUid(), "");
+                                    updateUserInfo(newDish, pickedImgUri);
+                                    return;
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
         });
 
+    }
+
+    private void updateUserInfo(final Dish newDish, Uri pickedImgUri) {
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+
+        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                //.setDisplayName(newUser.firstNsme)
+                                .setPhotoUri(uri)
+                                .build();
+
+                        String imageReference = uri.toString();
+                        databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Dish");
+
+                        newDish.setImgUrl(imageReference);
+                        databaseReferenceCategory.push().setValue(newDish);
+
+                        /*databaseReferenceCategory.child(key).child("category").setValue(newDish.category);
+                        databaseReferenceCategory.child(key).child("description").setValue(newDish.description);
+                        databaseReferenceCategory.child(key).child("dairyFree").setValue(newDish.dairyFree);
+                        databaseReferenceCategory.child(key).child("glutenFree").setValue(newDish.glutenFree);
+                        databaseReferenceCategory.child(key).child("restaurantId").setValue(newDish.restaurantId);
+                        databaseReferenceCategory.child(key).child("name").setValue(newDish.name);
+                        databaseReferenceCategory.child(key).child("price").setValue(newDish.price);
+                        databaseReferenceCategory.child(key).child("imgUrl").setValue(imageReference);*/
+
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void showMessage(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     public void retreiveData(){

@@ -145,90 +145,95 @@ public class MenuRestaurantFragment extends Fragment {
                 databaseReferenceDish.child(IDs).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            if (dataSnapshot.child("restaurantId").getValue().equals(firebaseAuth.getCurrentUser().getUid()) && dataSnapshot.child("category").getValue().equals(s)) {
 
-                        if (dataSnapshot.child("restaurantId").getValue().equals(firebaseAuth.getCurrentUser().getUid()) && dataSnapshot.child("category").getValue().equals(s)) {
-                            if (dataSnapshot.hasChild("imgUrl")) {
+                                if (dataSnapshot.hasChild("imgUrl")) {
 
-                                String name = dataSnapshot.child("name").getValue().toString();
-                                String category = dataSnapshot.child("category").getValue().toString();
-                                String description = dataSnapshot.child("description").getValue().toString();
-                                String dairyFree = dataSnapshot.child("dairyFree").getValue().toString();
-                                String glutenFree = dataSnapshot.child("glutenFree").getValue().toString();
-                                String price = dataSnapshot.child("price").getValue().toString();
-                                String imgUrl = dataSnapshot.child("imgUrl").getValue().toString();
+                                    String name = dataSnapshot.child("name").getValue().toString();
+                                    String category = dataSnapshot.child("category").getValue().toString();
+                                    String description = dataSnapshot.child("description").getValue().toString();
+                                    String dairyFree = dataSnapshot.child("dairyFree").getValue().toString();
+                                    String glutenFree = dataSnapshot.child("glutenFree").getValue().toString();
+                                    String price = dataSnapshot.child("price").getValue().toString();
+                                    String imgUrl = dataSnapshot.child("imgUrl").getValue().toString();
 
 
-                                holder.dishName.setText(name);
+                                    holder.dishName.setText(name);
 
-                                databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Category").child(category).child("name");
-                                databaseReferenceCategory.addValueEventListener((new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        holder.dishCategory.setText(dataSnapshot.getValue().toString());
+                                    databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Category").child(category).child("name");
+                                    databaseReferenceCategory.addValueEventListener((new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            holder.dishCategory.setText(dataSnapshot.getValue().toString());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            Activity activity = getActivity();
+                                            Toast.makeText(activity, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }));
+
+                                    holder.dishDescription.setText(description);
+                                    if (dairyFree.equals("true")) {
+                                        holder.dairyFree.setText("Dairy free");
                                     }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        Activity activity = getActivity();
-                                        Toast.makeText(activity, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                                    if (dairyFree.equals("true")) {
+                                        holder.glutenFree.setText("Gluten free");
                                     }
-                                }));
+                                    holder.price.setText(price + " " + "HRK");
+                                    Picasso.get().load(imgUrl).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.dishImage);
 
-                                holder.dishDescription.setText(description);
-                                if (dairyFree.equals("true")) {
-                                    holder.dairyFree.setText("Dairy free");
+                                } else {
+                                    String name = dataSnapshot.child("name").getValue().toString();
+                                    String category = dataSnapshot.child("category").getValue().toString();
+                                    String description = dataSnapshot.child("description").getValue().toString();
+                                    String dairyFree = dataSnapshot.child("dairyFree").getValue().toString();
+                                    String glutenFree = dataSnapshot.child("glutenFree").getValue().toString();
+                                    String price = dataSnapshot.child("price").getValue().toString();
+
+                                    holder.dishName.setText(name);
+                                    holder.dishCategory.setText(category);
+                                    holder.dishDescription.setText(description);
+                                    holder.dairyFree.setText(dairyFree);
+                                    holder.glutenFree.setText(glutenFree);
+                                    holder.price.setText(price);
                                 }
-                                if (dairyFree.equals("true")) {
-                                    holder.glutenFree.setText("Gluten free");
-                                }
-                                holder.price.setText(price + " " + "HRK");
-                                Picasso.get().load(imgUrl).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.dishImage);
 
-                            } else {
-                                String name = dataSnapshot.child("name").getValue().toString();
-                                String category = dataSnapshot.child("category").getValue().toString();
-                                String description = dataSnapshot.child("description").getValue().toString();
-                                String dairyFree = dataSnapshot.child("dairyFree").getValue().toString();
-                                String glutenFree = dataSnapshot.child("glutenFree").getValue().toString();
-                                String price = dataSnapshot.child("price").getValue().toString();
-
-                                holder.dishName.setText(name);
-                                holder.dishCategory.setText(category);
-                                holder.dishDescription.setText(description);
-                                holder.dairyFree.setText(dairyFree);
-                                holder.glutenFree.setText(glutenFree);
-                                holder.price.setText(price);
+                            }
+                            else{
+                                ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
+                                params.height = 0;
+                                holder.itemView.setLayoutParams(params);
+                                holder.itemView.setVisibility(View.GONE);
                             }
 
-                        }
-                        else{
-                            ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-                            params.height = 0;
-                            holder.itemView.setLayoutParams(params);
-                            holder.itemView.setVisibility(View.GONE);
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent profileIntent = new Intent(getContext(), ManuRestaurantEditActivity.class);
+                                    profileIntent.putExtra("dish_id", IDs);
+                                    profileIntent.putExtra("dish_name", dataSnapshot.child("name").getValue().toString());
+                                    profileIntent.putExtra("dish_category", dataSnapshot.child("category").getValue().toString());
+                                    profileIntent.putExtra("dish_description", dataSnapshot.child("description").getValue().toString());
+                                    profileIntent.putExtra("dish_dairy_free", dataSnapshot.child("dairyFree").getValue().toString());
+                                    profileIntent.putExtra("dish_gluten_free", dataSnapshot.child("dairyFree").getValue().toString());
+                                    profileIntent.putExtra("dish_price", dataSnapshot.child("price").getValue().toString());
+                                    if(dataSnapshot.hasChild("imgUrl")){
+                                        profileIntent.putExtra("dish_img_url", dataSnapshot.child("imgUrl").getValue().toString());
+                                    }
+                                    else{
+                                        profileIntent.putExtra("dish_img_url", "");
+                                    }
+
+                                    startActivity(profileIntent);
+                                }
+                            });
                         }
 
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent profileIntent = new Intent(getContext(), ManuRestaurantEditActivity.class);
-                                profileIntent.putExtra("dish_id", IDs);
-                                profileIntent.putExtra("dish_name", dataSnapshot.child("name").getValue().toString());
-                                profileIntent.putExtra("dish_category", dataSnapshot.child("category").getValue().toString());
-                                profileIntent.putExtra("dish_description", dataSnapshot.child("description").getValue().toString());
-                                profileIntent.putExtra("dish_dairy_free", dataSnapshot.child("dairyFree").getValue().toString());
-                                profileIntent.putExtra("dish_gluten_free", dataSnapshot.child("dairyFree").getValue().toString());
-                                profileIntent.putExtra("dish_price", dataSnapshot.child("price").getValue().toString());
-                                if(dataSnapshot.hasChild("imgUrl")){
-                                    profileIntent.putExtra("dish_img_url", dataSnapshot.child("imgUrl").getValue().toString());
-                                }
-                                else{
-                                    profileIntent.putExtra("dish_img_url", "");
-                                }
 
-                                startActivity(profileIntent);
-                            }
-                        });                    }
+                    }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
