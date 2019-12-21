@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent homeIntetnt = new Intent(MainActivity.this, StartActivity.class);
-            startActivity(homeIntetnt);
-            finish();
-        }
+                startActivity(homeIntetnt);
+                finish();
+            }
         }, SPLASH_TIME_OUT);
     }
 
