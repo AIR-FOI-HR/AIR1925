@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light"
+    android:background="#eeeeee"
     android:id="@+id/restaurantFragment"
     >
 
@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchRestaurants"
         android:padding="5dp"
-        android:layout_margin="5dp"
+        android:layout_margin="7dp"
         android:background="@android:color/white"
         android:outlineAmbientShadowColor="@android:color/holo_blue_light"
         />

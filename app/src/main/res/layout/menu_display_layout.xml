@@ -13,18 +13,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="0dp"
         android:orientation="horizontal">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgvDishImage"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginTop="35dp"
+            android:layout_width="110dp"
+            android:layout_height="101dp"
+
+            android:layout_marginTop="25dp"
             android:src="@drawable/common_full_open_on_phone"
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="2dp"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="Dish name"
                 android:textAlignment="textStart"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -57,7 +58,7 @@
                 android:text="Category"
                 android:textColor="@color/colorPrimary"
                 android:textAlignment="textStart"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtDishDescription"
@@ -65,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:text="Description"
                 android:textAlignment="textStart"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtDairyFree"
@@ -74,7 +75,7 @@
                 android:text="Dairy free"
                 android:textColor="@color/colorAccent"
                 android:textAlignment="textStart"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txtGlutenFree"
@@ -83,7 +84,7 @@
                 android:text="Gluten free"
                 android:textColor="@color/colorAccent"
                 android:textAlignment="textStart"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txtPrice"
@@ -93,7 +94,7 @@
                 android:textColor="@color/orangeDark"
                 android:textStyle="bold"
                 android:textAlignment="textStart"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
