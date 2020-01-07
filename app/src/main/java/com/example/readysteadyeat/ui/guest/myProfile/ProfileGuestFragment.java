@@ -66,6 +66,8 @@ public class ProfileGuestFragment extends Fragment {
     static int REQUESCODE = 1;
     Uri pickedImgUri;
 
+    private boolean imgPicked = false;
+
     public ProfileGuestFragment() { }
 
     public static ProfileGuestFragment newInstance(String param1, String param2) {
@@ -90,7 +92,7 @@ public class ProfileGuestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile_guest, container, false);
-    }
+}
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -155,8 +157,8 @@ public class ProfileGuestFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Guest guestInfo = dataSnapshot.getValue(Guest.class);
-                txtIFirstName.setText(guestInfo.getFirstNsme());
-                txtILastName.setText(guestInfo.getLastNsme());
+                txtIFirstName.setText(guestInfo.getFirstName());
+                txtILastName.setText(guestInfo.getLastName());
                 txtIEmail.setText(guestInfo.getEmail());
                 txtIPhoneNumber.setText(guestInfo.getPhone());
                 Picasso.get().load(guestInfo.getImgUrl()).into(imgUserProfile);
@@ -190,7 +192,7 @@ public class ProfileGuestFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         Activity activity = getActivity();
                         if(task.isSuccessful()){
-                            Toast.makeText(activity, "Password send to your email", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "Email with link for resset was sent.", Toast.LENGTH_LONG).show();
                             updateUI();
                         }else{
                             Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -216,43 +218,41 @@ public class ProfileGuestFragment extends Fragment {
 
     private void updateUserInfo(final String firstName, final String lastName, final String email, final String phone, final Uri pickedImgUri) {
 
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        if(imgPicked){
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+            final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                //.setDisplayName(newUser.firstNsme)
-                                .setPhotoUri(uri)
-                                .build();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    //.setDisplayName(newUser.firstNsme)
+                                    .setPhotoUri(uri)
+                                    .build();
 
-                        String imageReference = uri.toString();
-                        myRef = firebaseDatabase.getInstance().getReference("User").child("Guest");
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("firstName").setValue(firstName);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("lastName").setValue(lastName);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("phone").setValue(phone);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("imgUrl").setValue(imageReference);
+                            String imageReference = uri.toString();
+                            myRef = firebaseDatabase.getInstance().getReference("User").child("Guest");
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("firstName").setValue(firstName);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("lastName").setValue(lastName);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("phone").setValue(phone);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("imgUrl").setValue(imageReference);
 
-                        firebaseAuth.getCurrentUser().updateProfile(profileUpdate)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()) {
-                                            showMessage("Register Complete");
-                                        }
-                                    }
-                                });
-                    }
-                });
-            }
-        });
-
+                        }
+                    });
+                }
+            });
+        }else{
+            myRef = firebaseDatabase.getInstance().getReference("User").child("Guest");
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("firstName").setValue(firstName);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("lastName").setValue(lastName);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("phone").setValue(phone);
+        }
     }
 
     private void showMessage(String text) {
@@ -302,6 +302,9 @@ public class ProfileGuestFragment extends Fragment {
         if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null){
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgUserProfile);
+            imgPicked = true;
+        }else{
+            imgPicked = false;
         }
     }
 

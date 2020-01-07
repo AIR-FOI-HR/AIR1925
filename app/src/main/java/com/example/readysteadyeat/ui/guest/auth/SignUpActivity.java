@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String urlImage;
 
-
+    private boolean imgPicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +106,15 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Guest newUser = new Guest(mAuth.getCurrentUser().getUid(), firstName, lastName, email, phoneNumber, true, "");
-                    CreateUserAccount(newUser, password);
+
+                    if(imgPicked) {
+                        Guest newUser = new Guest(mAuth.getCurrentUser().getUid(), firstName, lastName, email, phoneNumber, true, "");
+                        CreateUserAccount(newUser, password);
+                    }
+                    else{
+                        showMessage("Please add profile picture!");
+                    }
+
                 }
             }
         });
@@ -122,9 +129,8 @@ public class SignUpActivity extends AppCompatActivity {
                             showMessage("Account created");
 
                             myRef = mFirebaseDb.getInstance().getReference("User").child("Guest");
-
-                            myRef.child(newUser.userId).setValue(newUser);
                             updateUserInfo(newUser, pickedImgUri);
+                            myRef.child(newUser.userId).setValue(newUser);
                         }
                         else
                         {
@@ -136,44 +142,43 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void updateUserInfo(final Guest newUser, Uri pickedImgUri) {
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+            final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                //.setDisplayName(newUser.firstNsme)
-                                .setPhotoUri(uri)
-                                .build();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    //.setDisplayName(newUser.firstNsme)
+                                    .setPhotoUri(uri)
+                                    .build();
 
-                        String imageReference = uri.toString();
-                        myRef.child(newUser.userId).child("imgUrl").setValue(imageReference);
+                            String imageReference = uri.toString();
+                            myRef.child(newUser.userId).child("imgUrl").setValue(imageReference);
 
-                        mAuth.getCurrentUser().updateProfile(profileUpdate)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()) {
-                                            showMessage("Register Complete");
-                                            updateUI();
-
+                            mAuth.getCurrentUser().updateProfile(profileUpdate)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()) {
+                                                showMessage("Register Complete");
+                                                updateUI();
+                                            }
                                         }
-                                    }
-                                });
-                    }
-                });
-            }
-        });
+                                    });
+                        }
+                    });
+                }
+            });
+        }
 
-    }
 
     private void updateUI() {
-        Intent homeActivity = new Intent(getApplicationContext(), BottomMenuGuestActivity.class);
+        Intent homeActivity = new Intent(getApplicationContext(), LogInActivity.class);
         startActivity(homeActivity);
         finish();
     }
@@ -210,9 +215,12 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null){
+        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null) {
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgUserPhoto);
+            imgPicked = true;
+        }else{
+            imgPicked = false;
         }
 
     }

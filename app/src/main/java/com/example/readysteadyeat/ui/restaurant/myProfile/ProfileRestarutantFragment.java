@@ -64,6 +64,8 @@ public class ProfileRestarutantFragment extends Fragment {
     static int REQUESCODE = 1;
     Uri pickedImgUri;
 
+    private boolean imgPicked = false;
+
     private OnFragmentInteractionListener mListener;
     public boolean click = false;
     public ProfileRestarutantFragment() {
@@ -211,7 +213,7 @@ public class ProfileRestarutantFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         Activity activity = getActivity();
                         if(task.isSuccessful()){
-                            Toast.makeText(activity, "Password send to your email", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "Email with link for resset was sent.", Toast.LENGTH_LONG).show();
                             updateUI();
                         }else{
                             Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -242,46 +244,50 @@ public class ProfileRestarutantFragment extends Fragment {
 
     private void updateUserInfo(final String restName, final String email, final String state, final String city, final String street, final String houseNumber, final String iban, Uri pickedImgUri) {
 
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        if(imgPicked){
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+            final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                //.setDisplayName(newUser.firstNsme)
-                                .setPhotoUri(uri)
-                                .build();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    //.setDisplayName(newUser.firstNsme)
+                                    .setPhotoUri(uri)
+                                    .build();
 
-                        String imageReference = uri.toString();
-                        myRef = firebaseDatabase.getInstance().getReference("User").child("Restaurant");
+                            String imageReference = uri.toString();
+                            myRef = firebaseDatabase.getInstance().getReference("User").child("Restaurant");
 
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("name").setValue(restName);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("state").setValue(state);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("city").setValue(city);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("street").setValue(street);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("houseNumber").setValue(houseNumber);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("iban").setValue(iban);
-                        myRef.child(firebaseAuth.getCurrentUser().getUid()).child("imgUrl").setValue(imageReference);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("name").setValue(restName);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("state").setValue(state);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("city").setValue(city);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("street").setValue(street);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("houseNumber").setValue(houseNumber);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("iban").setValue(iban);
+                            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("imgUrl").setValue(imageReference);
 
-                        firebaseAuth.getCurrentUser().updateProfile(profileUpdate)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()) {
-                                            showMessage("Register Complete");
-                                        }
-                                    }
-                                });
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
+        }else{
+            myRef = firebaseDatabase.getInstance().getReference("User").child("Restaurant");
+
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("name").setValue(restName);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("email").setValue(email);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("state").setValue(state);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("city").setValue(city);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("street").setValue(street);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("houseNumber").setValue(houseNumber);
+            myRef.child(firebaseAuth.getCurrentUser().getUid()).child("iban").setValue(iban);
+        }
+
 
     }
 
@@ -326,6 +332,9 @@ public class ProfileRestarutantFragment extends Fragment {
         if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null){
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgvUserProfile);
+            imgPicked = true;
+        }else{
+            imgPicked = false;
         }
     }
 }

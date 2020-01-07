@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.data.models.Guest;
 import com.example.readysteadyeat.data.models.Restaurant;
+import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
 import com.example.readysteadyeat.ui.restaurant.BottomMenuRestaurantActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,6 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String urlImage;
+
+    private boolean imgPicked = false;
 
 
     @Override
@@ -114,25 +117,29 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    CreateUserAccount(email, password);
-                    Restaurant newUser = new Restaurant(mAuth.getCurrentUser().getUid(), name, email, state, city, street, houseNumber, iban, false, "");
-
-                    myRef = mFirebaseDb.getInstance().getReference("User").child("Restaurant");
-                    myRef.child(newUser.userId).setValue(newUser);
-
-                    updateUserInfo(newUser, pickedImgUri);
+                    if(imgPicked) {
+                        Restaurant newUser = new Restaurant(mAuth.getCurrentUser().getUid(), name, email, state, city, street, houseNumber, iban, false, "");
+                        CreateUserAccount(newUser, password);
+                    }
+                    else{
+                        showMessage("Please add profile picture!");
+                    }
                 }
             }
         });
     }
 
-    private void CreateUserAccount(final String email, final String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
+    private void CreateUserAccount(final Restaurant newUser, final String password) {
+        mAuth.createUserWithEmailAndPassword(newUser.email, password)
                 .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             showMessage("Account created");
+
+                            myRef = mFirebaseDb.getInstance().getReference("User").child("Restaurant");
+                            myRef.child(newUser.userId).setValue(newUser);
+                            updateUserInfo(newUser, pickedImgUri);
                         }
                         else
                         {
@@ -143,44 +150,48 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void updateUserInfo(final Restaurant newUser, Uri pickedImgUri) {
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        if(pickedImgUri != null || !pickedImgUri.equals("")){
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+            final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                //.setDisplayName(newUser.firstNsme)
-                                .setPhotoUri(uri)
-                                .build();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    //.setDisplayName(newUser.firstNsme)
+                                    .setPhotoUri(uri)
+                                    .build();
 
-                        String imageReference = uri.toString();
-                        myRef.child(newUser.userId).child("imgUrl").setValue(imageReference);
+                            String imageReference = uri.toString();
+                            myRef.child(newUser.userId).child("imgUrl").setValue(imageReference);
 
-                        mAuth.getCurrentUser().updateProfile(profileUpdate)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()) {
-                                            showMessage("Register Complete");
-                                            updateUI();
+                            mAuth.getCurrentUser().updateProfile(profileUpdate)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()) {
+                                                showMessage("Register Complete");
+                                                updateUI();
 
+                                            }
                                         }
-                                    }
-                                });
-                    }
-                });
-            }
-        });
-
+                                    });
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            showMessage("Please add profile picture!");
+        }
     }
 
     private void updateUI() {
-        Intent homeActivity = new Intent(getApplicationContext(), BottomMenuRestaurantActivity.class);
+        Intent homeActivity = new Intent(getApplicationContext(), LogInActivity.class);
         startActivity(homeActivity);
         finish();
     }
@@ -220,6 +231,9 @@ public class SignUpActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null){
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgUserPhoto);
+            imgPicked = true;
+        }else{
+            imgPicked = false;
         }
     }
 

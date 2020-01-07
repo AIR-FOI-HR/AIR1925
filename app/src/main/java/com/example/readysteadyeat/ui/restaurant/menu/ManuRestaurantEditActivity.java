@@ -80,11 +80,8 @@ public class ManuRestaurantEditActivity extends AppCompatActivity {
     static int PReqCode = 1;
     static int REQUESCODE = 1;
     Uri pickedImgUri;
-    //povuci oba bzutton
-    //povuci sve iz boxova
-    //dva onClick listenera
-    //napraviti deltee
-    //napravit update
+
+    private boolean imgPicked = false;
 
     private DatabaseReference databaseReferenceDish;
     private DatabaseReference databaseReferenceCategory;
@@ -231,6 +228,9 @@ public class ManuRestaurantEditActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null){
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgvDish);
+            imgPicked = true;
+        }else{
+            imgPicked = false;
         }
 
     }
@@ -242,42 +242,42 @@ public class ManuRestaurantEditActivity extends AppCompatActivity {
     }
 
     private void updateDishInfo(final Dish newDish, final Uri pickedImgUri, final String dishId) {
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        if(imgPicked){
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+            final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                //.setDisplayName(newUser.firstNsme)
-                                .setPhotoUri(uri)
-                                .build();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    .setPhotoUri(uri)
+                                    .build();
 
-                        String imageReference = uri.toString();
-                        databaseReferenceDish = FirebaseDatabase.getInstance().getReference("Dish");
-
-                        newDish.setImgUrl(imageReference);
-
-                        //databaseReferenceCategory.push().setValue(newDish);
-
-                        databaseReferenceDish.child(dishId).setValue(newDish);
-                        /*databaseReferenceCategory.child(key).child("description").setValue(newDish.description);
-                        databaseReferenceCategory.child(key).child("dairyFree").setValue(newDish.dairyFree);
-                        databaseReferenceCategory.child(key).child("glutenFree").setValue(newDish.glutenFree);
-                        databaseReferenceCategory.child(key).child("restaurantId").setValue(newDish.restaurantId);
-                        databaseReferenceCategory.child(key).child("name").setValue(newDish.name);
-                        databaseReferenceCategory.child(key).child("price").setValue(newDish.price);
-                        databaseReferenceCategory.child(key).child("imgUrl").setValue(imageReference);*/
+                            String imageReference = uri.toString();
+                            databaseReferenceDish = FirebaseDatabase.getInstance().getReference("Dish");
+                            newDish.setImgUrl(imageReference);
+                            databaseReferenceDish.child(dishId).setValue(newDish);
+                            showMessage("Dish updated successfully.");
 
 
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
+        }else{
+            databaseReferenceDish = FirebaseDatabase.getInstance().getReference("Dish");
+            databaseReferenceDish.child(dishId).child("dairyFree").setValue(newDish.dairyFree);
+            databaseReferenceDish.child(dishId).child("glutenFree").setValue(newDish.glutenFree);
+            databaseReferenceDish.child(dishId).child("restaurantId").setValue(newDish.restaurantId);
+            databaseReferenceDish.child(dishId).child("name").setValue(newDish.name);
+            databaseReferenceDish.child(dishId).child("price").setValue(newDish.price);
+            showMessage("Dish updated successfully.");
+        }
+
     }
 
     private void showMessage(String text) {

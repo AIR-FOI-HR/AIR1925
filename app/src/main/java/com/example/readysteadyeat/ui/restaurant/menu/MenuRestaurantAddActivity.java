@@ -70,7 +70,7 @@ public class MenuRestaurantAddActivity extends AppCompatActivity {
     String dairyFreeStr;
 
     private FirebaseAuth mAuth;
-
+    private boolean imgPicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,41 +164,37 @@ public class MenuRestaurantAddActivity extends AppCompatActivity {
     }
 
     private void updateUserInfo(final Dish newDish, Uri pickedImgUri) {
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        if(imgPicked){
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
+            final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                //.setDisplayName(newUser.firstNsme)
-                                .setPhotoUri(uri)
-                                .build();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    //.setDisplayName(newUser.firstNsme)
+                                    .setPhotoUri(uri)
+                                    .build();
 
-                        String imageReference = uri.toString();
-                        databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Dish");
+                            String imageReference = uri.toString();
+                            databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Dish");
 
-                        newDish.setImgUrl(imageReference);
-                        databaseReferenceCategory.push().setValue(newDish);
+                            newDish.setImgUrl(imageReference);
+                            databaseReferenceCategory.push().setValue(newDish);
+                            showMessage("Dish added successfully.");
 
-                        /*databaseReferenceCategory.child(key).child("category").setValue(newDish.category);
-                        databaseReferenceCategory.child(key).child("description").setValue(newDish.description);
-                        databaseReferenceCategory.child(key).child("dairyFree").setValue(newDish.dairyFree);
-                        databaseReferenceCategory.child(key).child("glutenFree").setValue(newDish.glutenFree);
-                        databaseReferenceCategory.child(key).child("restaurantId").setValue(newDish.restaurantId);
-                        databaseReferenceCategory.child(key).child("name").setValue(newDish.name);
-                        databaseReferenceCategory.child(key).child("price").setValue(newDish.price);
-                        databaseReferenceCategory.child(key).child("imgUrl").setValue(imageReference);*/
+                        }
+                    });
+                }
+            });
+        }else{
+            showMessage("Please add photo.");
+        }
 
-
-                    }
-                });
-            }
-        });
 
     }
 
@@ -254,6 +250,9 @@ public class MenuRestaurantAddActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null){
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgvDish);
+            imgPicked = true;
+        }else{
+            imgPicked = false;
         }
 
     }

@@ -20,13 +20,13 @@ public class Guest implements Serializable {
     public Guest() {}
 
     public Guest(String userId, String firstName,
-                 String lastNsme, String email,
+                 String lastName, String email,
                  String phone, boolean userType,
                  String imgUrl) {
 
         this.userId = userId;
         this.firstName = firstName;
-        this.lastName = lastNsme;
+        this.lastName = getLastName();
         this.email = email;
         this.phone = phone;
         this.userType = userType;
@@ -41,19 +41,19 @@ public class Guest implements Serializable {
         this.userId = userId;
     }
 
-    public String getFirstNsme() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstNsme(String firstNsme) {
+    public void setFirstName(String firstNsme) {
         this.firstName = firstNsme;
     }
 
-    public String getLastNsme() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastNsme(String lastNsme) {
+    public void setLastName(String lastNsme) {
         this.lastName = lastNsme;
     }
 
