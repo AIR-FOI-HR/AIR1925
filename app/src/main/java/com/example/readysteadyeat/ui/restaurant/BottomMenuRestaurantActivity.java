@@ -22,17 +22,13 @@ public class BottomMenuRestaurantActivity extends AppCompatActivity implements M
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fragment fragment=new OrdersRestaurantFragment();
-
         setContentView(R.layout.activity_bottom_menu_restaurant);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-
         bottomNavigationView.setSelectedItemId(R.id.navigation_orders_restaurants);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
         toolbar=(Toolbar)findViewById(R.id.toolbarBottomRestaurant);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Orders");
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 
