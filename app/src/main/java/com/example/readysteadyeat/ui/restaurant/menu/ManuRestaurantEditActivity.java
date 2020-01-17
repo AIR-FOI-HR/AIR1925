@@ -298,7 +298,7 @@ public class ManuRestaurantEditActivity extends AppCompatActivity {
                     Category category = item.getValue(Category.class);
                     spinnerDataList.add(category.name);
                 }
-                adapter.notifyDataSetChanged();;;
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
