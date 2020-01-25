@@ -21,13 +21,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Category;
-import com.example.readysteadyeat.data.models.Dish;
-import com.example.readysteadyeat.data.models.Guest;
-import com.example.readysteadyeat.ui.guest.auth.SignUpActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.readysteadyeat.Model.data.Category;
+import com.example.readysteadyeat.Model.data.Dish;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;

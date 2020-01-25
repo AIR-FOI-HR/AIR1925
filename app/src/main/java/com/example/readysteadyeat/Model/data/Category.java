@@ -17,18 +17,17 @@ public class Category {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getIdDish() {
         return idDish;
     }
-
     public void setIdDish(String idDish) {
         this.idDish = idDish;
     }
+
+    //sjfllč
 
 
 }

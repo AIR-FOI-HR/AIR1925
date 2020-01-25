@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.guest.auth;
+package com.example.readysteadyeat.ui.restaurant.auth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +19,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Guest;
-import com.example.readysteadyeat.ui.guest.BottomMenuGuestActivity;
+import com.example.readysteadyeat.Model.data.Restaurant;
+import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,40 +35,44 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-
 public class SignUpActivity extends AppCompatActivity {
 
-    Button SignUpButton;
-    static ImageView imgUserPhoto;
+    ImageView imgUserPhoto;
     static int PReqCode = 1;
     static int REQUESCODE = 1;
     Uri pickedImgUri;
-    //Za registraciju
-    private EditText txtVFirstName, txtVLastName, txtVEmail, txtVPassword, txtVRepeatPassword, txtPhoneNumber;
+
+    private EditText txtRestaurantName, txtEmail, txtRestaurantState, txtRestaturantCity, txtRestaurantStreet, txtRestaturantHouseNumber, txtIBAN, txtPassword, txtRepeatPassword;
+    Button SignUpButton;
+
     private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
     private FirebaseStorage storage;
     private StorageReference sotrageRererence;
     private FirebaseDatabase mFirebaseDb;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
     private String urlImage;
 
     private boolean imgPicked = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_guest);
+        setContentView(R.layout.activity_sign_up_rest);
 
-        imgUserPhoto = (ImageView) findViewById(R.id.imgvUserPictureGuest);
-        //za registraciju
-        SignUpButton = (Button) findViewById(R.id.btnSignUp);
-        txtVFirstName = (TextInputEditText) findViewById(R.id.txtIFirstName);
-        txtVLastName = (TextInputEditText) findViewById(R.id.txtILastName);
-        txtVEmail = (TextInputEditText) findViewById(R.id.txtIEmail);
-        txtVPassword = (TextInputEditText) findViewById(R.id.txtIPassword);
-        txtVRepeatPassword = (TextInputEditText) findViewById(R.id.txtIRepeatPassword);
-        txtPhoneNumber = (TextInputEditText) findViewById(R.id.txtIPhoneNumber);
+        imgUserPhoto = findViewById(R.id.imgvUserProfile);
+        SignUpButton = (Button) findViewById(R.id.btnSignUnRest);
+
+        txtRestaurantName = (TextInputEditText) findViewById(R.id.txtRestaurantName);
+        txtEmail = (TextInputEditText) findViewById(R.id.txtEmail);
+        txtRestaurantState = (TextInputEditText) findViewById(R.id.txtRestaurantState);
+        txtRestaturantCity = (TextInputEditText) findViewById(R.id.txtRestaturantCity);
+        txtRestaurantStreet = (TextInputEditText) findViewById(R.id.txtRestaurantStreet);
+        txtRestaturantHouseNumber = (TextInputEditText) findViewById(R.id.txtRestaturantHouseNumber);
+        txtIBAN = (TextInputEditText) findViewById(R.id.txtIBAN);
+        txtPassword = (TextInputEditText) findViewById(R.id.txtPassword);
+        txtRepeatPassword = (TextInputEditText) findViewById(R.id.txtRepeatPassword);
 
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -90,15 +94,20 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final String firstName = txtVFirstName.getText().toString();
-                final String lastName = txtVLastName.getText().toString();
-                final String email = txtVEmail.getText().toString();
-                final String password = txtVPassword.getText().toString();
-                final String repeatPassword = txtVRepeatPassword.getText().toString();
-                final String phoneNumber = txtPhoneNumber.getText().toString();
+                final String name = txtRestaurantName.getText().toString();
+                final String email = txtEmail.getText().toString();
+                final String state = txtRestaurantState.getText().toString();
+                final String city = txtRestaturantCity.getText().toString();
+                final String street = txtRestaurantStreet.getText().toString();
+                final String houseNumber = txtRestaturantHouseNumber.getText().toString();
+                final String iban = txtIBAN.getText().toString();
+                final String password = txtPassword.getText().toString();
+                final String repeatPassword = txtRepeatPassword.getText().toString();
+
                 final String imgUrl;
 
-                if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || phoneNumber.isEmpty()) {
+                if(name.isEmpty() || email.isEmpty() || state.isEmpty() || city.isEmpty() || street.isEmpty() || houseNumber.isEmpty() || iban.isEmpty()
+                        || password.isEmpty() || repeatPassword.isEmpty()) {
                     showMessage("Please Verify all fields");
                 }
                 else if(!password.equals(repeatPassword)){
@@ -106,31 +115,29 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else
                 {
-
                     if(imgPicked) {
-                        Guest newUser = new Guest(mAuth.getCurrentUser().getUid(), firstName, lastName, email, phoneNumber, true, "");
+                        Restaurant newUser = new Restaurant(mAuth.getCurrentUser().getUid(), name, email, state, city, street, houseNumber, iban, false, "");
                         CreateUserAccount(newUser, password);
                     }
                     else{
                         showMessage("Please add profile picture!");
                     }
-
                 }
             }
         });
     }
 
-    private void CreateUserAccount(final Guest newUser, final String password) {
+    private void CreateUserAccount(final Restaurant newUser, final String password) {
         mAuth.createUserWithEmailAndPassword(newUser.email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             showMessage("Account created");
 
-                            myRef = mFirebaseDb.getInstance().getReference("User").child("Guest");
-                            updateUserInfo(newUser, pickedImgUri);
+                            myRef = mFirebaseDb.getInstance().getReference("User").child("Restaurant");
                             myRef.child(newUser.userId).setValue(newUser);
+                            updateUserInfo(newUser, pickedImgUri);
                         }
                         else
                         {
@@ -140,8 +147,8 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-
-    private void updateUserInfo(final Guest newUser, Uri pickedImgUri) {
+    private void updateUserInfo(final Restaurant newUser, Uri pickedImgUri) {
+        if(pickedImgUri != null || !pickedImgUri.equals("")){
             StorageReference mStorage = FirebaseStorage.getInstance().getReference().child(pickedImgUri.getLastPathSegment());
             final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
 
@@ -167,6 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             if(task.isSuccessful()) {
                                                 showMessage("Register Complete");
                                                 updateUI();
+
                                             }
                                         }
                                     });
@@ -175,7 +183,10 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
         }
-
+        else{
+            showMessage("Please add profile picture!");
+        }
+    }
 
     private void updateUI() {
         Intent homeActivity = new Intent(getApplicationContext(), LogInActivity.class);
@@ -215,13 +226,13 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null && data.getData() != null) {
+        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null){
             pickedImgUri = data.getData();
             Picasso.get().load(pickedImgUri).into(imgUserPhoto);
             imgPicked = true;
         }else{
             imgPicked = false;
         }
-
     }
+
 }

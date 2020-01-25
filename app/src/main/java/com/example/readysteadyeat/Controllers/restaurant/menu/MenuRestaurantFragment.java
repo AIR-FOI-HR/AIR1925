@@ -1,9 +1,7 @@
 package com.example.readysteadyeat.ui.restaurant.menu;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,30 +10,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Category;
-import com.example.readysteadyeat.data.models.Dish;
-import com.example.readysteadyeat.data.models.Guest;
-import com.example.readysteadyeat.data.models.Restaurant;
-import com.example.readysteadyeat.data.models.restaurant.DishMenuListRestaurant;
-import com.example.readysteadyeat.ui.guest.restaurants.RestaurantProfileActivity;
+import com.example.readysteadyeat.Model.data.Category;
+import com.example.readysteadyeat.Model.data.Dish;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

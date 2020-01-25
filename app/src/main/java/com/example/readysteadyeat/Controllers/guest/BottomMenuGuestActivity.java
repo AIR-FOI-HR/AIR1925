@@ -48,7 +48,7 @@ public class BottomMenuGuestActivity extends AppCompatActivity  {
                 getSupportActionBar().setTitle(imeFragmneta);
             }
             BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-            
+
             if(imeFragmneta.equals("Orders")){
                 bottomNavigationView.setSelectedItemId(R.id.navigation_orders_guest);
                 fm.popBackStack();

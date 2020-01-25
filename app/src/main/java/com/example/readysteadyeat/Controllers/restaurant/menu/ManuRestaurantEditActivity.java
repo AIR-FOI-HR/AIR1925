@@ -20,15 +20,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Category;
-import com.example.readysteadyeat.data.models.Dish;
-import com.example.readysteadyeat.ui.guest.BottomMenuGuestActivity;
-import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
-import com.example.readysteadyeat.ui.guest.restaurants.RestaurantFragmentList;
+import com.example.readysteadyeat.Model.data.Category;
+import com.example.readysteadyeat.Model.data.Dish;
 import com.example.readysteadyeat.ui.restaurant.BottomMenuRestaurantActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

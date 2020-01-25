@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Guest;
+import com.example.readysteadyeat.Model.data.Guest;
 import com.example.readysteadyeat.ui.shared.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;

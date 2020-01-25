@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.data.models.Restaurant;
+import com.example.readysteadyeat.Model.data.Restaurant;
 import com.example.readysteadyeat.ui.shared.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -259,6 +259,7 @@ public class ProfileRestarutantFragment extends Fragment {
                                     //.setDisplayName(newUser.firstNsme)
                                     .setPhotoUri(uri)
                                     .build();
+
 
                             String imageReference = uri.toString();
                             myRef = firebaseDatabase.getInstance().getReference("User").child("Restaurant");

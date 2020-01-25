@@ -1,5 +1,13 @@
 package com.example.readysteadyeat.data.models;
 
+import android.net.Uri;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+
 public class Restaurant {
 
     public String userId;
@@ -33,6 +41,25 @@ public class Restaurant {
         this.userType = userType;
         this.imgUrl = imgUrl;
     }
+
+    public boolean CreateAuthentication(final Guest newUser, final String password, final Uri pickedImgUri) {
+        mAuth.createUserWithEmailAndPassword(newUser.email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()) {
+                            updateUserInfo(newUser, pickedImgUri);
+                            myRef.child(newUser.userId).setValue(newUser);
+                        }
+                        else
+                        {
+                            return false;
+                            showMessage("account creation failed " + task.getException().getMessage());
+                        }
+                    }
+                });
+    }
+
 
     public String getUserId() {
         return userId;
@@ -113,5 +140,6 @@ public class Restaurant {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
 
 }
