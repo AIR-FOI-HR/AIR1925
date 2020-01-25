@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.guest.BottomMenuGuestActivity"
+    tools:context=".Controllers.guest.myProfile.ProfileGuestFragment"
     tools:layout_editor_absoluteX="-1dp"
-    tools:layout_editor_absoluteY="-49dp">
+    tools:layout_editor_absoluteY="-49dp"
+    android:id="@+id/guestProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.readysteadyeat.ui.shared.StartActivity;
+import com.example.readysteadyeat.Controllers.shared.StartActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 4000;

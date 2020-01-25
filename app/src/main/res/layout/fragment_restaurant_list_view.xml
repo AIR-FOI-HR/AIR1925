@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#eeeeee"
-    android:id="@+id/restaurantFragment"
-    >
-
+    android:id="@+id/guestRestaurantFragment"
+    tools:context=".Controllers.guest.restaurants.RestaurantFragmentList">
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +15,6 @@
         android:background="@android:color/white"
         android:outlineAmbientShadowColor="@android:color/holo_blue_light"
         />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/restaurants_list"
         android:layout_width="match_parent"

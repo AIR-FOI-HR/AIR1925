@@ -15,18 +15,18 @@
         android:roundIcon="@mipmap/ready_steasy_eat_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.guest.restaurants.RestaurantProfileActivity"></activity>
-        <activity android:name=".ui.restaurant.menu.ManuRestaurantEditActivity"></activity>
-        <activity android:name=".ui.restaurant.menu.MenuRestaurantAddActivity"></activity>
-        <activity android:name=".ui.restaurant.auth.SignUpActivity" />
+        <activity android:name=".Controllers.guest.restaurants.RestaurantProfileActivity"></activity>
+        <activity android:name=".Controllers.restaurant.menu.ManuRestaurantEditActivity"></activity>
+        <activity android:name=".Controllers.restaurant.menu.MenuRestaurantAddActivity"></activity>
+        <activity android:name=".Controllers.restaurant.auth.SignUpActivity" />
         <activity
-            android:name=".ui.guest.BottomMenuGuestActivity"
+            android:name=".Controllers.guest.BottomMenuGuestActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.restaurant.BottomMenuRestaurantActivity" />
-        <activity android:name=".ui.guest.auth.SignUpActivity" />
-        <activity android:name=".ui.shared.UserTypeActivity" />
-        <activity android:name=".ui.shared.StartActivity" />
-        <activity android:name=".ui.guest.auth.LogInActivity" />
+        <activity android:name=".Controllers.restaurant.BottomMenuRestaurantActivity" />
+        <activity android:name=".Controllers.guest.auth.SignUpActivity" />
+        <activity android:name=".Controllers.shared.UserTypeActivity" />
+        <activity android:name=".Controllers.shared.StartActivity" />
+        <activity android:name=".Controllers.guest.auth.LogInActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
