@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.guest.restaurants;
+package com.example.readysteadyeat.Controllers.guest.restaurants;
 
 import android.content.Intent;
 import android.os.Bundle;

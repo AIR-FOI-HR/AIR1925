@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.shared;
+package com.example.readysteadyeat.Controllers.shared;
 
 public class Constants {
     public static String KEY_EMAIL = "email";

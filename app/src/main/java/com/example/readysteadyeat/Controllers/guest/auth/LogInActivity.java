@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.guest.auth;
+package com.example.readysteadyeat.Controllers.guest.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.Model.data.Restaurant;
-import com.example.readysteadyeat.ui.guest.BottomMenuGuestActivity;
-import com.example.readysteadyeat.ui.restaurant.BottomMenuRestaurantActivity;
+import com.example.readysteadyeat.Controllers.guest.BottomMenuGuestActivity;
+import com.example.readysteadyeat.Controllers.restaurant.BottomMenuRestaurantActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

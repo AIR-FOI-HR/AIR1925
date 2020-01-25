@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.restaurant.auth;
+package com.example.readysteadyeat.Controllers.restaurant.auth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.Model.data.Restaurant;
-import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
+import com.example.readysteadyeat.Controllers.guest.auth.LogInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

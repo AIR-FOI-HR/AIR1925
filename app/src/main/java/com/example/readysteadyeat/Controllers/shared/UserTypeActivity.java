@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.shared;
+package com.example.readysteadyeat.Controllers.shared;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.readysteadyeat.ui.guest.auth.SignUpActivity;
+import com.example.readysteadyeat.Controllers.guest.auth.SignUpActivity;
 import com.example.readysteadyeat.R;
 
 public class UserTypeActivity extends AppCompatActivity {
@@ -43,7 +43,7 @@ public class UserTypeActivity extends AppCompatActivity {
     }
 
     public void openActivitySignUpRestaurant(){
-        Intent homeIntetnt = new Intent(UserTypeActivity.this, com.example.readysteadyeat.ui.restaurant.auth.SignUpActivity.class);
+        Intent homeIntetnt = new Intent(UserTypeActivity.this, com.example.readysteadyeat.Controllers.restaurant.auth.SignUpActivity.class);
         startActivity(homeIntetnt);
     }
 }

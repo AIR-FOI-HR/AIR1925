@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.guest;
+package com.example.readysteadyeat.Controllers.guest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,15 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.ui.guest.Orders.OrdersGuestFragment;
-import com.example.readysteadyeat.ui.guest.myProfile.ProfileGuestFragment;
-import com.example.readysteadyeat.ui.guest.restaurants.RestaurantFragmentList;
+import com.example.readysteadyeat.Controllers.guest.Orders.OrdersGuestFragment;
+import com.example.readysteadyeat.Controllers.guest.myProfile.ProfileGuestFragment;
+import com.example.readysteadyeat.Controllers.guest.restaurants.RestaurantFragmentList;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomMenuGuestActivity extends AppCompatActivity  {

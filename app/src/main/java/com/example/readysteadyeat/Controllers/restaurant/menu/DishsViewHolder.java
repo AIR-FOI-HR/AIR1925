@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.restaurant.menu;
+package com.example.readysteadyeat.Controllers.restaurant.menu;
 
 import android.view.View;
 import android.widget.TextView;

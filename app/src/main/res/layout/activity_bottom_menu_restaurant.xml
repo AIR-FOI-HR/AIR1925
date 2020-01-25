@@ -5,7 +5,7 @@
     android:id="@+id/bottomMenuRestaurant"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.restaurant.BottomMenuRestaurantActivity">
+    tools:context=".Controllers.restaurant.BottomMenuRestaurantActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarBottomRestaurant"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white"
 
-        tools:context=".ui.restaurant.BottomMenuRestaurantActivity"
+        tools:context=".Controllers.restaurant.BottomMenuRestaurantActivity"
         />
 
     <FrameLayout

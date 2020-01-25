@@ -1,15 +1,14 @@
-package com.example.readysteadyeat.ui.shared;
+package com.example.readysteadyeat.Controllers.shared;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.ui.guest.auth.LogInActivity;
+import com.example.readysteadyeat.Controllers.guest.auth.LogInActivity;
 
 public class StartActivity extends AppCompatActivity {
     private Button btnEnterSignUp;

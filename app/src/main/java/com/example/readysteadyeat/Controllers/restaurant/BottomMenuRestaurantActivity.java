@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.restaurant;
+package com.example.readysteadyeat.Controllers.restaurant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,18 +6,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.readysteadyeat.R;
-import com.example.readysteadyeat.ui.restaurant.menu.MenuRestaurantFragment;
-import com.example.readysteadyeat.ui.restaurant.myProfile.ProfileRestarutantFragment;
-import com.example.readysteadyeat.ui.restaurant.orders.OrdersRestaurantFragment;
+import com.example.readysteadyeat.Controllers.restaurant.menu.MenuRestaurantFragment;
+import com.example.readysteadyeat.Controllers.restaurant.myProfile.ProfileRestarutantFragment;
+import com.example.readysteadyeat.Controllers.restaurant.orders.OrdersRestaurantFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.common.base.internal.Finalizer;
 
 public class BottomMenuRestaurantActivity extends AppCompatActivity implements MenuRestaurantFragment.OnFragmentInteractionListener {
     Toolbar toolbar;

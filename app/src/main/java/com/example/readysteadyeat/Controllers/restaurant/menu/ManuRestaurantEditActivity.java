@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.restaurant.menu;
+package com.example.readysteadyeat.Controllers.restaurant.menu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.Model.data.Category;
 import com.example.readysteadyeat.Model.data.Dish;
-import com.example.readysteadyeat.ui.restaurant.BottomMenuRestaurantActivity;
+import com.example.readysteadyeat.Controllers.restaurant.BottomMenuRestaurantActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;

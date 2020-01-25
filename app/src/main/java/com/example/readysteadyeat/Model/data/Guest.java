@@ -1,9 +1,4 @@
-package com.example.readysteadyeat.data.models;
-
-import android.net.Uri;
-
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.Exclude;
+package com.example.readysteadyeat.Model.data;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.data.models;
+package com.example.readysteadyeat.Model.data;
 
 import android.net.Uri;
 
@@ -42,23 +42,7 @@ public class Restaurant {
         this.imgUrl = imgUrl;
     }
 
-    public boolean CreateAuthentication(final Guest newUser, final String password, final Uri pickedImgUri) {
-        mAuth.createUserWithEmailAndPassword(newUser.email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            updateUserInfo(newUser, pickedImgUri);
-                            myRef.child(newUser.userId).setValue(newUser);
-                        }
-                        else
-                        {
-                            return false;
-                            showMessage("account creation failed " + task.getException().getMessage());
-                        }
-                    }
-                });
-    }
+
 
 
     public String getUserId() {

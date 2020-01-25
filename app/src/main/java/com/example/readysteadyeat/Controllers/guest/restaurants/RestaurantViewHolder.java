@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.guest.restaurants;
+package com.example.readysteadyeat.Controllers.guest.restaurants;
 
 import android.view.View;
 import android.widget.TextView;

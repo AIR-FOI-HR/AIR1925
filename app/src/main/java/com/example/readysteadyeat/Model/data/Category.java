@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.data.models;
+package com.example.readysteadyeat.Model.data;
 
 public class Category {
 

@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.ui.guest.auth;
+package com.example.readysteadyeat.Controllers.guest.auth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.readysteadyeat.Model.businessModel.SignUp;
 import com.example.readysteadyeat.R;
 import com.example.readysteadyeat.Model.data.Guest;
 import com.example.readysteadyeat.Model.data.Restaurant;
@@ -36,6 +37,8 @@ import com.squareup.picasso.Picasso;
 
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private SignUp registracija = new SignUp();
 
     static int PReqCode = 1;
     static int REQUESCODE = 1;
@@ -113,9 +116,12 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    Restaurant restoran1 = new Restaurant();
+    SignUp reg = new SignUp();
+
+
 
     private void CreateUserAccount(final Guest newUser, final String password) {
+        registracija.CreateUserAccount(newUser, password, pickedImgUri);
         mAuth.createUserWithEmailAndPassword(newUser.email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

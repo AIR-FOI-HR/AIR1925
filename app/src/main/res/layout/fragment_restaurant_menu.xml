@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#eeeeee"
-    tools:context=".ui.restaurant.menu.MenuRestaurantFragment"
+    tools:context=".Controllers.restaurant.menu.MenuRestaurantFragment"
     android:id="@+id/restaurantFragmentMenu">
 
     <Spinner

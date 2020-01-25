@@ -1,4 +1,4 @@
-package com.example.readysteadyeat.data.models.restaurant;
+package com.example.readysteadyeat.Model.data;
 
 public class DishMenuListRestaurant {
 
