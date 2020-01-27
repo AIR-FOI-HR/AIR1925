@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent homeIntetnt = new Intent(MainActivity.this, StartActivity.class);
                 startActivity(homeIntetnt);
                 finish();
-                //proba
+                //proba/////
             }
         }, SPLASH_TIME_OUT);
     }
