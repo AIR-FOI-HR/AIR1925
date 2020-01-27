@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controllers.guest.BottomMenuGuestActivity"
+    tools:context="foi.air.rse.Controllers.guest.BottomMenuGuestActivity"
     >
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarBottomGuest"
