@@ -19,19 +19,5 @@ public class SignUp {
     public void a(){
 
     }
-    public  void CreateUserAccount(final Guest newUser, final String password, final Uri pickedImgUrl) {
-        mAuth.createUserWithEmailAndPassword(newUser.email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            ///lsdfdk
-                            myRef.child(newUser.userId).setValue(newUser);
-                        }
-                        else
-                        {
-                        }
-                    }
-                });
-    }
+
 }

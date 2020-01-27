@@ -116,12 +116,12 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    SignUp reg = new SignUp();
+  
 
 
 
     private void CreateUserAccount(final Guest newUser, final String password) {
-        registracija.CreateUserAccount(newUser, password, pickedImgUri);
+
         mAuth.createUserWithEmailAndPassword(newUser.email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
