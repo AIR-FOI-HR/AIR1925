@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".Controllers.shared.UserTypeActivity">
+    tools:context="foi.air.rse.Controllers.shared.UserTypeActivity">
 
     <ImageView
         android:id="@+id/imageView2"
