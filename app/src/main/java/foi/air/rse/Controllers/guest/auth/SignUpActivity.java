@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import foi.air.rse.Model.businessModel.SignUp;
 import com.example.readysteadyeat.R;
 import foi.air.rse.Model.Guest;
 
@@ -35,10 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-
 public class SignUpActivity extends AppCompatActivity {
-
-    private SignUp registracija = new SignUp();
 
     static int PReqCode = 1;
     static int REQUESCODE = 1;
