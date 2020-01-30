@@ -12,8 +12,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DishsViewHolder extends RecyclerView.ViewHolder {
 
-    TextView dishName, dishDescription, dishCategory, dairyFree, glutenFree, category, price;
-    CircleImageView dishImage;
+    public TextView dishName, dishDescription, dishCategory, dairyFree, glutenFree, category, price;
+    public CircleImageView dishImage;
 
     public DishsViewHolder(@NonNull View itemView) {
 
