@@ -13,4 +13,7 @@ public interface NavigationItem {
     public Button getButton(Context context);
     public Fragment getFragment();
 
+    public String getName(Context context);
+    public Drawable getIcon(Context context);
+
 }

@@ -2,6 +2,7 @@ package com.example.qrscanning;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,16 @@ public class qrScanning extends Fragment implements NavigationItem {
     @Override
     public Fragment getFragment() {
         return this;
+    }
+
+    @Override
+    public String getName(Context context) {
+        return "Scan QR code";
+    }
+
+    @Override
+    public Drawable getIcon(Context context) {
+        return context.getDrawable(android.R.drawable.ic_menu_agenda);
     }
 
 }

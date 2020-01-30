@@ -2,6 +2,7 @@ package foi.air.rse.Controllers.guest.restaurants;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +47,16 @@ public class RestaurantDishList extends Fragment implements NavigationItem {
     @Override
     public Fragment getFragment() {
         return this;
+    }
+
+    @Override
+    public String getName(Context context) {
+        return "See menu";
+    }
+
+    @Override
+    public Drawable getIcon(Context context) {
+        return context.getDrawable(android.R.drawable.ic_menu_agenda);
     }
 
 }
