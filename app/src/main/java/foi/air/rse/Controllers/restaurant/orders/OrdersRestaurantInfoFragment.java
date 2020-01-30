@@ -138,16 +138,6 @@ public class OrdersRestaurantInfoFragment extends Fragment {
 
 
     public void populateItems(){
-
-
-
-
-
-
-
-
-
-
         FirebaseRecyclerOptions options=
                 new FirebaseRecyclerOptions.Builder<OrderDetails>()
                 .setQuery(databaseReferenceOrderDetails, OrderDetails.class)

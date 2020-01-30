@@ -4,12 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.qrscanning.qrScanning;
 import com.example.readysteadyeat.R;
 import com.squareup.picasso.Picasso;
 
-public class RestaurantProfileActivity extends AppCompatActivity {
+import com.example.core.NavigationItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RestaurantProfileActivity extends AppCompatActivity{
 
     private String restaurantId;
     private String restaurantName;
@@ -19,6 +26,10 @@ public class RestaurantProfileActivity extends AppCompatActivity {
     private String restaurantState;
     private String restaurantEmail;
     private String restaurantImgUrl;
+
+    private List<NavigationItem> navigationItems;
+
+    //manage drawer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +53,25 @@ public class RestaurantProfileActivity extends AppCompatActivity {
         TextView restaurant_street = findViewById(R.id.restaurantStreetTextView);
         TextView restaurant_houseNumber = findViewById(R.id.restaurantHouseNumberTextView);
         TextView restaurant_city = findViewById(R.id.restaurantCityTextView);
-        TextView restaurant_state = findViewById(R.id.restaurantStateTextView);
         TextView restaurant_email = findViewById(R.id.restaurantEmailTextView);
+
+        //RelativeLayout sw = findViewById(R.id.scrollViewRestaurantProfile);
+        RelativeLayout rl = findViewById(R.id.modularButtonLayout);
+        navigationItems = new ArrayList<>();
+        navigationItems.add(new RestaurantDishList());
+        navigationItems.add(new qrScanning());
 
         restaurant_name.setText(restaurantName);
         restaurant_street.setText(restaurantStreet);
         restaurant_houseNumber.setText(restaurantHouseNumber);
         restaurant_city.setText(restaurantCity);
-        restaurant_state.setText(restaurantState);
         restaurant_email.setText(restaurantEmail);
         Picasso.get().load(restaurantImgUrl).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(restaurant_imgUrl);
+
+        for (int i = 0; i < navigationItems.size(); i++) {
+            NavigationItem item = navigationItems.get(i);
+            rl.addView(item.getButton(this));
+        }
+
     }
 }

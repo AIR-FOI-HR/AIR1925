@@ -53,10 +53,13 @@ public class LogInActivity extends AppCompatActivity {
 
                 if(email.isEmpty() || password.isEmpty()) {
                     showMessage("Please Verify All Field");
+                    signIn("test@gmail.con", "1234567");
                 }
                 else
                 {
-                    signIn(email, password);
+                    //signIn(email, password);
+                    signIn("test@gmail.com", "1234567");
+
                 }
             }
         });
