@@ -1,4 +1,4 @@
-package foi.air.rse.Controllers.guest.restaurants;
+package foi.air.rse.Controllers.guest.restaurants.helperClasses;
 
 
 import android.view.MenuItem;
@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import foi.air.rse.Controllers.guest.restaurants.modular.RestaurantMenuFragment;
 
 
 public class NavigationManager {
@@ -34,12 +35,13 @@ public class NavigationManager {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private int dynamicGroupId;
+    String restaurantID;
 
     private NavigationManager()
     {
         //modularnsot
         navigationItems = new ArrayList<>();
-        navigationItems.add(new RestaurantDishList());
+        navigationItems.add(new RestaurantMenuFragment());
         navigationItems.add(new qrScanning());
     }
 
@@ -49,6 +51,10 @@ public class NavigationManager {
             instance = new NavigationManager();
 
         return instance;
+    }
+
+    public void sendData(String restaurantId){
+        restaurantID = restaurantId;
     }
 
     public void setDrawerDependencies(
@@ -90,7 +96,7 @@ public class NavigationManager {
                 .replace(R.id.fragment_container, module.getFragment())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
-        DataManager.getInstance().sendData(module);
+        DataManager.getInstance().sendData(module, restaurantID);
     }
 
     public void selectNavigationItem(MenuItem menuItem) {

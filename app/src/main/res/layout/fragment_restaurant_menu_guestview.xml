@@ -6,30 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="foi.air.rse.Controllers.guest.restaurants.RestaurantMenuFragment"
+    tools:context="foi.air.rse.Controllers.guest.restaurants.modular.RestaurantMenuFragment"
     android:id="@+id/restaurant_menu_guestview">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvDishListGuest"
         android:layout_width="match_parent"
-        android:layout_height="634dp"
+        android:layout_height="479dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="27dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnOrder"
-        android:layout_width="181dp"
-        android:layout_height="20dp"
+        android:layout_width="362dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="114dp"
-        android:layout_marginTop="662dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginBottom="10dp"
+
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="516dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="170dp"
         android:text="Order"
         android:textAlignment="center"
         android:textColor="@color/white"

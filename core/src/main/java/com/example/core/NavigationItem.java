@@ -15,5 +15,6 @@ public interface NavigationItem {
 
     public String getName(Context context);
     public Drawable getIcon(Context context);
+    public void setData(String id);
 
 }

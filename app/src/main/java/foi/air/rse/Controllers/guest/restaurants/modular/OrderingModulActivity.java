@@ -1,4 +1,4 @@
-package foi.air.rse.Controllers.guest.restaurants;
+package foi.air.rse.Controllers.guest.restaurants.modular;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,6 +16,8 @@ import android.view.View;
 import com.example.readysteadyeat.R;
 import com.google.android.material.navigation.NavigationView;
 
+import foi.air.rse.Controllers.guest.restaurants.helperClasses.NavigationManager;
+
 public class OrderingModulActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener{
 
     //private Util util = new Util();
@@ -23,11 +25,20 @@ public class OrderingModulActivity extends AppCompatActivity implements SharedPr
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     NavigationView navigationView;
+    String s;
+
+    String selectedRestaurant;
+
+    /*public OrderingModulActivity(String SelectedRestaurant) {
+        selectedRestaurant = SelectedRestaurant;
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordering_modul);
+
+        s = getIntent().getStringExtra("restaurantId");
 
         initializeLayout();
 
@@ -57,7 +68,7 @@ public class OrderingModulActivity extends AppCompatActivity implements SharedPr
 
     private void initializeNavigationManager() {
         NavigationManager nm = NavigationManager.getInstance();
-
+        nm.sendData(s);
         nm.setDrawerDependencies(
                 this,
                 navigationView,

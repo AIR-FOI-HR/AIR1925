@@ -15,12 +15,12 @@
         android:roundIcon="@mipmap/ready_steasy_eat_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="foi.air.rse.Controllers.guest.restaurants.OrderingModulActivity"></activity>
+        <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity"></activity>
         <activity
             android:name="foi.air.rse.Controllers.guest.restaurants.RestaurantProfileActivity1"
             android:label="@string/title_activity_restaurant_profile1"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="foi.air.rse.Controllers.guest.restaurants.RestaurantProfileActivity" />
+        <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.RestaurantProfileActivity" />
         <activity android:name="foi.air.rse.Controllers.restaurant.menu.ManuRestaurantEditActivity" />
         <activity android:name="foi.air.rse.Controllers.restaurant.menu.MenuRestaurantAddActivity" />
         <activity android:name="foi.air.rse.Controllers.restaurant.auth.SignUpActivity" />

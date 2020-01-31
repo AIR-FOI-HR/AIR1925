@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#eeeeee"
     android:fitsSystemWindows="true"
-    tools:context="foi.air.rse.Controllers.guest.restaurants.OrderingModulActivity"
+    tools:context="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView

@@ -1,9 +1,6 @@
-package foi.air.rse.Controllers.guest.restaurants;
+package foi.air.rse.Controllers.guest.restaurants.helperClasses;
 
 import com.example.core.NavigationItem;
-
-import java.util.ArrayList;
-
 
 
 public class DataManager {
@@ -23,7 +20,8 @@ public class DataManager {
         return instance;
     }
 
-    public void sendData(final NavigationItem module){
+    public void sendData(final NavigationItem module, String id){
+        module.setData(id);
         /*DataLoader dataLoader;
         if(Store.getAll().isEmpty()){
             System.out.println("Loading web data");
@@ -35,7 +33,7 @@ public class DataManager {
         dataLoader.loadData(new DataLoadedListener() {
             @Override
             public void onDataLoaded(ArrayList<Store> stores, ArrayList<Discount> discounts) {
-                module.setData(stores, discounts);
+
             }
         });*/
     }

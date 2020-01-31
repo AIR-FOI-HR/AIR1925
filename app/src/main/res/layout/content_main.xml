@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="foi.air.rse.Controllers.guest.restaurants.OrderingModulActivity"
+    tools:context="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity"
     tools:showIn="@layout/layout_main">
 
     <FrameLayout

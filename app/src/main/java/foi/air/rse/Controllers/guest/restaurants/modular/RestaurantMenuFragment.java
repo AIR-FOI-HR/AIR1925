@@ -1,7 +1,9 @@
-package foi.air.rse.Controllers.guest.restaurants;
+package foi.air.rse.Controllers.guest.restaurants.modular;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,9 +23,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.core.NavigationItem;
 import com.example.readysteadyeat.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import foi.air.rse.Controllers.guest.restaurants.DishsViewHolderGuest;
 import foi.air.rse.Controllers.restaurant.menu.DishsViewHolder;
 import foi.air.rse.Controllers.restaurant.menu.ManuRestaurantEditActivity;
 import foi.air.rse.Controllers.restaurant.menu.MenuRestaurantAddActivity;
@@ -41,7 +46,7 @@ import foi.air.rse.Controllers.restaurant.menu.MenuRestaurantFragment;
 import foi.air.rse.Model.Category;
 import foi.air.rse.Model.Dish;
 
-public class RestaurantMenuFragment extends Fragment {
+public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     Spinner spinner;
     private View DishView;
     private RecyclerView dishList;
@@ -57,12 +62,17 @@ public class RestaurantMenuFragment extends Fragment {
     private String currentUserId;
     private String selectedRestaurant;
 
+    String id;
+
     ValueEventListener listener;
     ArrayAdapter<String> adapter;
     ArrayList<String> spinnerDataList;
 
-    public RestaurantMenuFragment(String SelectedRestaurant) {
+    /*public RestaurantMenuFragment(String SelectedRestaurant) {
         selectedRestaurant = SelectedRestaurant;
+    }*/
+
+    public RestaurantMenuFragment() {
     }
 
     public static MenuRestaurantFragment newInstance(String param1, String param2) {
@@ -110,7 +120,7 @@ public class RestaurantMenuFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
-                            if (dataSnapshot.child("restaurantId").getValue().equals(selectedRestaurant)) {
+                            if (dataSnapshot.child("restaurantId").getValue().equals(id)) {
 
                                 if (dataSnapshot.hasChild("imgUrl")) {
 
@@ -210,5 +220,34 @@ public class RestaurantMenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public Button getButton(Context context) {
+        return null;
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public String getName(Context context) {
+        return "See menu";
+    }
+
+    @Override
+    public Drawable getIcon(Context context) {
+        return context.getDrawable(android.R.drawable.ic_menu_agenda);
+    }
+
+    @Override
+    public void setData(String id) {
+        this.id = id;
+        tryToDisplayData();
+    }
+
+    private void tryToDisplayData() {
     }
 }

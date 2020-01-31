@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readysteadyeat.R;
+
+import foi.air.rse.Controllers.guest.restaurants.modular.RestaurantProfileActivity;
 import foi.air.rse.Model.Restaurant;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;

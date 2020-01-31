@@ -1,6 +1,5 @@
-package foi.air.rse.Controllers.guest.restaurants;
+package foi.air.rse.Controllers.guest.restaurants.modular;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,11 +8,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.qrscanning.qrScanning;
@@ -26,7 +23,7 @@ import com.example.core.NavigationItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import foi.air.rse.Controllers.guest.BottomMenuGuestActivity;
+import foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity;
 
 public class RestaurantProfileActivity extends AppCompatActivity{
 
@@ -65,10 +62,11 @@ public class RestaurantProfileActivity extends AppCompatActivity{
 
         populateItems();
 
+        //ide se na modularnost
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent modularActivity = new Intent(getApplicationContext(), OrderingModulActivity.class);
+                Intent modularActivity = new Intent(getApplicationContext(), OrderingModulActivity.class).putExtra("restaurantId", restaurantId);
                 startActivity(modularActivity);
                 finish();
             }
@@ -98,25 +96,12 @@ public class RestaurantProfileActivity extends AppCompatActivity{
         TextView restaurant_city = findViewById(R.id.restaurantCityTextView);
         TextView restaurant_email = findViewById(R.id.restaurantEmailTextView);
 
-        //RelativeLayout sw = findViewById(R.id.scrollViewRestaurantProfile);
-        //RelativeLayout rl = findViewById(R.id.modularButtonLayout);
-        navigationItems = new ArrayList<>();
-        navigationItems.add(new RestaurantDishList());
-        navigationItems.add(new qrScanning());
-
         restaurant_name.setText(restaurantName);
         restaurant_street.setText(restaurantStreet);
         restaurant_houseNumber.setText(restaurantHouseNumber);
         restaurant_city.setText(restaurantCity);
         restaurant_email.setText(restaurantEmail);
         Picasso.get().load(restaurantImgUrl).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(restaurant_imgUrl);
-
-        button = findViewById(R.id.btnNaruci);
-
-        for (int i = 0; i < navigationItems.size(); i++) {
-            NavigationItem item = navigationItems.get(i);
-            //rl.addView(item.getButton(this));
-        }
 
     }
 }

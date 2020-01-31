@@ -20,6 +20,8 @@ import com.example.core.NavigationItem;
 
 public class qrScanning extends Fragment implements NavigationItem {
 
+    String id;
+    
     @Override
     public Button getButton(Context context) {
         int radius = 20;
@@ -34,6 +36,7 @@ public class qrScanning extends Fragment implements NavigationItem {
         button.setBackground(gd);
         button.setText("Scann QR code");
         return button;
+        
     }
 
     @Override
@@ -49,6 +52,16 @@ public class qrScanning extends Fragment implements NavigationItem {
     @Override
     public Drawable getIcon(Context context) {
         return context.getDrawable(android.R.drawable.ic_menu_agenda);
+    }
+
+    @Override
+    public void setData(String id) {
+        this.id = id;
+        
+        tryToDisplayData();
+    }
+
+    private void tryToDisplayData() {
     }
 
 }
