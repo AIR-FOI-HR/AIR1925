@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,15 +94,17 @@ public class OrdersRestaurantFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(prikazStanje.equals("all")){
-                    slider.setGravity(Gravity.CENTER);
+                    setMargins(sliderCircle,20 );
                     prikazStanje="0";
                 }
                 else if(prikazStanje.equals("0")){
-                    slider.setGravity(Gravity.RIGHT);
+                    setMargins(sliderCircle,40 );
                     prikazStanje="1";
-                    notifyThis("Proba", "pa ludilo je ovo!");
+                }else if(prikazStanje.equals("1")){
+                    setMargins(sliderCircle,60 );
+                    prikazStanje="3";
                 }else{
-                    slider.setGravity(Gravity.LEFT);
+                    setMargins(sliderCircle,0 );
                     prikazStanje="all";
                 }
                 populateRecycleView(dateTime, prikazStanje);
@@ -194,7 +198,8 @@ public class OrdersRestaurantFragment extends Fragment {
                                     if(dataSnapshot.child("restaurantId").getValue().equals(firebaseAuth.getCurrentUser().getUid())
                                             && !dataSnapshot.child("status").getValue().toString().equals(declined) &&
                                             (dateTime.equals("all")|| dataSnapshot.child("dateTime").getValue().toString().equals(dateTime)) &&
-                                            (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))){
+                                            (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))
+                                            ){
                                         String guestID= dataSnapshot.child("userId").getValue().toString();
                                         String time= dataSnapshot.child("dateTime").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
@@ -204,15 +209,20 @@ public class OrdersRestaurantFragment extends Fragment {
 
                                         String notDecide="0";
                                         String accept="1";
+                                        String rated="3";
                                         if(status.equals(notDecide)){
                                             holder.btnAccept.setVisibility(View.VISIBLE);
                                             holder.btnDenied.setVisibility(View.VISIBLE);
+                                            holder.displayLayoutRestaurant.getBackground().setTint(getResources().getColor(R.color.white));
 
                                             holder.bullet.getBackground().setTint(getResources().getColor(R.color.yellow));
                                         }else{
                                             if(status.equals(accept)){
-
+                                                holder.displayLayoutRestaurant.getBackground().setTint(getResources().getColor(R.color.white));
                                                 holder.bullet.getBackground().setTint(getResources().getColor(R.color.apple_green));
+                                            }else if(status.equals(rated)){
+                                                holder.bullet.setBackgroundResource(R.drawable.ic_done_orange);
+                                                holder.displayLayoutRestaurant.getBackground().setTint(getResources().getColor(R.color.grayLight));
                                             }
                                             holder.btnAccept.setVisibility(View.GONE);
                                             holder.btnDenied.setVisibility(View.GONE);
@@ -345,6 +355,17 @@ public class OrdersRestaurantFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void setMargins (View view, int left) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            int leftFinal= (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, left, getResources()
+                            .getDisplayMetrics());
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(leftFinal, 0, 0, 0);
+            view.requestLayout();
+        }
     }
 
 

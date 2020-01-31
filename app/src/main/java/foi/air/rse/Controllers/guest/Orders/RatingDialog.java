@@ -10,6 +10,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.readysteadyeat.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import foi.air.rse.Model.Order;
 
@@ -19,7 +21,7 @@ public class RatingDialog {
     private Button buttonSubmit;
     private Button buttonBack;
     private String rate="0";
-    public void showDialog(Activity activity, final OrdersGuestFragment ordersGuestFragment){
+    public void showDialog(Activity activity, final OrdersGuestFragment ordersGuestFragment, final String IDs){
         final Dialog dialog = new Dialog(activity);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,20 +42,25 @@ public class RatingDialog {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("rating", rate);
-                ordersGuestFragment.setArguments(bundle);
+                if(!rate.equals("0")){
+                    updateOrderRate(rate, IDs);
+                }
                 dialog.dismiss();
             }
         });
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("rating", rate);
-                ordersGuestFragment.setArguments(bundle);
+                rate="0";
                 dialog.dismiss();
             }
         });
         dialog.show();
+
+    }
+    private void updateOrderRate(final String rate, final String orderId){
+        DatabaseReference databaseReferenceOrders = FirebaseDatabase.getInstance().getReference("Order");
+        databaseReferenceOrders.child(orderId).child("raiting").setValue(rate);
 
     }
 }

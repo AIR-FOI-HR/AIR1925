@@ -96,6 +96,8 @@ public class RestaurantProfileActivity extends AppCompatActivity{
         TextView restaurant_city = findViewById(R.id.restaurantCityTextView);
         TextView restaurant_email = findViewById(R.id.restaurantEmailTextView);
 
+        button = findViewById(R.id.btnNaruci);
+
         restaurant_name.setText(restaurantName);
         restaurant_street.setText(restaurantStreet);
         restaurant_houseNumber.setText(restaurantHouseNumber);

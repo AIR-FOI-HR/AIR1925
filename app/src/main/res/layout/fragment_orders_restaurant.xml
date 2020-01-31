@@ -44,7 +44,7 @@
             android:gravity="right">
             <LinearLayout
                 android:id="@+id/sliderButtonRestaurant"
-                android:layout_width="66dp"
+                android:layout_width="86dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/slider_button"
                 android:padding="3dp"

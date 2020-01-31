@@ -193,14 +193,17 @@ public class OrdersGuestFragment extends Fragment {
                                             &&(dataSnapshot.child("status").getValue().toString().equals(pokStatus)
                                             || pokStatus.equals("all"))){
 
-
+                                        String rating=dataSnapshot.child("raiting").getValue().toString();
+                                        Log.i("rate", rating);
+                                        if(!rating.equals("0")){
+                                            holder.btnRateGuest.setVisibility(View.GONE);
+                                        }
                                         String restaurantID= dataSnapshot.child("restaurantId").getValue().toString();
                                         String time= dataSnapshot.child("dateTime").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
                                         String price=dataSnapshot.child("price").getValue().toString();
 
                                         String status=dataSnapshot.child("status").getValue().toString();
-
                                         String notDecide="0";
                                         String accept="1";
                                         String payed="3";
@@ -216,7 +219,7 @@ public class OrdersGuestFragment extends Fragment {
 
                                             holder.btnPayOrder.setVisibility(View.GONE);
                                             holder.btnDeniedGuest.setVisibility(View.GONE);
-                                            if(!dataSnapshot.child("raiting").getValue().toString().equals("0")){
+                                            if(!dataSnapshot.child("raiting").getValue().toString().equals(notDecide)){
                                                 holder.btnRateGuest.setVisibility(View.GONE);
                                             }else{
                                                 holder.btnRateGuest.setVisibility(View.VISIBLE);
@@ -308,18 +311,17 @@ public class OrdersGuestFragment extends Fragment {
                                             fragmentTransaction.commit();
                                         }
                                     });
+
+
                                     holder.btnRateGuest.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             RatingDialog ratingDialog = new RatingDialog();
-                                            ratingDialog.showDialog(getActivity(), ordersGuestFragment);
-                                            String rate=ordersGuestFragment.getArguments().getString("rating");
-                                            updateOrderRate(rate, IDs);
-                                            if(!rate.equals("0")){
-                                                holder.btnRateGuest.setVisibility(View.GONE);
-                                            }
+                                            ratingDialog.showDialog(getActivity(), ordersGuestFragment, IDs);
                                         }
+
                                     });
+
 
 
 
@@ -348,11 +350,7 @@ public class OrdersGuestFragment extends Fragment {
     }
 
 
-    private void updateOrderRate(final String rate, final String orderId){
-        databaseReferenceOrders=FirebaseDatabase.getInstance().getReference("Order");
-        databaseReferenceOrders.child(orderId).child("raiting").setValue(rate);
 
-    }
     private void updateOrderStatus(final String status, final String orderId){
         databaseReferenceOrders=FirebaseDatabase.getInstance().getReference("Order");
         databaseReferenceOrders.child(orderId).child("status").setValue(status);
