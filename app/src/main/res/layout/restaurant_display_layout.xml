@@ -39,16 +39,31 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/restaurant_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Restaurant name"
-                android:textAlignment="textStart"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
 
+
+                <TextView
+                    android:id="@+id/restaurant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurant name"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/restaurant_rating"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rating"
+                    android:textAlignment="viewEnd"
+                    android:textSize="18sp"
+                    android:textColor="@color/orangeDark"
+                    android:drawableRight="@drawable/ic_star_orange"
+                    android:textStyle="bold" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/restaurant_street"
                 android:layout_width="match_parent"

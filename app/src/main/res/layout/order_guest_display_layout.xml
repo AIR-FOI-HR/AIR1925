@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:fadingEdge="horizontal"
+    android:layout_marginVertical="1dp"
+    android:id="@+id/displayOrderGuest">
+
+    <LinearLayout
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/status_bulletGuest"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right"
+                android:background="@drawable/circle_button"
+                android:backgroundTint="@color/yellow"/>
+
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NAME OF RESTAURANT"
+                android:textAlignment="textStart"
+                android:textSize="9sp"
+                />
+            <TextView
+                android:id="@+id/restaurant_orderGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name of restaurant"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:paddingLeft="6dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADRESS"
+                android:textAlignment="textStart"
+                android:textSize="9sp"
+                />
+            <TextView
+                android:id="@+id/restaurant_adress_orderGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adress"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:paddingLeft="6dp"
+                android:textStyle="bold" />
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RESERVATION"
+                android:textAlignment="textStart"
+                android:textSize="9sp"
+                />
+            <TextView
+                android:id="@+id/order_datetimeGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reservation time"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textSize="16sp" />
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NUMBER OF PERSONS"
+                android:textAlignment="textStart"
+                android:textSize="9sp"
+                />
+            <TextView
+                android:id="@+id/number_of_personsGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number of persons"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textSize="16sp" />
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PRICE"
+                android:textAlignment="textStart"
+                android:textSize="9sp"
+                />
+            <TextView
+                android:id="@+id/order_priceGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textSize="16sp" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                >
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_payOrderGuest"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:backgroundTint="@color/orangeDark"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="10dp"
+                    app:cornerRadius="200dp"
+                    android:layout_height="56dp"
+                    android:text="Pay ORDER"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_deniedGuest"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:layout_width="46dp"
+                    android:backgroundTint="@color/orangeDark"
+                    app:cornerRadius="200dp"
+                    android:layout_height="56dp"
+                    android:layout_marginRight="10dp"
+                    app:icon="@drawable/ic_denied_orders" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_informationGuest"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:backgroundTint="@color/orangeDark"
+                    android:layout_width="46dp"
+                    app:cornerRadius="200dp"
+                    android:layout_height="56dp"
+                    app:icon="@drawable/ic_info_orders"
+                    android:layout_marginRight="10dp"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_rateOrderGuest"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:backgroundTint="@color/orangeDark"
+                    android:layout_width="wrap_content"
+                    app:cornerRadius="200dp"
+                    android:layout_height="56dp"
+                    android:text="RATE"
+                    app:icon="@drawable/ic_star_white"
+                />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

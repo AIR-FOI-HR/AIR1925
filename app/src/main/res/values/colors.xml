@@ -12,4 +12,6 @@
     <color name="apple_green">#5BC236</color>
     <color name="grayLight">#F2F2F2</color>
     <color name="grayDark">#565656</color>
+    <color name="gray">#A9A9A9</color>
+    <color name="grayTransparent">#80A9A9A9</color>
 </resources>

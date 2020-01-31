@@ -1,11 +1,14 @@
 package foi.air.rse.Controllers.guest.restaurants;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +39,10 @@ public class RestaurantFragmentList extends Fragment {
     private String currentUserID;
     private SearchView searchRestaurants;
 
+
+    private double rating=0;
+    private double brojac=0;
+    private DatabaseReference databaseReferenceOrder;
 
     public RestaurantFragmentList(){
 
@@ -111,6 +118,7 @@ public class RestaurantFragmentList extends Fragment {
                                 holder.restaurantStreet.setText(restaurantStreet);
                                 holder.restaurantHouseNumber.setText(restaurantHouseNumber);
                             }
+
                         }
                         else{
                             if(dataSnapshot.child("name").getValue().toString().contains(s)){
@@ -166,6 +174,38 @@ public class RestaurantFragmentList extends Fragment {
                                 startActivity(profileIntent);
                             }
                         });
+                        databaseReferenceOrder=FirebaseDatabase.getInstance().getReference("Order").child("");
+                        databaseReferenceOrder.addValueEventListener((new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists() ){
+                                    brojac=0;
+                                    rating=0;
+                                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                                        String id=postSnapshot.getKey();
+                                        if(dataSnapshot.child(id).child("restaurantId").getValue().toString().equals(IDs)){
+                                            String ratingOrder=dataSnapshot.child(id).child("raiting").getValue().toString();
+                                            rating=rating+Double.parseDouble(ratingOrder);
+                                            brojac=brojac+1;
+                                        }
+                                    }
+                                    if(brojac==0){
+                                        holder.ratingRestaurant.setVisibility(View.GONE);
+                                    }else {
+                                        double finalRate = rating / brojac;
+
+                                        holder.ratingRestaurant.setVisibility(View.VISIBLE);
+                                        holder.ratingRestaurant.setText(String.valueOf(finalRate));
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Activity activity = getActivity();
+                                Toast.makeText(activity, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                            }
+                        }));
                     }
 
                     @Override
@@ -192,5 +232,6 @@ public class RestaurantFragmentList extends Fragment {
         adapter.startListening();
 
     }
+
 }
 
