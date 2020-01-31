@@ -10,4 +10,6 @@
     <color name="white">#FFFFFF</color>
     <color name="yellow">#FFE921</color>
     <color name="apple_green">#5BC236</color>
+    <color name="grayLight">#F2F2F2</color>
+    <color name="grayDark">#565656</color>
 </resources>

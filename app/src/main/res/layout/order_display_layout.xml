@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:fadingEdge="horizontal"
-    android:layout_marginVertical="1dp">
+    android:layout_marginVertical="1dp"
+    android:id="@+id/display_layout_order_restaurant">
 
     <LinearLayout
         android:layout_width="390dp"

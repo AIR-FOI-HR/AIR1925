@@ -1,21 +1,29 @@
 package foi.air.rse.Controllers.restaurant.orders;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
@@ -29,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 
 public class OrdersRestaurantFragment extends Fragment {
@@ -44,6 +54,8 @@ public class OrdersRestaurantFragment extends Fragment {
 
     private String phone;
     private  String userName;
+    private String prikazStanje;
+    private String dateTime;
 
     ValueEventListener listener;
     ArrayAdapter<String> adapter;
@@ -72,8 +84,71 @@ public class OrdersRestaurantFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        populateRecycleView();
-    }
+        prikazStanje="all";
+        dateTime="all";
+        final TextView sliderCircle=OrdersView.findViewById(R.id.sliderCircleRestaurant);
+        final LinearLayout slider=OrdersView.findViewById(R.id.sliderButtonRestaurant);
+        slider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(prikazStanje.equals("all")){
+                    slider.setGravity(Gravity.CENTER);
+                    prikazStanje="0";
+                }
+                else if(prikazStanje.equals("0")){
+                    slider.setGravity(Gravity.RIGHT);
+                    prikazStanje="1";
+                    notifyThis("Proba", "pa ludilo je ovo!");
+                }else{
+                    slider.setGravity(Gravity.LEFT);
+                    prikazStanje="all";
+                }
+                populateRecycleView(dateTime, prikazStanje);
+            }
+
+
+        });
+
+        final TextView calendar=OrdersView.findViewById(R.id.calendartxtRestaurant);
+        final DatePickerDialog.OnDateSetListener datePickerListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int selyear, int month, int seldayOfMonth) {
+                String year= String.valueOf(selyear);
+                String mon=String.valueOf(month+1);
+                String day=String.valueOf(seldayOfMonth);
+                dateTime =day+"/"+mon+"/"+year;
+                calendar.setText(dateTime);
+                OrdersView.findViewById(R.id.btnDltDateRestaurant).setVisibility(View.VISIBLE);
+                populateRecycleView(dateTime, prikazStanje);
+            }
+        };
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr=Calendar.getInstance();
+                int day=cldr.get(Calendar.DAY_OF_MONTH);
+                int month=cldr.get(Calendar.MONTH);
+                int year=cldr.get(Calendar.YEAR);
+                DatePickerDialog picker=new DatePickerDialog(getActivity(), datePickerListener,
+                        year, month, day);
+                picker.setCancelable(false);
+                picker.show();
+
+            }
+        });
+        OrdersView.findViewById(R.id.btnDltDateRestaurant).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OrdersView.findViewById(R.id.btnDltDateRestaurant).setVisibility(View.GONE);
+                dateTime="all";
+                calendar.setText("Pick date");
+                populateRecycleView(dateTime, prikazStanje);
+            }
+        });
+
+
+        populateRecycleView(dateTime,prikazStanje);
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,10 +159,18 @@ public class OrdersRestaurantFragment extends Fragment {
         firebaseAuth=FirebaseAuth.getInstance();
         currentUserId=firebaseAuth.getCurrentUser().getUid();
         databaseReferenceOrders= FirebaseDatabase.getInstance().getReference().child("Order");
+        OrdersView.findViewById(R.id.btnDltDateRestaurant).setVisibility(View.GONE);
+
         return OrdersView;
     }
 
-    public void populateRecycleView(){
+    public void populateRecycleView(final String dateTime, final String prikazStanje){
+
+
+
+
+
+
         FirebaseRecyclerOptions options=
                 new FirebaseRecyclerOptions.Builder<Order>()
                         .setQuery(databaseReferenceOrders, Order.class)
@@ -102,8 +185,16 @@ public class OrdersRestaurantFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
+                                final OrdersRestaurantInfoFragment fragment=new OrdersRestaurantInfoFragment();
+
+                                final Bundle bundle=new Bundle();
+                                String declined="2";
+
                                 if(dataSnapshot.exists()){
-                                    if(dataSnapshot.child("restaurantId").getValue().equals(firebaseAuth.getCurrentUser().getUid())){
+                                    if(dataSnapshot.child("restaurantId").getValue().equals(firebaseAuth.getCurrentUser().getUid())
+                                            && !dataSnapshot.child("status").getValue().toString().equals(declined) &&
+                                            (dateTime.equals("all")|| dataSnapshot.child("dateTime").getValue().toString().equals(dateTime)) &&
+                                            (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))){
                                         String guestID= dataSnapshot.child("userId").getValue().toString();
                                         String time= dataSnapshot.child("dateTime").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
@@ -122,16 +213,13 @@ public class OrdersRestaurantFragment extends Fragment {
                                             if(status.equals(accept)){
 
                                                 holder.bullet.getBackground().setTint(getResources().getColor(R.color.apple_green));
-                                            }else{
-
-                                                holder.bullet.getBackground().setTint(Color.RED);
                                             }
                                             holder.btnAccept.setVisibility(View.GONE);
                                             holder.btnDenied.setVisibility(View.GONE);
 
                                         }
 
-                                        databaseReferenceGuest=FirebaseDatabase.getInstance().getReference("User").child("Guest").child(guestID).child("");
+                                        databaseReferenceGuest=FirebaseDatabase.getInstance().getReference("User").child("Guest").child(guestID);
                                         databaseReferenceGuest.addValueEventListener((new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,6 +229,8 @@ public class OrdersRestaurantFragment extends Fragment {
                                                     phone=dataSnapshot.child("phone").getValue().toString();
                                                     userName=firstName+" "+lastName;
                                                     holder.userOrder.setText(firstName+' '+lastName);
+                                                    bundle.putString("user_phone", phone);
+                                                    bundle.putString("user_name", userName);
                                                 }
                                             }
 
@@ -181,16 +271,10 @@ public class OrdersRestaurantFragment extends Fragment {
                                         @Override
                                         public void onClick(View v) {
 
-
-
-                                            OrdersRestaurantInfoFragment fragment=new OrdersRestaurantInfoFragment();
-
-                                            Bundle bundle=new Bundle();
                                             bundle.putString("dateTime", dataSnapshot.child("dateTime").getValue().toString());
                                             bundle.putString("order_id", IDs);
                                             bundle.putString("user_id", dataSnapshot.child("userId").getValue().toString());
-                                            bundle.putString("user_phone", phone);
-                                            bundle.putString("user_name", userName);
+
                                             bundle.putString("personNumber",dataSnapshot.child("persons").getValue().toString() );
                                             bundle.putString("price",dataSnapshot.child("price").getValue().toString());
                                             bundle.putString("status",dataSnapshot.child("status").getValue().toString());
@@ -236,6 +320,21 @@ public class OrdersRestaurantFragment extends Fragment {
         databaseReferenceOrders.child(orderId).child("status").setValue(status);
         Toast.makeText(getActivity().getApplicationContext(), "Status is set to: "+status, Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void notifyThis(String title, String message) {
+        NotificationCompat.Builder b = new NotificationCompat.Builder(this.getContext());
+        b.setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.foodicon)
+                .setTicker("{your tiny message}")
+                .setContentTitle(title)
+                .setContentText(message)
+                .setContentInfo("INFO");
+
+        NotificationManager nm = (NotificationManager) this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(1, b.build());
     }
 
     public interface OnFragmentInteractionListener {

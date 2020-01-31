@@ -4,9 +4,63 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#eeeeee"
-    android:id="@+id/restaurantFragment">
+    android:id="@+id/restaurantFragmentOrders">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            >
+
+            <TextView
+                android:id="@+id/calendartxtRestaurant"
+                android:layout_width="126dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_calendar_black"
+                android:ems="10"
+                android:outlineAmbientShadowColor="@color/colorAccent"
+                android:shadowColor="@color/black"
+                android:text="Pick date"
+                android:textColor="@color/colorAccent"
+                android:textSize="14dp" />
+            <Button
+                android:id="@+id/btnDltDateRestaurant"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/small_button_x"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <LinearLayout
+                android:id="@+id/sliderButtonRestaurant"
+                android:layout_width="66dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/slider_button"
+                android:padding="3dp"
+                android:clickable="true"
+                >
+
+                <TextView
+                    android:id="@+id/sliderCircleRestaurant"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/circle_button"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 

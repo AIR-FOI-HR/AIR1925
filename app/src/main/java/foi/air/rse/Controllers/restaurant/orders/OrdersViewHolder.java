@@ -3,6 +3,7 @@ package foi.air.rse.Controllers.restaurant.orders;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ public class OrdersViewHolder extends RecyclerView.ViewHolder {
     public TextView userOrder, datetimeOrder, numOfPersonsOrder, priceOrder;
     public Button btnAccept, btnDenied, btnInfo;
     public LinearLayout bullet;
+    public RelativeLayout displayLayoutRestaurant;
 
     public OrdersViewHolder(@NonNull View itemView){
         super(itemView);
@@ -28,6 +30,8 @@ public class OrdersViewHolder extends RecyclerView.ViewHolder {
         datetimeOrder=itemView.findViewById(R.id.order_datetime);
         numOfPersonsOrder=itemView.findViewById(R.id.number_of_persons);
         priceOrder=itemView.findViewById(R.id.order_price);
+
+        displayLayoutRestaurant=itemView.findViewById(R.id.display_layout_order_restaurant);
 
     }
 }
