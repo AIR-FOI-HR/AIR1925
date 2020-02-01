@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -27,7 +23,6 @@ import com.example.core.NavigationItem;
 import com.example.readysteadyeat.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,14 +32,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import foi.air.rse.Controllers.guest.restaurants.DishsViewHolderGuest;
-import foi.air.rse.Controllers.restaurant.menu.DishsViewHolder;
-import foi.air.rse.Controllers.restaurant.menu.ManuRestaurantEditActivity;
-import foi.air.rse.Controllers.restaurant.menu.MenuRestaurantAddActivity;
+import foi.air.rse.Controllers.guest.restaurants.OrderSummaryActivity;
 import foi.air.rse.Controllers.restaurant.menu.MenuRestaurantFragment;
-import foi.air.rse.Model.Category;
 import foi.air.rse.Model.Dish;
+import foi.air.rse.Model.Order;
+import foi.air.rse.Model.OrderDetails;
 
 public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     Spinner spinner;
@@ -61,6 +56,12 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     private FirebaseAuth firebaseAuth;
     private String currentUserId;
     private String selectedRestaurant;
+    private Button btnOrder;
+    public List<OrderDetails> orderDetailsList = new ArrayList<>();
+    public float price=0;
+    public float finalPrice;
+    private DatabaseReference databaseReferenceOrder;
+    private DatabaseReference databaseReferenceOrderDetails;
 
     String id;
 
@@ -102,6 +103,9 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         firebaseAuth = FirebaseAuth.getInstance();
         currentUserId = firebaseAuth.getCurrentUser().getUid();
         databaseReferenceDish = FirebaseDatabase.getInstance().getReference().child("Dish");
+        databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
+        databaseReferenceOrderDetails = FirebaseDatabase.getInstance().getReference().child("OrderDetails");
+
         return DishView;
     }
 
@@ -134,6 +138,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
 
                                     holder.dishName.setText(name);
+                                    holder.dishId = dataSnapshot.getKey();
 
                                     databaseReferenceCategory = FirebaseDatabase.getInstance().getReference("Category").child(category).child("name");
                                     databaseReferenceCategory.addValueEventListener((new ValueEventListener() {
@@ -191,7 +196,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
                     }
 
-
                 });
             }
 
@@ -206,8 +210,8 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
         dishList.setAdapter(adapter);
         adapter.startListening();
-
     }
+
 
 
     @Override
@@ -220,6 +224,14 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnOrder = view.findViewById(R.id.btnOrder);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iterateRcv();
+                makeOrder();
+            }
+        });
     }
 
     @Override
@@ -250,4 +262,58 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
     private void tryToDisplayData() {
     }
+
+    public void iterateRcv(){
+        for (int i = 0; i < dishList.getChildCount(); i++) {
+            DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
+            if(holder.amountValue>0){
+                OrderDetails orderDetail = new OrderDetails(null, holder.dishId, Integer.toString(holder.amountValue));
+                orderDetailsList.add(orderDetail);
+            }
+        }
+    }
+
+    public void makeOrder(){
+        FirebaseDatabase.getInstance().getReference().child("Dish")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        price=0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Dish dish = snapshot.getValue(Dish.class);
+                            for(int i=0; i<orderDetailsList.size(); i++){
+                                String id = orderDetailsList.get(i).dishId;
+                                int quant = Integer.parseInt(orderDetailsList.get(i).quantity);
+                                if(snapshot.getKey().equals(id)){
+                                    price = price + quant * Float.parseFloat(dish.price);
+                                }
+                            }
+                        }
+                        finalPrice=price;
+                        String key = databaseReferenceOrder.push().getKey();
+                        Order order = new Order(null, null, Float.toString(finalPrice), null, "1", id, firebaseAuth.getCurrentUser().getUid());
+                        order.setKey(key);
+                        databaseReferenceOrder.child(key).setValue(order);
+                        updateOrderDetails(key);
+                        openTimeAndPersons(key);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    public void updateOrderDetails(String key){
+        for(int i=0; i<orderDetailsList.size(); i++){
+            orderDetailsList.get(i).orderId = key;
+            databaseReferenceOrderDetails.push().setValue(orderDetailsList.get(i));
+        }
+    }
+
+    public void openTimeAndPersons(String key){
+        Intent intent = new Intent(getContext(), OrderSummaryActivity.class);
+        intent.putExtra("key", key);
+        startActivity(intent);
+    }
+
 }

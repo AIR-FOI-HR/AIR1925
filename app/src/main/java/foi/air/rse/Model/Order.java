@@ -8,6 +8,7 @@ public class Order {
     public String status;
     public String restaurantId;
     public String guestId;
+    public String key;
 
 
     public Order(){}
@@ -76,5 +77,9 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

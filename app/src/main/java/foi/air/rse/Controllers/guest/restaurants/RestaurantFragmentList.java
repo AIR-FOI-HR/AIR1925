@@ -184,8 +184,8 @@ public class RestaurantFragmentList extends Fragment {
                                     for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                                         String id=postSnapshot.getKey();
                                         if(dataSnapshot.child(id).child("restaurantId").getValue().toString().equals(IDs)){
-                                            String ratingOrder=dataSnapshot.child(id).child("raiting").getValue().toString();
-                                            rating=rating+Double.parseDouble(ratingOrder);
+//                                            String ratingOrder=dataSnapshot.child(id).child("raiting").getValue().toString();
+//                                            rating=rating+Double.parseDouble(ratingOrder);
                                             brojac=brojac+1;
                                         }
                                     }
