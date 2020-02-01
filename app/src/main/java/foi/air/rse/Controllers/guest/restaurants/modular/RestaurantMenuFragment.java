@@ -266,9 +266,11 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public void iterateRcv(){
         for (int i = 0; i < dishList.getChildCount(); i++) {
             DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
-            if(holder.amountValue>0){
-                OrderDetails orderDetail = new OrderDetails(null, holder.dishId, Integer.toString(holder.amountValue));
-                orderDetailsList.add(orderDetail);
+            if(holder != null){
+                if(holder.amountValue>0){
+                    OrderDetails orderDetail = new OrderDetails(null, holder.dishId, Integer.toString(holder.amountValue));
+                    orderDetailsList.add(orderDetail);
+                }
             }
         }
     }
@@ -291,7 +293,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                         }
                         finalPrice=price;
                         String key = databaseReferenceOrder.push().getKey();
-                        Order order = new Order(null, null, Float.toString(finalPrice), null, "1", id, firebaseAuth.getCurrentUser().getUid());
+                        Order order = new Order(null, null, Float.toString(finalPrice), "0", "1", id, firebaseAuth.getCurrentUser().getUid());
                         order.setKey(key);
                         databaseReferenceOrder.child(key).setValue(order);
                         updateOrderDetails(key);

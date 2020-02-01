@@ -187,7 +187,7 @@ public class OrdersGuestFragment extends Fragment {
 
                                 final Bundle bundle=new Bundle();
                                 if(dataSnapshot.exists()){
-                                    if(dataSnapshot.child("userId").getValue().equals(firebaseAuth.getCurrentUser().getUid())
+                                    if(dataSnapshot.child("guestId").getValue().equals(firebaseAuth.getCurrentUser().getUid())
                                             &&( dataSnapshot.child("dateTime").getValue().toString().equals(dateTime)
                                             || dateTime.equals("all"))
                                             &&(dataSnapshot.child("status").getValue().toString().equals(pokStatus)
@@ -300,7 +300,7 @@ public class OrdersGuestFragment extends Fragment {
                                             bundle.putString("personNumber",dataSnapshot.child("persons").getValue().toString() );
                                             bundle.putString("price",dataSnapshot.child("price").getValue().toString());
                                             bundle.putString("status",dataSnapshot.child("status").getValue().toString());
-                                            bundle.putString("guest_id", dataSnapshot.child("userId").getValue().toString());
+                                            bundle.putString("guest_id", dataSnapshot.child("guestId").getValue().toString());
                                             bundle.putString("restaurant_id", dataSnapshot.child("restaurantId").getValue().toString());
                                             fragment.setArguments(bundle);
 
