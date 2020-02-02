@@ -92,7 +92,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
             }
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+                //super.onScrolled(recyclerView, dx, dy);
                 iterateRcv();
             }
         });

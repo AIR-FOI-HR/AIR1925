@@ -15,15 +15,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.readysteadyeat.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.type.Date;
 
 import java.util.Calendar;
-
-import foi.air.rse.Controllers.guest.BottomMenuGuestActivity;
 
 public class OrderSummaryActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
@@ -119,7 +114,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
                 databaseReferenceOrder.child(key).child("dateTime").setValue(finalReservationDate);
                 databaseReferenceOrder.child(key).child("time").setValue(finalReservationTime);
                 databaseReferenceOrder.child(key).child("persons").setValue(persons);
-                Intent intent = new Intent(getApplication(), BottomMenuGuestActivity.class);
+                //Intent intent = new Intent(getApplication(), BottomMenuGuestActivity.class);
                 Toast.makeText(getApplication(), "Submitted successfully!", Toast.LENGTH_LONG).show();
                 try
                 {
@@ -129,7 +124,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
                 {
                     Thread.currentThread().interrupt();
                 }
-                startActivity(intent);
+                //startActivity(intent);
+                finish();
             }
         }
     }
