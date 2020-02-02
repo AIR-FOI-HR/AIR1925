@@ -22,6 +22,7 @@ public class DataManager {
 
     public void sendData(final NavigationItem module, String id){
         module.setData(id);
+        module.startActivity();
         /*DataLoader dataLoader;
         if(Store.getAll().isEmpty()){
             System.out.println("Loading web data");

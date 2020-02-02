@@ -15,10 +15,9 @@
         android:roundIcon="@mipmap/ready_steasy_eat_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="foi.air.rse.Controllers.guest.restaurants.OrderSummaryActivity"></activity>
+        <activity android:name="foi.air.rse.Controllers.guest.auth.QrScanningActivity"></activity>
+        <activity android:name="foi.air.rse.Controllers.guest.restaurants.OrderSummaryActivity" />
         <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity" />
-        <activity
-            android:name="foi.air.rse.Controllers.guest.restaurants.RestaurantProfileActivity1"
             android:label="@string/title_activity_restaurant_profile1"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.RestaurantProfileActivity" />

@@ -1,2 +1,2 @@
-include ':app', ':core', ':qrscanning'
+include ':app', ':core', ':qrscanning', ':qrscannerelement'
 rootProject.name='ReadySteadyEat'

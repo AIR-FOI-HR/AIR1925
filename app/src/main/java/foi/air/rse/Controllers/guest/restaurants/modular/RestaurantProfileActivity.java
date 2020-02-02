@@ -13,17 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.qrscanning.qrScanning;
 import com.example.readysteadyeat.R;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import com.example.core.NavigationItem;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity;
 
 public class RestaurantProfileActivity extends AppCompatActivity{
 

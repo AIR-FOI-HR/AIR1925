@@ -20,7 +20,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.qrscanning.QrScanning;
+import com.example.qrscanning.QrScanningActivity;
+import com.example.qrscanning.probniActivity;
 import com.example.readysteadyeat.R;
+
+import foi.air.rse.Controllers.guest.auth.SignUpActivity;
+import foi.air.rse.Controllers.restaurant.menu.ManuRestaurantEditActivity;
 import foi.air.rse.Model.Guest;
 import foi.air.rse.Controllers.shared.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -205,8 +211,18 @@ public class ProfileGuestFragment extends Fragment {
         btnLogOutGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userSignOut();
-                updateUI();
+
+                Intent profileIntent = new Intent().setClass(getActivity(), probniActivity.class);
+
+                //Intent profileIntent = new Intent(getContext(), QrScanningActivity.class);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Intent intent = new Intent(getContext(), QrScanningActivity.class);
+
+                startActivity(profileIntent);
+                //userSignOut();
+                //updateUI();
+
             }
         });
     }
