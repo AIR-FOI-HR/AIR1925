@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readysteadyeat.R;
 import foi.air.rse.Model.Category;
-import foi.air.rse.Model.Dish;
+import com.example.core.Model.Dish;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;

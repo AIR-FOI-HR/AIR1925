@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.example.readysteadyeat.R;
 import foi.air.rse.Model.Category;
-import foi.air.rse.Model.Dish;
+import com.example.core.Model.Dish;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;

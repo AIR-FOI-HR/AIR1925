@@ -11,8 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import com.example.core.NavigationItem;
-import com.example.qrscanning.QrScanning;
-import com.example.qrscanning.probniFragment;
+import com.example.qrscanning.QrScanningFragment;
 import com.example.readysteadyeat.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,7 +42,7 @@ public class NavigationManager {
         //modularnsot
         navigationItems = new ArrayList<>();
         navigationItems.add(new RestaurantMenuFragment());
-        navigationItems.add(new probniFragment());
+        navigationItems.add(new QrScanningFragment());
     }
 
     public static NavigationManager getInstance()

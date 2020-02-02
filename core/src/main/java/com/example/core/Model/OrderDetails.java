@@ -1,4 +1,4 @@
-package foi.air.rse.Model;
+package com.example.core.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

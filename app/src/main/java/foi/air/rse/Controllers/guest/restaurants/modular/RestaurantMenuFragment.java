@@ -35,22 +35,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import foi.air.rse.Controllers.guest.restaurants.DishsViewHolderGuest;
-import foi.air.rse.Controllers.guest.restaurants.OrderSummaryActivity;
+import com.example.core.OrderSummaryActivity;
 import foi.air.rse.Controllers.restaurant.menu.MenuRestaurantFragment;
-import foi.air.rse.Model.Dish;
-import foi.air.rse.Model.Order;
-import foi.air.rse.Model.OrderDetails;
+import com.example.core.Model.Dish;
+import com.example.core.Model.Order;
+import com.example.core.Model.OrderDetails;
 
 public class RestaurantMenuFragment extends Fragment implements NavigationItem {
-    Spinner spinner;
+
+    private Spinner spinner;
     private View DishView;
     private RecyclerView dishList;
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-
     private DatabaseReference databaseReferenceDish;
     private DatabaseReference databaseReferenceCategory;
     private FirebaseAuth firebaseAuth;
@@ -63,16 +62,11 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceOrderDetails;
     private int numItems=0;
+    private String id;
+    private ValueEventListener listener;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> spinnerDataList;
 
-    String id;
-
-    ValueEventListener listener;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> spinnerDataList;
-
-    /*public RestaurantMenuFragment(String SelectedRestaurant) {
-        selectedRestaurant = SelectedRestaurant;
-    }*/
 
     public RestaurantMenuFragment() {
     }
@@ -96,7 +90,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -104,8 +97,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
             }
         });
     }
-
-
 
     @Nullable
     @Override
@@ -118,7 +109,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         databaseReferenceDish = FirebaseDatabase.getInstance().getReference().child("Dish");
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
         databaseReferenceOrderDetails = FirebaseDatabase.getInstance().getReference().child("OrderDetails");
-
         return DishView;
     }
 
@@ -202,14 +192,10 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                                 holder.itemView.setVisibility(View.GONE);
                             }
                         }
-
-
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
-
                 });
             }
 
@@ -231,8 +217,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -246,11 +230,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                 makeOrder();
             }
         });
-    }
-
-    @Override
-    public Button getButton(Context context) {
-        return null;
     }
 
     @Override
@@ -271,15 +250,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     @Override
     public void setData(String id) {
         this.id = id;
-        tryToDisplayData();
-    }
-
-    @Override
-    public void startActivity() {
-        
-    }
-
-    private void tryToDisplayData() {
     }
 
     public void iterateRcv(){

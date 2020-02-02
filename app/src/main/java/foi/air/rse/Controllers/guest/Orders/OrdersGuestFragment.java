@@ -3,27 +3,19 @@ package foi.air.rse.Controllers.guest.Orders;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
-import android.media.Rating;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
-import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,13 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import foi.air.rse.Controllers.restaurant.orders.OrdersRestaurantInfoFragment;
-import foi.air.rse.Controllers.restaurant.orders.OrdersViewHolder;
-import foi.air.rse.Model.Order;
+import com.example.core.Model.Order;
 
 public class OrdersGuestFragment extends Fragment {
     private OrdersGuestFragment ordersGuestFragment=this;

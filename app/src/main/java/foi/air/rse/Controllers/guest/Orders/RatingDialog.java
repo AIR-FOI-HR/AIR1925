@@ -7,13 +7,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.example.readysteadyeat.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import foi.air.rse.Model.Order;
 
 public class RatingDialog {
 

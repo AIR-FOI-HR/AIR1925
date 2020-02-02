@@ -10,14 +10,13 @@ import java.util.List;
 
 public interface NavigationItem {
 
-    public Button getButton(Context context);
     public Fragment getFragment();
-
     public String getName(Context context);
     public Drawable getIcon(Context context);
     public void setData(String id);
-
-    public void startActivity();
-
+    public void iterateRcv();
+    public void makeOrder();
+    public void updateOrderDetails(String key);
+    public void openTimeAndPersons(String key);
 
 }

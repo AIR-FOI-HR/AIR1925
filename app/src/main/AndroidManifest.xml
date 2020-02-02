@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="foi.air.rse.Controllers.guest.auth.QrScanningActivity"></activity>
-        <activity android:name="foi.air.rse.Controllers.guest.restaurants.OrderSummaryActivity" />
+        <activity android:name="com.example.core.OrderSummaryActivity" />
         <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity" />
             android:label="@string/title_activity_restaurant_profile1"
             android:theme="@style/AppTheme.NoActionBar" />

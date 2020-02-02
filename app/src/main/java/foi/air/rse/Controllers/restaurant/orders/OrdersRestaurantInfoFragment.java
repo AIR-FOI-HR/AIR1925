@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.readysteadyeat.R;
 
-import foi.air.rse.Model.OrderDetails;
+import com.example.core.Model.OrderDetails;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;

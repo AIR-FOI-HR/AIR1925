@@ -1,4 +1,4 @@
-package foi.air.rse.Model;
+package com.example.core.Model;
 
 public class Order {
     public String dateTime;

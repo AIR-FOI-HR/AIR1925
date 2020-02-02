@@ -4,7 +4,7 @@ import com.example.core.NavigationItem;
 
 
 public class DataManager {
-    //singleton
+
     private static DataManager instance;
 
     private DataManager()
@@ -22,20 +22,5 @@ public class DataManager {
 
     public void sendData(final NavigationItem module, String id){
         module.setData(id);
-        module.startActivity();
-        /*DataLoader dataLoader;
-        if(Store.getAll().isEmpty()){
-            System.out.println("Loading web data");
-            dataLoader = new WsDataLoader();
-        } else {
-            System.out.println("Loading local data");
-            dataLoader = new DbDataLoader();
-        }
-        dataLoader.loadData(new DataLoadedListener() {
-            @Override
-            public void onDataLoaded(ArrayList<Store> stores, ArrayList<Discount> discounts) {
-
-            }
-        });*/
     }
 }

@@ -1,8 +1,6 @@
 package foi.air.rse.Controllers.guest.Orders;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import foi.air.rse.Controllers.restaurant.orders.OrderDetailsViewHolder;
-import foi.air.rse.Model.OrderDetails;
+import com.example.core.Model.OrderDetails;
 
 public class OrderGuestInfoFragment extends Fragment {
 

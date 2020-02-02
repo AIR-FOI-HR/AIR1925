@@ -3,7 +3,7 @@
     package="com.example.qrscanning">
 
     <application>
-        <activity android:name=".probniActivity"></activity>
+        <activity android:name=".QrScanningActivity"></activity>
         <activity android:name=".QrScanningActivity" />
     </application>
 
