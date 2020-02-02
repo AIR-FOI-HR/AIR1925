@@ -322,7 +322,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                         }
                         finalPrice=price;
                         String key = databaseReferenceOrder.push().getKey();
-                        Order order = new Order(null, null, Float.toString(finalPrice), "0", "1", id, firebaseAuth.getCurrentUser().getUid());
+                        Order order = new Order(null, null, Float.toString(finalPrice), "0", "0", id, firebaseAuth.getCurrentUser().getUid());
                         order.setKey(key);
                         databaseReferenceOrder.child(key).setValue(order);
                         updateOrderDetails(key);

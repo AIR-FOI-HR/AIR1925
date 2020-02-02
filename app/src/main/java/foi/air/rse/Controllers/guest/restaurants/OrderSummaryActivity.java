@@ -37,7 +37,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
     private Button btnDateTime;
     private TextView txtVDateTime;
     private String persons;
-    private String finalReservation;
+    private String finalReservationDate;
+    private String finalReservationTime;
     private DatabaseReference databaseReferenceOrder;
 
 
@@ -112,13 +113,15 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
             Toast.makeText(getApplication(), "Please choose time and date!", Toast.LENGTH_LONG).show();
         }
         else{
-            finalReservation = dayFinal + "/" + monthFinal +"/" + yearFinal + "/" + hourFinal + "/" + minuteFinal;
+            finalReservationDate = dayFinal + "/" + monthFinal +"/" + yearFinal;
+            finalReservationTime = hourFinal + ":" + minuteFinal;
             if(numberOfPersons.getText().toString().equals("")){
                 Toast.makeText(getApplication(), "Please choose number of persons!", Toast.LENGTH_LONG).show();
             }
             else{
                 persons = numberOfPersons.getText().toString();
-                databaseReferenceOrder.child(key).child("dateTime").setValue(finalReservation);
+                databaseReferenceOrder.child(key).child("dateTime").setValue(finalReservationDate);
+                databaseReferenceOrder.child(key).child("time").setValue(finalReservationTime);
                 databaseReferenceOrder.child(key).child("persons").setValue(persons);
                 Intent intent = new Intent(getApplication(), BottomMenuGuestActivity.class);
                 Toast.makeText(getApplication(), "Submitted successfully!", Toast.LENGTH_LONG).show();

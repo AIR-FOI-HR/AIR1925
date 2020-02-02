@@ -200,7 +200,7 @@ public class OrdersRestaurantFragment extends Fragment {
                                             (dateTime.equals("all")|| dataSnapshot.child("dateTime").getValue().toString().equals(dateTime)) &&
                                             (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))
                                             ){
-                                        String guestID= dataSnapshot.child("userId").getValue().toString();
+                                        String guestID= dataSnapshot.child("guestId").getValue().toString();
                                         String time= dataSnapshot.child("dateTime").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
                                         String price=dataSnapshot.child("price").getValue().toString();
@@ -283,7 +283,7 @@ public class OrdersRestaurantFragment extends Fragment {
 
                                             bundle.putString("dateTime", dataSnapshot.child("dateTime").getValue().toString());
                                             bundle.putString("order_id", IDs);
-                                            bundle.putString("user_id", dataSnapshot.child("userId").getValue().toString());
+                                            bundle.putString("user_id", dataSnapshot.child("guestId").getValue().toString());
 
                                             bundle.putString("personNumber",dataSnapshot.child("persons").getValue().toString() );
                                             bundle.putString("price",dataSnapshot.child("price").getValue().toString());

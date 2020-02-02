@@ -153,7 +153,7 @@ public class OrdersRestaurantInfoFragment extends Fragment {
                                 if(dataSnapshot.exists()){
                                     if(dataSnapshot.child("orderId").getValue().toString().equals(orderID)){
                                         String dishId=dataSnapshot.child("dishId").getValue().toString();
-                                        final String quantity=dataSnapshot.child("quanttity").getValue().toString();
+                                        final String quantity=dataSnapshot.child("quantity").getValue().toString();
                                         holder.quantity.setText(quantity);
                                         databaseReferenceDish=FirebaseDatabase.getInstance().getReference("Dish").child(dishId);
                                         databaseReferenceDish.addValueEventListener((new ValueEventListener() {
