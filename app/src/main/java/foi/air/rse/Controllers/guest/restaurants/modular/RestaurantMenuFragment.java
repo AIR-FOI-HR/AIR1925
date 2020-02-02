@@ -274,6 +274,11 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         tryToDisplayData();
     }
 
+    @Override
+    public void startActivity() {
+        
+    }
+
     private void tryToDisplayData() {
     }
 
