@@ -62,6 +62,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public float finalPrice;
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceOrderDetails;
+    private int numItems=0;
 
     String id;
 
@@ -90,6 +91,18 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public void onStart() {
         super.onStart();
         populateRecycleView();
+        dishList.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                iterateRcv();
+            }
+        });
     }
 
 
@@ -125,6 +138,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                     public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
                             if (dataSnapshot.child("restaurantId").getValue().equals(id)) {
+                                numItems++;
 
                                 if (dataSnapshot.hasChild("imgUrl")) {
 
@@ -264,12 +278,22 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     }
 
     public void iterateRcv(){
-        for (int i = 0; i < dishList.getChildCount(); i++) {
+        boolean contains;
+
+        for (int i = 0; i < numItems; i++) {
             DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
             if(holder != null){
                 if(holder.amountValue>0){
+                    contains=false;
                     OrderDetails orderDetail = new OrderDetails(null, holder.dishId, Integer.toString(holder.amountValue));
-                    orderDetailsList.add(orderDetail);
+                    for(int j=0; j<orderDetailsList.size(); j++){
+                        if(orderDetailsList.get(j).dishId.equals(orderDetail.dishId)){
+                            contains=true;
+                        }
+                    }
+                    if(!contains){
+                        orderDetailsList.add(orderDetail);
+                    }
                 }
             }
         }
