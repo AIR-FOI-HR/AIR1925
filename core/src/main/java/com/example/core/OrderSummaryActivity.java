@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -100,7 +101,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
     }
 
     public void submitReservation(){
-        if(dayFinal==0 || monthFinal == 0 || yearFinal ==0 || hourFinal ==0 || minuteFinal ==0){
+        if(dayFinal==0 || monthFinal == 0 || yearFinal ==0 || hourFinal ==0){
             Toast.makeText(getApplication(), "Please choose time and date!", Toast.LENGTH_LONG).show();
         }
         else{
@@ -114,8 +115,9 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
                 databaseReferenceOrder.child(key).child("dateTime").setValue(finalReservationDate);
                 databaseReferenceOrder.child(key).child("time").setValue(finalReservationTime);
                 databaseReferenceOrder.child(key).child("persons").setValue(persons);
-                //Intent intent = new Intent(getApplication(), BottomMenuGuestActivity.class);
-                Toast.makeText(getApplication(), "Submitted successfully!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplication(), OrderFinal.class);
+                intent.putExtra("key", key);
+                //Toast.makeText(getApplication(), "Submitted successfully!", Toast.LENGTH_LONG).show();
                 try
                 {
                     Thread.sleep(1000);
@@ -124,8 +126,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
                 {
                     Thread.currentThread().interrupt();
                 }
-                //startActivity(intent);
-                finish();
+                startActivity(intent);
             }
         }
     }

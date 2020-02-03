@@ -43,6 +43,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
     public List<OrderDetails> orderDetailsList = new ArrayList<>();
     private DatabaseReference databaseReferenceOrderDetails;
     private DatabaseReference databaseReferenceOrder;
+    private DatabaseReference databaseReferenceDish;
     private FirebaseAuth firebaseAuth;
     public float price=0;
     public float finalPrice;
@@ -62,13 +63,17 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan();
 
-        Button button = (Button) getView().findViewById(R.id.btnOrder);
-        button.setOnClickListener(new View.OnClickListener() {
+        //Button button = (Button) getView().findViewById(R.id.btnOrder);
+        databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReferenceOrderDetails = FirebaseDatabase.getInstance().getReference().child("OrderDetails");
+        databaseReferenceDish = FirebaseDatabase.getInstance().getReference().child("Dish");
+        /*button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -90,12 +95,19 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
                 if (scanningResult.getContents() != null) {
                     rezultat = scanningResult.getContents().toString();
                 }
-                Toast.makeText(getActivity(), rezultat, Toast.LENGTH_SHORT).show();
+                String[] details = rezultat.split(";");
+                for(int i=0; i<details.length; i=i+2){
+                    OrderDetails orderDetail = new OrderDetails(null, details[i], details[i+1]);
+                    orderDetailsList.add(orderDetail);
+                }
+                makeOrder();
             } else {
                 Toast.makeText(getActivity(), "Nothing scanned", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+
 
     @Override
     public Fragment getFragment() {

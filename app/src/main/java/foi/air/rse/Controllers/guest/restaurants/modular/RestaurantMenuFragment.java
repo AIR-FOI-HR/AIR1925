@@ -255,7 +255,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public void iterateRcv(){
         boolean contains;
 
-        for (int i = 0; i < numItems; i++) {
+        for (int i = 0; i <= numItems; i++) {
             DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
             if(holder != null){
                 if(holder.amountValue>0){
