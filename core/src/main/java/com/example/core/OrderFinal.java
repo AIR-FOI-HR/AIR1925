@@ -32,7 +32,6 @@ public class OrderFinal extends AppCompatActivity {
         dateValue = findViewById(R.id.dateValue);
         timeValue = findViewById(R.id.timeValue);
         personsValue = findViewById(R.id.personsValue);
-        dishesValue = findViewById(R.id.dishesValue);
         priceValue = findViewById(R.id.priceValue);
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
 
@@ -105,15 +104,6 @@ public class OrderFinal extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-        populateDishes();
     }
 
-    public void populateDishes(){
-        String dishes="";
-        //Toast.makeText(getApplicationContext(), Integer.toString(listDishId.size()), Toast.LENGTH_LONG).show();
-        for(int i=0; i<listDishName.size(); i++){
-            Toast.makeText(getApplicationContext(), "ima", Toast.LENGTH_LONG).show();
-        }
-        dishesValue.setText(dishes);
-    }
 }

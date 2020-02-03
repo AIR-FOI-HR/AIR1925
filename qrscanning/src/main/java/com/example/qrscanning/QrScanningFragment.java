@@ -140,7 +140,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        price=0;
+                        //price=0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Dish dish = snapshot.getValue(Dish.class);
                             for(int i=0; i<orderDetailsList.size(); i++){
