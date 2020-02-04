@@ -16,6 +16,7 @@ public class DishsViewHolderGuest extends RecyclerView.ViewHolder {
     public CircleImageView dishImage;
     private Button btnAdd, btnRemove;
     public int amountValue;
+    public int numItems;
     public String dishId;
 
     public DishsViewHolderGuest(@NonNull View itemView) {

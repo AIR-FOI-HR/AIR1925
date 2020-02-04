@@ -131,8 +131,9 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                     @Override
                     public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
+                            numItems++;
                             if (dataSnapshot.child("restaurantId").getValue().equals(id)) {
-                                numItems++;
+
 
                                 if (dataSnapshot.hasChild("imgUrl")) {
 
@@ -258,8 +259,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
     public void iterateRcv(){
         boolean contains;
-
-        for (int i = 0; i <= numItems; i++) {
+        for (int i = 0; i <= numItems+1; i++) {
             DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
             if(holder != null){
                 if(holder.amountValue>0){
@@ -272,6 +272,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                     }
                     if(!contains){
                         orderDetailsList.add(orderDetail);
+                        Log.i("kifla",orderDetail.toString());
                     }
                 }
             }
@@ -287,15 +288,17 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
                         Log.i("price", String.valueOf(price));
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            quant=0;
                             Dish dish = snapshot.getValue(Dish.class);
                             for(int i=0; i<orderDetailsList.size(); i++){
                                 String id = orderDetailsList.get(i).dishId;
-                                quant = Integer.parseInt(orderDetailsList.get(i).quantity);
-                                Log.i("price2", String.valueOf(quant));
+                                int quant = Integer.parseInt(orderDetailsList.get(i).quantity);
+                                Log.i("priceQuant", String.valueOf(quant));
                                 if(snapshot.getKey().equals(id)){
-                                    price = price + quant * Float.parseFloat(dish.price);
-                                    Log.i("price", String.valueOf(price));
+                                    if(!dish.price.equals("0")
+                                    && quant!=0){
+                                        price = price + quant * Float.parseFloat(dish.price);
+                                        Log.i("priceFinal", String.valueOf(price));
+                                    }
                                 }
                             }
                         }
@@ -306,11 +309,14 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                         databaseReferenceOrder.child(key).setValue(order);
                         updateOrderDetails(key);
                         openTimeAndPersons(key);
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+        finalPrice=0;
+        price=0;
     }
 
     public void updateOrderDetails(String key){
@@ -327,4 +333,5 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         startActivity(intent);
     }
 
+    
 }

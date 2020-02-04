@@ -80,6 +80,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
             @Override
             public void onClick(View v) {
                 submitReservation();
+
             }
         });
     }
