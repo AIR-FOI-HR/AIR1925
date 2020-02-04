@@ -31,6 +31,8 @@ public class RestaurantProfileActivity extends AppCompatActivity{
     private String restaurantState;
     private String restaurantEmail;
     private String restaurantImgUrl;
+    private String restaurantRating;
+
 
     private List<NavigationItem> navigationItems;
 
@@ -55,6 +57,7 @@ public class RestaurantProfileActivity extends AppCompatActivity{
         restaurantState = getIntent().getExtras().get("restaurant_state").toString();
         restaurantEmail = getIntent().getExtras().get("restaurant_email").toString();
         restaurantImgUrl = getIntent().getExtras().get("restaurant_imgUrl").toString();
+        restaurantRating = getIntent().getExtras().get("restaurant_rating").toString();
 
         populateItems();
 
@@ -92,6 +95,7 @@ public class RestaurantProfileActivity extends AppCompatActivity{
         TextView restaurant_houseNumber = findViewById(R.id.restaurantHouseNumberTextView);
         TextView restaurant_city = findViewById(R.id.restaurantCityTextView);
         TextView restaurant_email = findViewById(R.id.restaurantEmailTextView);
+        TextView restaurant_rating=findViewById(R.id.restaurant_rating_info);
 
         button = findViewById(R.id.btnNaruci);
 
@@ -100,6 +104,7 @@ public class RestaurantProfileActivity extends AppCompatActivity{
         restaurant_houseNumber.setText(restaurantHouseNumber);
         restaurant_city.setText(restaurantCity);
         restaurant_email.setText(restaurantEmail);
+        restaurant_rating.setText(restaurantRating);
         Picasso.get().load(restaurantImgUrl).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(restaurant_imgUrl);
 
     }

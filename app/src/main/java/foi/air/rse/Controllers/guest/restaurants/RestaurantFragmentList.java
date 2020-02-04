@@ -44,6 +44,7 @@ public class RestaurantFragmentList extends Fragment {
 
     private double rating=0;
     private double brojac=0;
+    private float buffer=0;
     private DatabaseReference databaseReferenceOrder;
 
     public RestaurantFragmentList(){
@@ -80,6 +81,7 @@ public class RestaurantFragmentList extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                s=s.toLowerCase();
                 populateRecycleView(s);
                 return true;
             }
@@ -104,10 +106,10 @@ public class RestaurantFragmentList extends Fragment {
                                 String restaurantName = dataSnapshot.child("name").getValue().toString();
                                 String restaurantStreet = dataSnapshot.child("street").getValue().toString();
                                 String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+                                String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
 
                                 holder.restaurantName.setText(restaurantName);
-                                holder.restaurantStreet.setText(restaurantStreet);
-                                holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                holder.restaurantAdress.setText(fullAdress);
                                 Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
 
                             }
@@ -115,24 +117,25 @@ public class RestaurantFragmentList extends Fragment {
                                 String restaurantName = dataSnapshot.child("name").getValue().toString();
                                 String restaurantStreet = dataSnapshot.child("street").getValue().toString();
                                 String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+                                String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
+
 
                                 holder.restaurantName.setText(restaurantName);
-                                holder.restaurantStreet.setText(restaurantStreet);
-                                holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                holder.restaurantAdress.setText(fullAdress);
                             }
 
                         }
                         else{
-                            if(dataSnapshot.child("name").getValue().toString().contains(s)){
+                            if(dataSnapshot.child("name").getValue().toString().toLowerCase().contains(s)){
                                 if(dataSnapshot.hasChild("imgUrl")){
                                     String profileImage = dataSnapshot.child("imgUrl").getValue().toString();
                                     String restaurantName = dataSnapshot.child("name").getValue().toString();
                                     String restaurantStreet = dataSnapshot.child("street").getValue().toString();
                                     String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+                                    String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
 
                                     holder.restaurantName.setText(restaurantName);
-                                    holder.restaurantStreet.setText(restaurantStreet);
-                                    holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                    holder.restaurantAdress.setText(fullAdress);
                                     Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
 
                                 }
@@ -140,10 +143,10 @@ public class RestaurantFragmentList extends Fragment {
                                     String restaurantName = dataSnapshot.child("name").getValue().toString();
                                     String restaurantStreet = dataSnapshot.child("street").getValue().toString();
                                     String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
+                                    String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
 
                                     holder.restaurantName.setText(restaurantName);
-                                    holder.restaurantStreet.setText(restaurantStreet);
-                                    holder.restaurantHouseNumber.setText(restaurantHouseNumber);
+                                    holder.restaurantAdress.setText(fullAdress);
                                 }
                             }
                             else{
@@ -166,6 +169,7 @@ public class RestaurantFragmentList extends Fragment {
                                 profileIntent.putExtra("restaurant_city", dataSnapshot.child("city").getValue().toString());
                                 profileIntent.putExtra("restaurant_state", dataSnapshot.child("state").getValue().toString());
                                 profileIntent.putExtra("restaurant_email", dataSnapshot.child("email").getValue().toString());
+                                profileIntent.putExtra("restaurant_rating", BigDecimal.valueOf(buffer).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
                                 if(dataSnapshot.hasChild("imgUrl")){
                                     profileIntent.putExtra("restaurant_imgUrl", dataSnapshot.child("imgUrl").getValue().toString());
                                 }
@@ -200,6 +204,7 @@ public class RestaurantFragmentList extends Fragment {
                                         finalRate = BigDecimal.valueOf(finalRate).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
                                         holder.ratingRestaurant.setVisibility(View.VISIBLE);
                                         holder.ratingRestaurant.setText(String.valueOf(finalRate));
+                                        buffer=finalRate;
                                     }
                                 }
                             }

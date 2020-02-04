@@ -11,13 +11,12 @@ import com.example.readysteadyeat.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RestaurantViewHolder extends RecyclerView.ViewHolder {
-    TextView restaurantName, restaurantStreet, restaurantHouseNumber, ratingRestaurant;
+    TextView restaurantName, restaurantAdress, ratingRestaurant;
     CircleImageView profileImage;
     public RestaurantViewHolder(@NonNull View itemView) {
         super(itemView);
         restaurantName = itemView.findViewById(R.id.restaurant_name);
-        restaurantStreet = itemView.findViewById(R.id.restaurant_street);
-        restaurantHouseNumber = itemView.findViewById(R.id.restaurant_house_number);
+        restaurantAdress = itemView.findViewById(R.id.restaurant_adress);
         profileImage = itemView.findViewById(R.id.restaurant_image);
         ratingRestaurant=itemView.findViewById(R.id.restaurant_rating);
     }

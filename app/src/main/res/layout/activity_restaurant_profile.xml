@@ -44,11 +44,16 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right">
-                    <ImageView
-                        android:id="@+id/icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/icon" />
+                    <TextView
+                        android:id="@+id/restaurant_rating_info"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rating"
+                        android:textAlignment="viewEnd"
+                        android:textSize="18sp"
+                        android:textColor="@color/orangeDark"
+                        android:drawableRight="@drawable/ic_star_orange"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout

@@ -65,18 +65,10 @@
                     android:textStyle="bold" />
             </LinearLayout>
             <TextView
-                android:id="@+id/restaurant_street"
+                android:id="@+id/restaurant_adress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Restaurant street"
-                android:textAlignment="textStart"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/restaurant_house_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Restaurant number"
+                android:text="Restaurant adress"
                 android:textAlignment="textStart"
                 android:textSize="16sp" />
 

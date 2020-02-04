@@ -333,5 +333,5 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         startActivity(intent);
     }
 
-    
+
 }
