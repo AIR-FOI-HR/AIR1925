@@ -106,6 +106,7 @@ public class NavigationManager {
 
             NavigationItem selectedItem = navigationItems.get(menuItem.getItemId());
             startModule(selectedItem);
+
         }
     }
 }

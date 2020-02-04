@@ -10,40 +10,28 @@
     android:id="@+id/restaurant_menu_guestview"
     android:gravity="center|fill_vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvDishListGuest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnOrder"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:layout_alignParentEnd="true" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvDishListGuest"
-            android:layout_width="match_parent"
-            android:layout_height="479dp" />
-
-        <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-
-            <com.google.android.material.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
                 android:text="Order"
+                android:layout_alignParentBottom="true"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 app:cornerRadius="20dp"
                 tools:visibility="visible" />
 
-        </LinearLayout>
-
-    </LinearLayout>
 
 </RelativeLayout>

@@ -177,6 +177,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
     public void openTimeAndPersons(String key) {
         Intent intent = new Intent(getContext(), OrderSummaryActivity.class);
         intent.putExtra("key", key);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 

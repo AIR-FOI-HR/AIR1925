@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
+
 public class RestaurantFragmentList extends Fragment {
 
     private View RestaurantsView;
@@ -185,15 +187,17 @@ public class RestaurantFragmentList extends Fragment {
                                         String id=postSnapshot.getKey();
                                         if(dataSnapshot.child(id).child("restaurantId").getValue().toString().equals(IDs)){
                                             String ratingOrder=dataSnapshot.child(id).child("raiting").getValue().toString();
-                                            rating=rating+Double.parseDouble(ratingOrder);
-                                            brojac=brojac+1;
+                                            if(!ratingOrder.equals("0")){
+                                                rating=rating+Double.parseDouble(ratingOrder);
+                                                brojac=brojac+1;
+                                            }
                                         }
                                     }
                                     if(brojac==0){
                                         holder.ratingRestaurant.setVisibility(View.GONE);
                                     }else {
-                                        double finalRate = rating / brojac;
-
+                                        float finalRate = (float)(rating / brojac);
+                                        finalRate = BigDecimal.valueOf(finalRate).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
                                         holder.ratingRestaurant.setVisibility(View.VISIBLE);
                                         holder.ratingRestaurant.setText(String.valueOf(finalRate));
                                     }

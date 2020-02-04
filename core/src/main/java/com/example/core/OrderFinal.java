@@ -1,9 +1,11 @@
 package com.example.core;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ public class OrderFinal extends AppCompatActivity {
     private DatabaseReference databaseReferenceOrder;
     private List<String> listDishId = new ArrayList<>();
     private List<String> listDishName = new ArrayList<>();
+    private ConstraintLayout layout;
 
     @Override
     protected void onStart() {
@@ -34,9 +37,19 @@ public class OrderFinal extends AppCompatActivity {
         personsValue = findViewById(R.id.personsValue);
         priceValue = findViewById(R.id.priceValue);
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
+        layout = findViewById(R.id.layoutZadnji);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
 
+            }
+        });
         populateItems();
+
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,5 +118,7 @@ public class OrderFinal extends AppCompatActivity {
                     }
                 });
     }
+
+
 
 }

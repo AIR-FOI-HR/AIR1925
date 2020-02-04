@@ -88,17 +88,17 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         super.onStart();
         populateRecycleView();
 
-        dishList.addOnScrollListener(new RecyclerView.OnScrollListener(){
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                //super.onScrolled(recyclerView, dx, dy);
-                iterateRcv();
-            }
-        });
+        //dishList.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        //    @Override
+        //    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        //        super.onScrollStateChanged(recyclerView, newState);
+        //    }
+        //    @Override
+        //    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        //        //super.onScrolled(recyclerView, dx, dy);
+        //        iterateRcv();
+        //    }
+        //});
     }
 
     @Nullable
@@ -323,6 +323,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public void openTimeAndPersons(String key){
         Intent intent = new Intent(getContext(), OrderSummaryActivity.class);
         intent.putExtra("key", key);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 

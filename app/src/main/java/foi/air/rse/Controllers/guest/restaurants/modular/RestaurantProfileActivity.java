@@ -63,6 +63,7 @@ public class RestaurantProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent modularActivity = new Intent(getApplicationContext(), OrderingModulActivity.class).putExtra("restaurantId", restaurantId);
+
                 startActivity(modularActivity);
                 finish();
             }

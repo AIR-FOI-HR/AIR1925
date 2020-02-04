@@ -132,7 +132,9 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
                 {
                     Thread.currentThread().interrupt();
                 }
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
+
             }
         }
     }
