@@ -33,5 +33,8 @@ public class OrdersViewHolder extends RecyclerView.ViewHolder {
 
         displayLayoutRestaurant=itemView.findViewById(R.id.display_layout_order_restaurant);
 
+
     }
+
+
 }

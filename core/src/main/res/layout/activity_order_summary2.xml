@@ -7,68 +7,48 @@
     android:orientation="vertical"
     tools:context="com.example.core.OrderSummaryActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <EditText
-        android:id="@+id/numberOfPersons"
-        android:layout_width="wrap_content"
-        android:layout_height="69dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:ems="10"
-        android:hint="How many people: "
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.611" />
+        <EditText
+            android:id="@+id/txtVDateTime"
+            android:layout_width="250dp"
+            android:layout_height="69dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:inputType="none"
+            android:textColor="@color/grayDark"
+            android:drawableLeft="@drawable/ic_calendar_black"
+            android:ems="10"
+            android:drawablePadding="10dp"
+            android:text="Pick date and time"
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnDateTime"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:padding="10dp"
-        android:text="SELECT DATE AND TIME"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.182" />
+            />
+        <EditText
+            android:id="@+id/numberOfPersons"
+            android:drawableLeft="@drawable/ic_people_number_blue"
+            android:layout_width="250dp"
+            android:layout_height="69dp"
+            android:ems="10"
+            android:hint="How many people: "
+            android:inputType="date"
+            android:drawablePadding="10dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:text="Submit"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:cornerRadius="20dp" />
 
-    <TextView
-        android:id="@+id/txtVDateTime"
-        android:layout_width="197dp"
-        android:layout_height="103dp"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+    </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSubmit"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:padding="10dp"
-        android:text="Submit"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

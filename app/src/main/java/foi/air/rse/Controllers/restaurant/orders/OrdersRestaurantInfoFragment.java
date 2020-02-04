@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.core.Model.OrderDetails;
 import com.example.readysteadyeat.R;
 
-import com.example.core.Model.OrderDetails;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +41,7 @@ public class OrdersRestaurantInfoFragment extends Fragment {
 
     private String orderID;
     private String userId;
+    private String time;
     private String  phoneNumber;
     private  String userName;
     private String dateTime;
@@ -102,36 +103,35 @@ public class OrdersRestaurantInfoFragment extends Fragment {
         phoneNumber=this.getArguments().getString("user_phone");
         userName=this.getArguments().getString("user_name");
         dateTime=this.getArguments().getString("dateTime");
-        numberPersons=this.getArguments().getString("persons");
+        numberPersons=this.getArguments().getString("personNumber");
         price=this.getArguments().getString("price");
         status=this.getArguments().getString("status");
-
+        time=this.getArguments().getString("time");
         dateTime=this.getArguments().getString("dateTime");
 
-
-         TextView phone_Number=(TextView)OrderDetailsView.findViewById(R.id.user_phone_numberInfo);
-         TextView user_Name=(TextView)OrderDetailsView.findViewById(R.id.user_orderInfo);
-         TextView date_Time=(TextView)OrderDetailsView.findViewById(R.id.order_datetimeInfo);
-         TextView number_Persons=(TextView)OrderDetailsView.findViewById(R.id.number_of_personsInfo);
-         TextView price_order=(TextView)OrderDetailsView.findViewById(R.id.order_priceInfo);
-         LinearLayout status_order=(LinearLayout) OrderDetailsView.findViewById(R.id.status_bulletInfo);
+        TextView phone_Number=(TextView)OrderDetailsView.findViewById(R.id.user_phone_numberInfo);
+        TextView user_Name=(TextView)OrderDetailsView.findViewById(R.id.user_orderInfo);
+        TextView date_Time=(TextView)OrderDetailsView.findViewById(R.id.order_datetimeInfo);
+        TextView number_Persons=(TextView)OrderDetailsView.findViewById(R.id.number_of_personsInfo);
+        TextView price_order=(TextView)OrderDetailsView.findViewById(R.id.order_priceInfo);
+        LinearLayout status_order=(LinearLayout) OrderDetailsView.findViewById(R.id.status_bulletInfo);
 
         phone_Number.setText(phoneNumber);
         user_Name.setText(userName);
-        date_Time.setText(dateTime);
+        date_Time.setText(dateTime+" "+time);
         number_Persons.setText(numberPersons);
         price_order.setText(price);
         if(status.equals("0")){
-          status_order.getBackground().setTint(getResources().getColor(R.color.yellow));
-       }else{
-           if(status.equals("1")){
+            status_order.getBackground().setTint(getResources().getColor(R.color.yellow));
+        }else{
+            if(status.equals("1")){
 
-               status_order.getBackground().setTint(getResources().getColor(R.color.apple_green));
-           }else{
+                status_order.getBackground().setTint(getResources().getColor(R.color.apple_green));
+            }else{
 
-               status_order.getBackground().setTint(Color.RED);
-           }
-       }
+                status_order.getBackground().setTint(Color.RED);
+            }
+        }
         return OrderDetailsView;
     }
 
@@ -140,8 +140,8 @@ public class OrdersRestaurantInfoFragment extends Fragment {
     public void populateItems(){
         FirebaseRecyclerOptions options=
                 new FirebaseRecyclerOptions.Builder<OrderDetails>()
-                .setQuery(databaseReferenceOrderDetails, OrderDetails.class)
-                .build();
+                        .setQuery(databaseReferenceOrderDetails, OrderDetails.class)
+                        .build();
         FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolder> adapter=
                 new FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolder>(options) {
                     @Override
@@ -150,40 +150,42 @@ public class OrdersRestaurantInfoFragment extends Fragment {
                         databaseReferenceOrderDetails.child(IDs).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if(dataSnapshot.exists()){
-                                    if(dataSnapshot.child("orderId").getValue().toString().equals(orderID)){
-                                        String dishId=dataSnapshot.child("dishId").getValue().toString();
-                                        final String quantity=dataSnapshot.child("quantity").getValue().toString();
-                                        holder.quantity.setText(quantity);
-                                        databaseReferenceDish=FirebaseDatabase.getInstance().getReference("Dish").child(dishId);
-                                        databaseReferenceDish.addValueEventListener((new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                if(dataSnapshot.exists()){
-                                                    String name=dataSnapshot.child("name").getValue().toString();
-                                                    String price=dataSnapshot.child("price").getValue().toString();
-                                                    holder.dishName.setText(name);
-                                                    int finalPrice=Integer.parseInt(price)*Integer.parseInt(quantity);
-                                                    holder.price.setText(String.valueOf(finalPrice)+" HRK");
 
-                                                }
-                                            }
+                                holder.itemView.setVisibility(View.GONE);
+                                if(dataSnapshot.exists()&& dataSnapshot.child("orderId").getValue().toString().equals(orderID)) {
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    holder.itemView.setVisibility(View.VISIBLE);
+                                    String dishId = dataSnapshot.child("dishId").getValue().toString();
+                                    final String quantity = dataSnapshot.child("quantity").getValue().toString();
+                                    holder.quantity.setText(quantity);
+                                    databaseReferenceDish = FirebaseDatabase.getInstance().getReference("Dish").child(dishId);
+                                    databaseReferenceDish.addValueEventListener((new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                String name = dataSnapshot.child("name").getValue().toString();
+                                                String price = dataSnapshot.child("price").getValue().toString();
+                                                holder.dishName.setText(name);
+                                                //int finalPrice=Integer.parseInt(price)*Integer.parseInt(quantity);
+                                                holder.price.setText(String.valueOf(price) + " HRK");
 
                                             }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
                                     }));
-                                    }
-                                    else{
-                                        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-                                        params.height = 0;
-                                        holder.itemView.setLayoutParams(params);
-                                        holder.itemView.setVisibility(View.GONE);
-                                    }
+                                }else{
+                                    holder.itemView.setVisibility(View.GONE);
+                                    holder.itemView.getLayoutParams().height=0;
+
                                 }
 
                             }
+
+
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -199,9 +201,17 @@ public class OrdersRestaurantInfoFragment extends Fragment {
                         OrderDetailsViewHolder viewHolder = new OrderDetailsViewHolder(view);
                         return viewHolder;
                     }
+                    @Override
+                    public long getItemId(int position) {
+                        return position;
+                    }
+
+
                 };
+        adapter.setHasStableIds(true);
         orderDetailsList.setAdapter(adapter);
         adapter.startListening();
+
 
     }
 
@@ -209,4 +219,5 @@ public class OrdersRestaurantInfoFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

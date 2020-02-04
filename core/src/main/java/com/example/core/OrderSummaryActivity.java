@@ -1,11 +1,14 @@
 package com.example.core;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
@@ -16,17 +19,20 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+
+
+
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class OrderSummaryActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     public String key;
     private Button btnSubmit;
     private EditText numberOfPersons;
-    private Button btnDateTime;
     private TextView txtVDateTime;
     private String persons;
     private String finalReservationDate;
@@ -54,10 +60,10 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
         btnSubmit = findViewById(R.id.btnSubmit);
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
 
-        btnDateTime = findViewById(R.id.btnDateTime);
+
         txtVDateTime = findViewById(R.id.txtVDateTime);
 
-        btnDateTime.setOnClickListener(new View.OnClickListener() {
+        txtVDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
@@ -79,10 +85,10 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
     }
 
     @Override
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2){
-        yearFinal = i;
-        monthFinal = i1+1;
-        dayFinal = i2;
+    public void onDateSet(DatePicker datePicker, int year, int month, int day){
+        yearFinal = year;
+        monthFinal = month+1;
+        dayFinal = day;
 
         Calendar c = Calendar.getInstance();
         hour = c.get(Calendar.HOUR_OF_DAY);
@@ -93,15 +99,15 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
     }
 
     @Override
-    public void onTimeSet(TimePicker timePicker, int i, int i1){
-        hourFinal = i;
-        minuteFinal = i1;
+    public void onTimeSet(TimePicker timePicker, int hour, int minutes){
+        hourFinal = hour;
+        minuteFinal = minutes;
 
-        txtVDateTime.setText("Year: " +yearFinal + "\n" + "Month: " + monthFinal + "\n" + "Day: " + dayFinal + "\n" + "Hour: " + hourFinal + "\n" + "Minute: " + minuteFinal);
+        txtVDateTime.setText(hourFinal+":"+minuteFinal+"  "+dayFinal+"/"+monthFinal+"/"+yearFinal);
     }
 
     public void submitReservation(){
-        if(dayFinal==0 || monthFinal == 0 || yearFinal ==0 || hourFinal ==0){
+        if(dayFinal==0 || monthFinal == 0 || yearFinal ==0 || hourFinal ==0 || minuteFinal ==0){
             Toast.makeText(getApplication(), "Please choose time and date!", Toast.LENGTH_LONG).show();
         }
         else{
@@ -117,7 +123,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
                 databaseReferenceOrder.child(key).child("persons").setValue(persons);
                 Intent intent = new Intent(getApplication(), OrderFinal.class);
                 intent.putExtra("key", key);
-                //Toast.makeText(getApplication(), "Submitted successfully!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), "Submitted successfully!", Toast.LENGTH_LONG).show();
                 try
                 {
                     Thread.sleep(1000);

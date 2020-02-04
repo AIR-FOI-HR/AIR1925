@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.readysteadyeat.R;
 import com.example.core.Model.Order;
+import com.example.readysteadyeat.R;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -149,7 +152,7 @@ public class OrdersRestaurantFragment extends Fragment {
 
 
         populateRecycleView(dateTime,prikazStanje);
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -193,12 +196,19 @@ public class OrdersRestaurantFragment extends Fragment {
 
                                 if(dataSnapshot.exists()){
                                     if(dataSnapshot.child("restaurantId").getValue().equals(firebaseAuth.getCurrentUser().getUid())
-                                            && !dataSnapshot.child("status").getValue().toString().equals(declined) &&
-                                            (dateTime.equals("all")|| dataSnapshot.child("dateTime").getValue().toString().equals(dateTime)) &&
-                                            (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))
-                                            ){
+                                            && !dataSnapshot.child("status").getValue().toString().equals(declined)
+                                            && dataSnapshot.hasChild("dateTime")
+                                            && dataSnapshot.hasChild("status")
+                                            && dataSnapshot.hasChild("time")
+                                            && dataSnapshot.hasChild("price")
+                                            && dataSnapshot.hasChild("persons")
+                                            && dataSnapshot.hasChild("raiting")
+                                            &&(dateTime.equals("all")|| dataSnapshot.child("dateTime").getValue().toString().equals(dateTime))
+                                            && (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))
+                                    ){
                                         String guestID= dataSnapshot.child("guestId").getValue().toString();
-                                        String time= dataSnapshot.child("dateTime").getValue().toString();
+                                        String dateTime1= dataSnapshot.child("dateTime").getValue().toString();
+                                        String time=dataSnapshot.child("time").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
                                         String price=dataSnapshot.child("price").getValue().toString();
 
@@ -249,14 +259,13 @@ public class OrdersRestaurantFragment extends Fragment {
                                         }));
                                         holder.priceOrder.setText(price+" HRK");
                                         holder.numOfPersonsOrder.setText(personcount);
-                                        holder.datetimeOrder.setText(time);
+                                        holder.datetimeOrder.setText(dateTime1+"  "+time);
 
+                                        holder.itemView.setVisibility(View.VISIBLE);
                                     }
                                     else{
-                                        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-                                        params.height = 0;
-                                        holder.itemView.setLayoutParams(params);
                                         holder.itemView.setVisibility(View.GONE);
+                                        holder.itemView.getLayoutParams().height=0;
                                     }
                                     holder.btnAccept.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -281,7 +290,7 @@ public class OrdersRestaurantFragment extends Fragment {
                                             bundle.putString("dateTime", dataSnapshot.child("dateTime").getValue().toString());
                                             bundle.putString("order_id", IDs);
                                             bundle.putString("user_id", dataSnapshot.child("guestId").getValue().toString());
-
+                                            bundle.putString("time", dataSnapshot.child("time").getValue().toString());
                                             bundle.putString("personNumber",dataSnapshot.child("persons").getValue().toString() );
                                             bundle.putString("price",dataSnapshot.child("price").getValue().toString());
                                             bundle.putString("status",dataSnapshot.child("status").getValue().toString());
@@ -315,7 +324,17 @@ public class OrdersRestaurantFragment extends Fragment {
                         OrdersViewHolder viewHolder = new OrdersViewHolder(view);
                         return viewHolder;
                     }
+                    @Override
+                    public long getItemId(int position) {
+                        return position;
+                    }
+
+                    @Override
+                    public int getItemViewType(int position) {
+                        return position;
+                    }
                 };
+        adapter.setHasStableIds(true);
         orderList.setAdapter(adapter);
         adapter.startListening();
 

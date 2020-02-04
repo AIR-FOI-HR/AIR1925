@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public List<OrderDetails> orderDetailsList = new ArrayList<>();
     public float price=0;
     public float finalPrice;
+    public int quant;
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceOrderDetails;
     private int numItems=0;
@@ -85,6 +87,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public void onStart() {
         super.onStart();
         populateRecycleView();
+
         dishList.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -101,6 +104,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         DishView = inflater.inflate(R.layout.fragment_restaurant_menu_guestview, container, false);
         dishList = (RecyclerView) DishView.findViewById(R.id.rcvDishListGuest);
         dishList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -275,18 +279,23 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     }
 
     public void makeOrder(){
+        price=0;
         FirebaseDatabase.getInstance().getReference().child("Dish")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        price=0;
+
+                        Log.i("price", String.valueOf(price));
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            quant=0;
                             Dish dish = snapshot.getValue(Dish.class);
                             for(int i=0; i<orderDetailsList.size(); i++){
                                 String id = orderDetailsList.get(i).dishId;
-                                int quant = Integer.parseInt(orderDetailsList.get(i).quantity);
+                                quant = Integer.parseInt(orderDetailsList.get(i).quantity);
+                                Log.i("price2", String.valueOf(quant));
                                 if(snapshot.getKey().equals(id)){
                                     price = price + quant * Float.parseFloat(dish.price);
+                                    Log.i("price", String.valueOf(price));
                                 }
                             }
                         }

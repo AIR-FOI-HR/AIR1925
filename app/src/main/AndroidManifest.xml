@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ready_steasy_eat_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="foi.air.rse.Controllers.guest.auth.QrScanningActivity"></activity>
+        <activity android:name="com.example.qrscanning.QrScanningActivity"></activity>
         <activity android:name="com.example.core.OrderSummaryActivity" />
         <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity" />
             android:label="@string/title_activity_restaurant_profile1"

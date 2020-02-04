@@ -1,6 +1,8 @@
 package foi.air.rse.Controllers.guest.Orders;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,12 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.core.Model.OrderDetails;
 import com.example.readysteadyeat.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -24,7 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.example.core.Model.OrderDetails;
+import foi.air.rse.Controllers.restaurant.orders.OrderDetailsViewHolder;
 
 public class OrderGuestInfoFragment extends Fragment {
 
@@ -43,6 +47,8 @@ public class OrderGuestInfoFragment extends Fragment {
     private String numberPersons;
     private String price;
     private String status;
+    private String time;
+    private FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolderGuest> adapter;
 
 
 
@@ -75,6 +81,7 @@ public class OrderGuestInfoFragment extends Fragment {
         numberPersons=this.getArguments().getString("personNumber");
         price=this.getArguments().getString("price");
         status=this.getArguments().getString("status");
+        time=this.getArguments().getString("time");
 
         LinearLayout status_orderL=(LinearLayout) OrderDetailsView.findViewById(R.id.status_bulletInfoGuest);
         TextView nameRestaurantL=(TextView)OrderDetailsView.findViewById(R.id.restaurant_name_orderInfoGuest);
@@ -85,7 +92,7 @@ public class OrderGuestInfoFragment extends Fragment {
 
         nameRestaurantL.setText(restaurantName);
         addressL.setText(address);
-        date_TimeL.setText(dateTime);
+        date_TimeL.setText(dateTime+" "+time);
         number_PersonsL.setText(numberPersons);
         price_orderL.setText(price);
         if(status.equals("0")){
@@ -110,10 +117,12 @@ public class OrderGuestInfoFragment extends Fragment {
                 new FirebaseRecyclerOptions.Builder<OrderDetails>()
                         .setQuery(databaseReferenceOrderDetails, OrderDetails.class)
                         .build();
-        FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolderGuest> adapter=
-                new FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolderGuest>(options) {
+
+               adapter= new FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolderGuest>(options) {
+
+
                     @Override
-                    protected void onBindViewHolder(@NonNull final OrderDetailsViewHolderGuest holder, int position, @NonNull OrderDetails model) {
+                    protected void onBindViewHolder(@NonNull final OrderDetailsViewHolderGuest holder, final int position, @NonNull OrderDetails model) {
                         final String IDs=getRef(position).getKey();
                         databaseReferenceOrderDetails.child(IDs).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -131,8 +140,8 @@ public class OrderGuestInfoFragment extends Fragment {
                                                     String name=dataSnapshot.child("name").getValue().toString();
                                                     String price=dataSnapshot.child("price").getValue().toString();
                                                     holder.dishName.setText(name);
-                                                    int finalPrice=Integer.parseInt(price)*Integer.parseInt(quantity);
-                                                    holder.price.setText(String.valueOf(finalPrice)+" HRK");
+                                                    //int finalPrice=Integer.parseInt(price)*Integer.parseInt(quantity);
+                                                    holder.price.setText(String.valueOf(price)+" HRK");
                                                     holder.details.setText(dataSnapshot.child("description").getValue().toString());
 
                                                 }
@@ -145,20 +154,21 @@ public class OrderGuestInfoFragment extends Fragment {
                                         }));
                                     }
                                     else{
-                                        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-                                        params.height = 0;
-                                        holder.itemView.setLayoutParams(params);
+                                        holder.itemView.getLayoutParams().height=0;
                                         holder.itemView.setVisibility(View.GONE);
                                     }
                                 }
 
                             }
 
+
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
                         });
+
                     }
 
                     @NonNull
@@ -168,11 +178,26 @@ public class OrderGuestInfoFragment extends Fragment {
                         OrderDetailsViewHolderGuest viewHolder = new OrderDetailsViewHolderGuest(view);
                         return viewHolder;
                     }
+
+
+                    @Override
+                    public long getItemId(int position) {
+                        return position;
+                    }
+
+                    @Override
+                    public int getItemViewType(int position) {
+                        return position;
+                    }
                 };
+        adapter.setHasStableIds(true);
         orderDetailsList.setAdapter(adapter);
         adapter.startListening();
 
+
+
     }
+
 
 
     @Override

@@ -3,25 +3,34 @@ package foi.air.rse.Controllers.guest.Orders;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
+import android.media.Rating;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.core.Model.Order;
 import com.example.readysteadyeat.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -32,9 +41,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-import com.example.core.Model.Order;
+import foi.air.rse.Controllers.restaurant.orders.OrdersRestaurantInfoFragment;
+import foi.air.rse.Controllers.restaurant.orders.OrdersViewHolder;
 
 public class OrdersGuestFragment extends Fragment {
     private OrdersGuestFragment ordersGuestFragment=this;
@@ -176,6 +188,12 @@ public class OrdersGuestFragment extends Fragment {
                                 final Bundle bundle=new Bundle();
                                 if(dataSnapshot.exists()){
                                     if(dataSnapshot.child("guestId").getValue().equals(firebaseAuth.getCurrentUser().getUid())
+                                            && dataSnapshot.hasChild("dateTime")
+                                            && dataSnapshot.hasChild("status")
+                                            && dataSnapshot.hasChild("time")
+                                            && dataSnapshot.hasChild("price")
+                                            && dataSnapshot.hasChild("persons")
+                                            && dataSnapshot.hasChild("raiting")
                                             &&( dataSnapshot.child("dateTime").getValue().toString().equals(dateTime)
                                             || dateTime.equals("all"))
                                             &&(dataSnapshot.child("status").getValue().toString().equals(pokStatus)
@@ -187,9 +205,10 @@ public class OrdersGuestFragment extends Fragment {
                                             holder.btnRateGuest.setVisibility(View.GONE);
                                         }
                                         String restaurantID= dataSnapshot.child("restaurantId").getValue().toString();
-                                        String time= dataSnapshot.child("dateTime").getValue().toString();
+                                        String date= dataSnapshot.child("dateTime").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
                                         String price=dataSnapshot.child("price").getValue().toString();
+                                        String time=dataSnapshot.child("time").getValue().toString();
 
                                         String status=dataSnapshot.child("status").getValue().toString();
                                         String notDecide="0";
@@ -255,14 +274,25 @@ public class OrdersGuestFragment extends Fragment {
                                         }));
                                         holder.priceOrderGuest.setText(price+" HRK");
                                         holder.numOfPersonsOrderGuest.setText(personcount);
-                                        holder.dateTimeOrderGuest.setText(time);
+                                        holder.dateTimeOrderGuest.setText(date+" "+time);
+                                        holder.itemView.setVisibility(View.VISIBLE);
 
                                     }
                                     else{
-                                        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-                                        params.height = 0;
-                                        holder.itemView.setLayoutParams(params);
+                                      //  String key = dataSnapshot.getKey();
+
+                                      //  if (mKeys.contains(key)) {
+                                      //      int index = mKeys.indexOf(key);
+                                      //      T item = mItems.get(index);
+                                      //
+                                      //      mKeys.remove(index);
+                                      //      mItems.remove(index);
+                                      //
+                                      //      notifyItemRemoved(index);
+                                      //      itemRemoved(item, key, index);
+                                      //  }
                                         holder.itemView.setVisibility(View.GONE);
+                                        holder.itemView.getLayoutParams().height=0;
                                     }
                                     holder.btnPayOrder.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -285,6 +315,7 @@ public class OrdersGuestFragment extends Fragment {
                                         public void onClick(View v) {
                                             bundle.putString("order_id", IDs);
                                             bundle.putString("dateTime", dataSnapshot.child("dateTime").getValue().toString());
+                                            bundle.putString("time", dataSnapshot.child("time").getValue().toString());
                                             bundle.putString("personNumber",dataSnapshot.child("persons").getValue().toString() );
                                             bundle.putString("price",dataSnapshot.child("price").getValue().toString());
                                             bundle.putString("status",dataSnapshot.child("status").getValue().toString());
@@ -332,7 +363,17 @@ public class OrdersGuestFragment extends Fragment {
                         OrdersViewHolderGuest viewHolder = new OrdersViewHolderGuest(view);
                         return viewHolder;
                     }
+                    @Override
+                    public long getItemId(int position) {
+                        return position;
+                    }
+
+                    @Override
+                    public int getItemViewType(int position) {
+                        return position;
+                    }
                 };
+        adapter.setHasStableIds(true);
         orderList.setAdapter(adapter);
         adapter.startListening();
     }
