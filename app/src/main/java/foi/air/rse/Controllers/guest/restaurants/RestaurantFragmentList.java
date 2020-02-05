@@ -57,6 +57,7 @@ public class RestaurantFragmentList extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         RestaurantsView= inflater.inflate(R.layout.fragment_restaurant_list_view, container, false);
         searchRestaurants = (SearchView) RestaurantsView.findViewById(R.id.searchRestaurants);
+        searchRestaurants.getBackground().setTint(getResources().getColor(R.color.white));
 
 
         myRestaurantsList = (RecyclerView) RestaurantsView.findViewById(R.id.restaurants_list);
@@ -107,7 +108,7 @@ public class RestaurantFragmentList extends Fragment {
                                 String restaurantStreet = dataSnapshot.child("street").getValue().toString();
                                 String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
                                 String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
-
+                                holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                 holder.restaurantName.setText(restaurantName);
                                 holder.restaurantAdress.setText(fullAdress);
                                 Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
@@ -120,6 +121,7 @@ public class RestaurantFragmentList extends Fragment {
                                 String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
 
 
+                                holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                 holder.restaurantName.setText(restaurantName);
                                 holder.restaurantAdress.setText(fullAdress);
                             }
@@ -134,6 +136,7 @@ public class RestaurantFragmentList extends Fragment {
                                     String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
                                     String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
 
+                                    holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                     holder.restaurantName.setText(restaurantName);
                                     holder.restaurantAdress.setText(fullAdress);
                                     Picasso.get().load(profileImage).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(holder.profileImage);
@@ -145,6 +148,7 @@ public class RestaurantFragmentList extends Fragment {
                                     String restaurantHouseNumber = dataSnapshot.child("houseNumber").getValue().toString();
                                     String fullAdress=restaurantStreet+' '+restaurantHouseNumber;
 
+                                    holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                     holder.restaurantName.setText(restaurantName);
                                     holder.restaurantAdress.setText(fullAdress);
                                 }
@@ -236,8 +240,6 @@ public class RestaurantFragmentList extends Fragment {
         };
         myRestaurantsList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         myRestaurantsList.setAdapter(adapter);
-
-
         adapter.startListening();
 
     }

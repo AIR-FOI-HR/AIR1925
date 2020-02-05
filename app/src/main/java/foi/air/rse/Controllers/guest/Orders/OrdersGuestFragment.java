@@ -217,12 +217,12 @@ public class OrdersGuestFragment extends Fragment {
                                         if(status.equals(notDecide)){
                                             holder.btnRateGuest.setVisibility(View.GONE);
                                             holder.btnDeniedGuest.setVisibility(View.VISIBLE);
-                                            holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.white));
+                                            holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                             holder.btnPayOrder.setVisibility(View.GONE);
                                             holder.bulletGuest.getBackground().setTint(getResources().getColor(R.color.yellow));
                                         }else if(status.equals(payed)){
                                             holder.bulletGuest.setBackgroundResource(R.drawable.ic_done_orange);
-                                            holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.white));
+                                            holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
 
                                             holder.btnPayOrder.setVisibility(View.GONE);
                                             holder.btnDeniedGuest.setVisibility(View.GONE);
@@ -235,10 +235,10 @@ public class OrdersGuestFragment extends Fragment {
                                         else{
                                             if(status.equals(accept)){
                                                 holder.btnPayOrder.setVisibility(View.VISIBLE);
-                                                holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.white));
+                                                holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                                 holder.bulletGuest.getBackground().setTint(getResources().getColor(R.color.apple_green));
                                             }else{
-                                                holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.gray));
+                                                holder.itemView.getBackground().setTint(getResources().getColor(R.color.gray));
                                                 holder.btnPayOrder.setVisibility(View.GONE);
                                                 holder.bulletGuest.getBackground().setTint(Color.RED);
                                             }

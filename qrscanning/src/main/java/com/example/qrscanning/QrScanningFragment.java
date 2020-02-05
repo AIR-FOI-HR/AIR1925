@@ -40,7 +40,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
     String id;
     Button button;
     private String rezultat;
-    public List<OrderDetails> orderDetailsList = new ArrayList<>();
+    public List<OrderDetails> orderDetailsList;
     private DatabaseReference databaseReferenceOrderDetails;
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceDish;
@@ -89,6 +89,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        orderDetailsList= new ArrayList<>();
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanningResult != null) {
@@ -101,6 +102,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
                     orderDetailsList.add(orderDetail);
                 }
                 makeOrder();
+                getActivity().getFragmentManager().popBackStack();
                 getActivity().finish();
             } else {
                 Toast.makeText(getActivity(), "Nothing scanned", Toast.LENGTH_SHORT).show();
@@ -137,6 +139,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
 
     @Override
     public void makeOrder() {
+        price=0;
         FirebaseDatabase.getInstance().getReference().child("Dish")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
