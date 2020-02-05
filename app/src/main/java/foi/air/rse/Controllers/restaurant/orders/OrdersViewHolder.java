@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.readysteadyeat.R;
 
 public class OrdersViewHolder extends RecyclerView.ViewHolder {
-    public TextView userOrder, datetimeOrder, numOfPersonsOrder, priceOrder;
+    public TextView userOrder, datetimeOrder, numOfPersonsOrder, priceOrder, restaurantRating;
     public Button btnAccept, btnDenied, btnInfo;
     public LinearLayout bullet;
     public RelativeLayout displayLayoutRestaurant;
@@ -30,6 +30,7 @@ public class OrdersViewHolder extends RecyclerView.ViewHolder {
         datetimeOrder=itemView.findViewById(R.id.order_datetime);
         numOfPersonsOrder=itemView.findViewById(R.id.number_of_persons);
         priceOrder=itemView.findViewById(R.id.order_price);
+        restaurantRating=itemView.findViewById(R.id.restaurant_rating_restaurant_view);
 
         displayLayoutRestaurant=itemView.findViewById(R.id.display_layout_order_restaurant);
 

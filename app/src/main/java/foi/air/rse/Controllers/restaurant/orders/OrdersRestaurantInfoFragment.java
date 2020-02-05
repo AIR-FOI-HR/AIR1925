@@ -123,15 +123,13 @@ public class OrdersRestaurantInfoFragment extends Fragment {
         price_order.setText(price);
         if(status.equals("0")){
             status_order.getBackground().setTint(getResources().getColor(R.color.yellow));
-        }else{
-            if(status.equals("1")){
-
+        }else if(status.equals("1")){
                 status_order.getBackground().setTint(getResources().getColor(R.color.apple_green));
-            }else{
 
-                status_order.getBackground().setTint(Color.RED);
-            }
+        }else if(status.equals("3")){
+                status_order.setBackgroundResource(R.drawable.ic_done_orange);
         }
+
         return OrderDetailsView;
     }
 

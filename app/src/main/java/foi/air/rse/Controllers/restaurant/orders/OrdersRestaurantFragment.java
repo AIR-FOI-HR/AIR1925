@@ -203,6 +203,7 @@ public class OrdersRestaurantFragment extends Fragment {
                                             && dataSnapshot.hasChild("price")
                                             && dataSnapshot.hasChild("persons")
                                             && dataSnapshot.hasChild("raiting")
+                                            && dataSnapshot.hasChild("guestId")
                                             &&(dateTime.equals("all")|| dataSnapshot.child("dateTime").getValue().toString().equals(dateTime))
                                             && (prikazStanje.equals("all") || dataSnapshot.child("status").getValue().toString().equals(prikazStanje))
                                     ){
@@ -211,8 +212,10 @@ public class OrdersRestaurantFragment extends Fragment {
                                         String time=dataSnapshot.child("time").getValue().toString();
                                         String personcount=dataSnapshot.child("persons").getValue().toString();
                                         String price=dataSnapshot.child("price").getValue().toString();
+                                        String rating=dataSnapshot.child("raiting").getValue().toString();
 
                                         String status=dataSnapshot.child("status").getValue().toString();
+                                        holder.itemView.setVisibility(View.VISIBLE);
 
                                         String notDecide="0";
                                         String accept="1";
@@ -230,6 +233,11 @@ public class OrdersRestaurantFragment extends Fragment {
                                             }else if(status.equals(rated)){
                                                 holder.bullet.setBackgroundResource(R.drawable.ic_done_orange);
                                                 holder.displayLayoutRestaurant.getBackground().setTint(getResources().getColor(R.color.grayLight));
+                                                holder.restaurantRating.setVisibility(View.VISIBLE);
+                                                holder.restaurantRating.setText(rating);
+                                            }else if(status.equals("2")){
+                                                holder.itemView.setVisibility(View.GONE);
+                                                holder.itemView.getLayoutParams().height=0;
                                             }
                                             holder.btnAccept.setVisibility(View.GONE);
                                             holder.btnDenied.setVisibility(View.GONE);
@@ -260,8 +268,6 @@ public class OrdersRestaurantFragment extends Fragment {
                                         holder.priceOrder.setText(price+" HRK");
                                         holder.numOfPersonsOrder.setText(personcount);
                                         holder.datetimeOrder.setText(dateTime1+"  "+time);
-
-                                        holder.itemView.setVisibility(View.VISIBLE);
                                     }
                                     else{
                                         holder.itemView.setVisibility(View.GONE);
@@ -280,6 +286,8 @@ public class OrdersRestaurantFragment extends Fragment {
                                         public void onClick(View v) {
                                             String status= "2";
                                             updateOrderStatus(status, IDs);
+                                            holder.itemView.setVisibility(View.GONE);
+                                            holder.itemView.getLayoutParams().height=0;
                                             Toast.makeText(getActivity().getApplicationContext(), "Order is denied!", Toast.LENGTH_SHORT).show();
                                         }
                                     });

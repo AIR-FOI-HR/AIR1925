@@ -40,8 +40,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
     private DatabaseReference databaseReferenceOrder;
 
 
-    int day, month, year, hour, minute;
-    int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal = 0;
+    Integer day, month, year, hour, minute;
+    Integer dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal = 0;
 
 
 
@@ -87,7 +87,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day){
-        yearFinal = year;
+        yearFinal=year;
         monthFinal = month+1;
         dayFinal = day;
 
@@ -108,7 +108,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements DatePicke
     }
 
     public void submitReservation(){
-        if(dayFinal==0 || monthFinal == 0 || yearFinal ==0 || hourFinal ==0 || minuteFinal ==0){
+        if(dayFinal==null || monthFinal == null || yearFinal ==null || hourFinal ==null || minuteFinal ==null){
             Toast.makeText(getApplication(), "Please choose time and date!", Toast.LENGTH_LONG).show();
         }
         else{

@@ -6,7 +6,10 @@
     tools:context="foi.air.rse.Controllers.guest.Orders.OrdersGuestFragment"
     android:id="@+id/guestOrdersFragment"
     >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,17 +66,12 @@
 
     </LinearLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerOrdersListGuest"
         android:layout_width="match_parent"
-        android:layout_height="553dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="1dp" />
+        android:layout_height="wrap_content"
+        /></LinearLayout>
+
 
 
 

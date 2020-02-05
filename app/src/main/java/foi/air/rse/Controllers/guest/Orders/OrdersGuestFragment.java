@@ -238,7 +238,7 @@ public class OrdersGuestFragment extends Fragment {
                                                 holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.white));
                                                 holder.bulletGuest.getBackground().setTint(getResources().getColor(R.color.apple_green));
                                             }else{
-                                                holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.grayLight));
+                                                holder.displayOrderGuest.getBackground().setTint(getResources().getColor(R.color.gray));
                                                 holder.btnPayOrder.setVisibility(View.GONE);
                                                 holder.bulletGuest.getBackground().setTint(Color.RED);
                                             }
@@ -279,18 +279,6 @@ public class OrdersGuestFragment extends Fragment {
 
                                     }
                                     else{
-                                      //  String key = dataSnapshot.getKey();
-
-                                      //  if (mKeys.contains(key)) {
-                                      //      int index = mKeys.indexOf(key);
-                                      //      T item = mItems.get(index);
-                                      //
-                                      //      mKeys.remove(index);
-                                      //      mItems.remove(index);
-                                      //
-                                      //      notifyItemRemoved(index);
-                                      //      itemRemoved(item, key, index);
-                                      //  }
                                         holder.itemView.setVisibility(View.GONE);
                                         holder.itemView.getLayoutParams().height=0;
                                     }
