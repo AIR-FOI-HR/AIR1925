@@ -15,7 +15,7 @@ public class DishsViewHolderGuest extends RecyclerView.ViewHolder {
     public TextView dishName, dishDescription, dishCategory, dairyFree, glutenFree, category, price, amount;
     public CircleImageView dishImage;
     private Button btnAdd, btnRemove;
-    public int amountValue;
+    public int amountValue=0;
     public int numItems;
     public String dishId;
 

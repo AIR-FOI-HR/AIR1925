@@ -80,6 +80,8 @@ public class OrderingModulActivity extends AppCompatActivity implements SharedPr
 
     private void startMainModule() {
         NavigationManager.getInstance().startMainModule();
+
+
     }
 
     @Override

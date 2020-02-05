@@ -57,7 +57,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     private String currentUserId;
     private String selectedRestaurant;
     private Button btnOrder;
-    public List<OrderDetails> orderDetailsList = new ArrayList<>();
+    public List<OrderDetails> orderDetailsList;
     public float price=0;
     public float finalPrice;
     public int quant;
@@ -131,9 +131,8 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                     @Override
                     public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
-                            numItems++;
                             if (dataSnapshot.child("restaurantId").getValue().equals(id)) {
-
+                                numItems++;
 
                                 if (dataSnapshot.hasChild("imgUrl")) {
 
@@ -187,6 +186,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                                     holder.dairyFree.setText(dairyFree);
                                     holder.glutenFree.setText(glutenFree);
                                     holder.price.setText(price);
+                                    holder.amountValue=0;
                                 }
 
                             }
@@ -231,8 +231,11 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                orderDetailsList = new ArrayList<>();
                 iterateRcv();
                 makeOrder();
+                getActivity().getFragmentManager().popBackStack();
+                getActivity().finish();
             }
         });
     }
@@ -259,7 +262,7 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
     public void iterateRcv(){
         boolean contains;
-        for (int i = 0; i <= numItems+1; i++) {
+        for (int i = 0; i <= numItems; i++) {
             DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
             if(holder != null){
                 if(holder.amountValue>0){
@@ -288,17 +291,16 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
 
                         Log.i("price", String.valueOf(price));
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            quant=0;
                             Dish dish = snapshot.getValue(Dish.class);
                             for(int i=0; i<orderDetailsList.size(); i++){
                                 String id = orderDetailsList.get(i).dishId;
-                                int quant = Integer.parseInt(orderDetailsList.get(i).quantity);
+                                quant = Integer.parseInt(orderDetailsList.get(i).quantity);
                                 Log.i("priceQuant", String.valueOf(quant));
                                 if(snapshot.getKey().equals(id)){
-                                    if(!dish.price.equals("0")
-                                    && quant!=0){
                                         price = price + quant * Float.parseFloat(dish.price);
                                         Log.i("priceFinal", String.valueOf(price));
-                                    }
+
                                 }
                             }
                         }
@@ -315,8 +317,6 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-        finalPrice=0;
-        price=0;
     }
 
     public void updateOrderDetails(String key){
@@ -332,6 +332,5 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
-
 
 }

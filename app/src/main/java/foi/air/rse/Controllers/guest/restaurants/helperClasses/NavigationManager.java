@@ -1,6 +1,7 @@
 package foi.air.rse.Controllers.guest.restaurants.helperClasses;
 
 
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,6 +97,7 @@ public class NavigationManager {
                 .replace(R.id.fragment_container, module.getFragment())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
+        Log.i("ime", module.getFragment().toString());
         DataManager.getInstance().sendData(module, restaurantID);
     }
 

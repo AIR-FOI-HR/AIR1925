@@ -101,6 +101,7 @@ public class QrScanningFragment extends Fragment implements NavigationItem {
                     orderDetailsList.add(orderDetail);
                 }
                 makeOrder();
+                getActivity().finish();
             } else {
                 Toast.makeText(getActivity(), "Nothing scanned", Toast.LENGTH_SHORT).show();
             }

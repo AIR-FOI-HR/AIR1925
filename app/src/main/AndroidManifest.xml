@@ -17,10 +17,12 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.example.qrscanning.QrScanningActivity"></activity>
         <activity android:name="com.example.core.OrderSummaryActivity" />
-        <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity" />
+        <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.OrderingModulActivity"
+            android:launchMode="singleInstance"/>
             android:label="@string/title_activity_restaurant_profile1"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.RestaurantProfileActivity" />
+        <activity android:name="foi.air.rse.Controllers.guest.restaurants.modular.RestaurantProfileActivity"
+            android:launchMode="singleInstance"/>
         <activity android:name="foi.air.rse.Controllers.restaurant.menu.ManuRestaurantEditActivity" />
         <activity android:name="foi.air.rse.Controllers.restaurant.menu.MenuRestaurantAddActivity" />
         <activity android:name="foi.air.rse.Controllers.restaurant.auth.SignUpActivity" />
