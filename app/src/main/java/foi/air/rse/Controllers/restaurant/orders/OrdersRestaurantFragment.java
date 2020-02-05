@@ -53,7 +53,6 @@ public class OrdersRestaurantFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private String currentUserId;
 
-
     private String phone;
     private  String userName;
     private String prikazStanje;
@@ -62,23 +61,7 @@ public class OrdersRestaurantFragment extends Fragment {
     ValueEventListener listener;
     ArrayAdapter<String> adapter;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
     public OrdersRestaurantFragment() {
-    }
-
-    public static OrdersRestaurantFragment newInstance(String param1, String param2) {
-        OrdersRestaurantFragment fragment = new OrdersRestaurantFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
 
@@ -169,11 +152,6 @@ public class OrdersRestaurantFragment extends Fragment {
     }
 
     public void populateRecycleView(final String dateTime, final String prikazStanje){
-
-
-
-
-
 
         FirebaseRecyclerOptions options=
                 new FirebaseRecyclerOptions.Builder<Order>()
@@ -354,26 +332,6 @@ public class OrdersRestaurantFragment extends Fragment {
         databaseReferenceOrders.child(orderId).child("status").setValue(status);
         Toast.makeText(getActivity().getApplicationContext(), "Status is set to: "+status, Toast.LENGTH_SHORT).show();
 
-    }
-
-    public void notifyThis(String title, String message) {
-        NotificationCompat.Builder b = new NotificationCompat.Builder(this.getContext());
-        b.setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.foodicon)
-                .setTicker("{your tiny message}")
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentInfo("INFO");
-
-        NotificationManager nm = (NotificationManager) this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(1, b.build());
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
     @Override

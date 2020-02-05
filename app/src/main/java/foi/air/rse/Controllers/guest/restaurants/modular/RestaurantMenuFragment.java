@@ -233,9 +233,13 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
             public void onClick(View v) {
                 orderDetailsList = new ArrayList<>();
                 iterateRcv();
-                makeOrder();
-                getActivity().getFragmentManager().popBackStack();
-                getActivity().finish();
+                if(orderDetailsList.size()==0){
+                    Toast.makeText(getActivity(), "There is no items in order!", Toast.LENGTH_SHORT).show();
+                }else {
+                    makeOrder();
+                    getActivity().getFragmentManager().popBackStack();
+                    getActivity().finish();
+                }
             }
         });
     }
@@ -263,23 +267,22 @@ public class RestaurantMenuFragment extends Fragment implements NavigationItem {
     public void iterateRcv(){
         boolean contains;
         for (int i = 0; i <= numItems; i++) {
-            DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
-            if(holder != null){
-                if(holder.amountValue>0){
-                    contains=false;
-                    OrderDetails orderDetail = new OrderDetails(null, holder.dishId, Integer.toString(holder.amountValue));
-                    for(int j=0; j<orderDetailsList.size(); j++){
-                        if(orderDetailsList.get(j).dishId.equals(orderDetail.dishId)){
-                            contains=true;
+                DishsViewHolderGuest holder = (DishsViewHolderGuest) dishList.findViewHolderForAdapterPosition(i);
+                if (holder != null) {
+                    if (holder.amountValue > 0) {
+                        contains = false;
+                        OrderDetails orderDetail = new OrderDetails(null, holder.dishId, Integer.toString(holder.amountValue));
+                        for (int j = 0; j < orderDetailsList.size(); j++) {
+                            if (orderDetailsList.get(j).dishId.equals(orderDetail.dishId)) {
+                                contains = true;
+                            }
                         }
-                    }
-                    if(!contains){
-                        orderDetailsList.add(orderDetail);
-                        Log.i("kifla",orderDetail.toString());
+                        if (!contains) {
+                            orderDetailsList.add(orderDetail);
+                        }
                     }
                 }
             }
-        }
     }
 
     public void makeOrder(){

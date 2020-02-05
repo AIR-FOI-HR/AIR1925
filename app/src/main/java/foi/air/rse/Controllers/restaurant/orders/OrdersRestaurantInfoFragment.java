@@ -48,30 +48,11 @@ public class OrdersRestaurantInfoFragment extends Fragment {
     private String numberPersons;
     private String price;
     private String status;
-
-
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolder> adapter;
 
     public OrdersRestaurantInfoFragment() {
         // Required empty public constructor
     }
-
-    public static OrdersRestaurantInfoFragment newInstance(String param1, String param2) {
-        OrdersRestaurantInfoFragment fragment = new OrdersRestaurantInfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
     @Override
     public void onStart() {
@@ -83,10 +64,6 @@ public class OrdersRestaurantInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -140,8 +117,7 @@ public class OrdersRestaurantInfoFragment extends Fragment {
                 new FirebaseRecyclerOptions.Builder<OrderDetails>()
                         .setQuery(databaseReferenceOrderDetails, OrderDetails.class)
                         .build();
-        FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolder> adapter=
-                new FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolder>(options) {
+        adapter=new FirebaseRecyclerAdapter<OrderDetails, OrderDetailsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final OrderDetailsViewHolder holder, int position, @NonNull OrderDetails model) {
                         final String IDs=getRef(position).getKey();
@@ -150,40 +126,40 @@ public class OrdersRestaurantInfoFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 holder.itemView.setVisibility(View.GONE);
-                                if(dataSnapshot.exists()&& dataSnapshot.child("orderId").getValue().toString().equals(orderID)) {
+                                if (dataSnapshot.exists()) {
+                                    if (dataSnapshot.child("orderId").getValue().toString().equals(orderID)) {
+                                        holder.itemView.setVisibility(View.VISIBLE);
+                                        String dishId = dataSnapshot.child("dishId").getValue().toString();
+                                        final String quantity = dataSnapshot.child("quantity").getValue().toString();
+                                        holder.quantity.setText(quantity);
+                                        databaseReferenceDish = FirebaseDatabase.getInstance().getReference("Dish").child(dishId);
+                                        databaseReferenceDish.addValueEventListener((new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+                                                    String name = dataSnapshot.child("name").getValue().toString();
+                                                    String price = dataSnapshot.child("price").getValue().toString();
+                                                    holder.dishName.setText(name);
+                                                    //int finalPrice=Integer.parseInt(price)*Integer.parseInt(quantity);
+                                                    holder.price.setText(String.valueOf(price) + " HRK");
 
-                                    holder.itemView.setVisibility(View.VISIBLE);
-                                    String dishId = dataSnapshot.child("dishId").getValue().toString();
-                                    final String quantity = dataSnapshot.child("quantity").getValue().toString();
-                                    holder.quantity.setText(quantity);
-                                    databaseReferenceDish = FirebaseDatabase.getInstance().getReference("Dish").child(dishId);
-                                    databaseReferenceDish.addValueEventListener((new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.exists()) {
-                                                String name = dataSnapshot.child("name").getValue().toString();
-                                                String price = dataSnapshot.child("price").getValue().toString();
-                                                holder.dishName.setText(name);
-                                                //int finalPrice=Integer.parseInt(price)*Integer.parseInt(quantity);
-                                                holder.price.setText(String.valueOf(price) + " HRK");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                             }
-                                        }
+                                        }));
+                                    } else {
+                                        holder.itemView.setVisibility(View.GONE);
+                                        holder.itemView.getLayoutParams().height = 0;
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    }));
-                                }else{
-                                    holder.itemView.setVisibility(View.GONE);
-                                    holder.itemView.getLayoutParams().height=0;
+                                    }
 
                                 }
 
                             }
-
-
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -211,11 +187,6 @@ public class OrdersRestaurantInfoFragment extends Fragment {
         adapter.startListening();
 
 
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
 }

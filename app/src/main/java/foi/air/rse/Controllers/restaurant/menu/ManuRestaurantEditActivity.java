@@ -269,6 +269,7 @@ public class ManuRestaurantEditActivity extends AppCompatActivity {
             databaseReferenceDish.child(dishId).child("dairyFree").setValue(newDish.dairyFree);
             databaseReferenceDish.child(dishId).child("glutenFree").setValue(newDish.glutenFree);
             databaseReferenceDish.child(dishId).child("restaurantId").setValue(newDish.restaurantId);
+            databaseReferenceDish.child(dishId).child("description").setValue(newDish.description);
             databaseReferenceDish.child(dishId).child("name").setValue(newDish.name);
             databaseReferenceDish.child(dishId).child("price").setValue(newDish.price);
             showMessage("Dish updated successfully.");

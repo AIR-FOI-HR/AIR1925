@@ -91,18 +91,14 @@ public class RestaurantProfileActivity extends AppCompatActivity{
     private void populateItems(){
         ImageView restaurant_imgUrl = findViewById(R.id.profileImageView);
         TextView restaurant_name = findViewById(R.id.restaurantNameTextView);
-        TextView restaurant_street = findViewById(R.id.restaurantStreetTextView);
-        TextView restaurant_houseNumber = findViewById(R.id.restaurantHouseNumberTextView);
-        TextView restaurant_city = findViewById(R.id.restaurantCityTextView);
+        TextView restaurant_adress = findViewById(R.id.restaurantAdressTextView);
         TextView restaurant_email = findViewById(R.id.restaurantEmailTextView);
         TextView restaurant_rating=findViewById(R.id.restaurant_rating_info);
 
         button = findViewById(R.id.btnNaruci);
 
         restaurant_name.setText(restaurantName);
-        restaurant_street.setText(restaurantStreet);
-        restaurant_houseNumber.setText(restaurantHouseNumber);
-        restaurant_city.setText(restaurantCity);
+        restaurant_adress.setText(restaurantStreet+' '+restaurantHouseNumber+", "+restaurantCity);
         restaurant_email.setText(restaurantEmail);
         restaurant_rating.setText(restaurantRating);
         Picasso.get().load(restaurantImgUrl).placeholder(R.drawable.common_google_signin_btn_icon_dark).into(restaurant_imgUrl);

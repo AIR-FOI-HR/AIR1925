@@ -238,7 +238,7 @@ public class OrdersGuestFragment extends Fragment {
                                                 holder.itemView.getBackground().setTint(getResources().getColor(R.color.white));
                                                 holder.bulletGuest.getBackground().setTint(getResources().getColor(R.color.apple_green));
                                             }else{
-                                                holder.itemView.getBackground().setTint(getResources().getColor(R.color.gray));
+                                                holder.itemView.getBackground().setTint(getResources().getColor(R.color.grayLight));
                                                 holder.btnPayOrder.setVisibility(View.GONE);
                                                 holder.bulletGuest.getBackground().setTint(Color.RED);
                                             }
@@ -285,9 +285,9 @@ public class OrdersGuestFragment extends Fragment {
                                     holder.btnPayOrder.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            String status= "3";
-                                            updateOrderStatus(status, IDs);
-                                            Toast.makeText(getActivity().getApplicationContext(), "Order is accepted!", Toast.LENGTH_SHORT).show();
+                                         //   String status= "3";
+                                         //   updateOrderStatus(status, IDs);
+                                            Toast.makeText(getActivity().getApplicationContext(), "Paying is in development!", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                     holder.btnDeniedGuest.setOnClickListener(new View.OnClickListener() {
